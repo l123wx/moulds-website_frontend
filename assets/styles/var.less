@@ -1,0 +1,23 @@
+@header-height-pc: 75px;
+@header-height-mobile: 45px;
+
+// 响应式布局断点
+@viewport-sm: 512px;
+@viewport-md: 768px;
+@viewport-lg: 1024px;
+@viewport-xl: 1280px;
+
+@page-content-max-width: @viewport-xl;
+
+@font-family: '';
+
+@default-font-color: #101931;
+@main-color: #154296;
+
+* {
+    --header-height: 80px;
+    @media screen and (max-width: @viewport-md) {
+        --header-height: 70px;
+    }
+}
+

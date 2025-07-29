@@ -1,0 +1,1 @@
+export const videoUrl = '//r8.vzan.com/v/1476686256_360498223347924351.m3u8?zbid=1476686256&tpid=1927300709'

@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
 import useI18n from '~/hooks/useI18n'
 
-const BASE_URL = 'https://www.w-esc.com/api'
+const BASE_URL = '/api'
 const DEFAULT_TIMEOUT = 10 * 1000
 
 const http = axios.create({
@@ -40,5 +40,16 @@ const responseInterceptor = (res: AxiosResponse) => {
 }
 
 http.interceptors.response.use(responseInterceptor)
+
+http.interceptors.request.use((config) => {
+    const { languageCode } = useI18n()
+    if (languageCode) {
+        config.params = {
+            ...config.params,
+            languageCode
+        }
+    }
+    return config
+})
 
 export default http

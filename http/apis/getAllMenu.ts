@@ -9,7 +9,7 @@ type Column = {
 }
 
 const getAllMenu = () => {
-    return http.get<any, { rows: Column[] }>('/menuList')
+    return http.get<any, { rows: Column[] }>('/websiteMenu')
 }
 
 export default getAllMenu

@@ -20,32 +20,60 @@
                     <template v-for="menu in menuTreeList">
                         <el-sub-menu
                             v-if="menu.children && menu.children.length"
-                            :key="menu.menuId"
-                            :index="String(menu.menuId)"
+                            :key="menu.id"
+                            :index="String(menu.id)"
                         >
                             <template #title>
                                 <span>
-                                    {{ $tt(menu.name, menu.englishName) }}
+                                    {{ menu.label }}
                                 </span>
                             </template>
                             <el-menu-item
-                                v-for="subColumn in menu.children"
-                                :key="subColumn.menuId"
-                                :index="String(subColumn.menuId)"
+                                v-for="subMenu in menu.children"
+                                :key="subMenu.id"
+                                :index="String(subMenu.id)"
                             >
-                                <NuxtLinkLocale :to="subColumn.routerLink || ''" class="item">
-                                    {{ $tt(subColumn.name, subColumn.englishName) }}
+                                <NuxtLinkLocale
+                                    v-if="subMenu.linkType === '0'"
+                                    :key="'nuxtLink_' + subMenu.id"
+                                    :to="subMenu.link || ''"
+                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                    class="item"
+                                >
+                                    {{ subMenu.label }}
                                 </NuxtLinkLocale>
+                                <NuxtLink
+                                    v-else
+                                    :key="'nuxtLink_' + subMenu.id"
+                                    :to="subMenu.link || ''"
+                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                    class="item">
+                                    {{ subMenu.label }}
+                                </NuxtLink>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-menu-item
                             v-else
-                            :key="'menu_item_' + menu.menuId"
-                            :index="String(menu.menuId)"
+                            :key="'menu_item_' + menu.id"
+                            :index="String(menu.id)"
                         >
-                            <NuxtLinkLocale :to="menu.routerLink || ''" class="item">
-                                {{ $tt(menu.name, menu.englishName) }}
+                            <NuxtLinkLocale
+                                v-if="menu.linkType === '0'"
+                                :key="'nuxtLink_' + menu.id"
+                                :to="menu.link || ''"
+                                :target="menu.openType === '1' ? '_blank' : '_self'"
+                                class="item"
+                            >
+                                {{ menu.label }}
                             </NuxtLinkLocale>
+                            <NuxtLink
+                                v-else
+                                :key="'nuxtLink_' + menu.id"
+                                :to="menu.link || ''"
+                                :target="menu.openType === '1' ? '_blank' : '_self'"
+                                class="item">
+                                {{ menu.label }}
+                            </NuxtLink>
                         </el-menu-item>
                     </template>
                     <el-menu-item>
@@ -61,35 +89,60 @@
         <template v-for="menu in menuTreeList">
             <el-dropdown
                 v-if="menu.children && menu.children.length"
-                :key="menu.menuId"
+                :key="menu.id"
                 class="item"
                 :show-timeout="100"
             >
                 <div style="display: flex; align-items: center; width: fit-content">
-                    {{ $tt(menu.name, menu.englishName) }}
+                    {{ menu.label }}
                     <el-icon class="el-icon--right"><arrow-down /></el-icon>
                 </div>
                 <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item
-                            v-for="subColumn in menu.children"
-                            :key="subColumn.menuId"
+                            v-for="subMenu in menu.children"
+                            :key="subMenu.id"
                         >
-                            <NuxtLinkLocale :to="subColumn.routerLink || ''" class="dropdown-item">
-                                {{ $tt(subColumn.name, subColumn.englishName) }}
+                            <NuxtLinkLocale
+                                v-if="subMenu.linkType === '0'"
+                                :key="'nuxtLink_' + subMenu.id"
+                                :to="subMenu.link || ''"
+                                :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                class="dropdown-item"
+                            >
+                                {{ subMenu.label }}
                             </NuxtLinkLocale>
+                            <NuxtLink
+                                v-else
+                                :key="'nuxtLink_' + subMenu.id"
+                                :to="subMenu.link || ''"
+                                :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                class="dropdown-item">
+                                {{ subMenu.label }}
+                            </NuxtLink>
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
-            <NuxtLinkLocale
-                v-else
-                :key="'nuxtLink_' + menu.menuId"
-                :to="menu.routerLink || ''"
-                class="item"
-            >
-                {{ $tt(menu.name, menu.englishName) }}
-            </NuxtLinkLocale>
+            <template v-else>
+                <NuxtLinkLocale
+                    v-if="menu.linkType === '0'"
+                    :key="'nuxtLink_' + menu.id"
+                    :to="menu.link || ''"
+                    :target="menu.openType === '1' ? '_blank' : '_self'"
+                    class="item"
+                >
+                    {{ menu.label }}
+                </NuxtLinkLocale>
+                <NuxtLink
+                    v-else
+                    :key="'nuxtLink_' + menu.id"
+                    :to="menu.link || ''"
+                    :target="menu.openType === '1' ? '_blank' : '_self'"
+                    class="item">
+                    {{ menu.label }}
+                </NuxtLink>
+            </template>
         </template>
 
         <div class="item">
@@ -106,16 +159,14 @@
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 
-    import useI18n from '~/hooks/useI18n'
-
-    const { $tt } = useI18n()
     const route = useRoute()
 
     const switchLocalePath = useSwitchLocalePath()
 
     const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
+        server: false,
         transform: data => {
-            const result = handconstree(data.rows, 'menuId', 'parentId')
+            const result = handconstree(data.data, 'id', 'parentId')
             return result
         },
         default: () => []

@@ -53,6 +53,13 @@ export default defineNuxtConfig({
         }
     },
 
+    serverHandlers: [
+        {
+            route: '/profile/upload/**:path',
+            handler: '~/server/profileUploadHandler.ts'
+        }
+    ],
+
     modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image'],
 
     i18n: {

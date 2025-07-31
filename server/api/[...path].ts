@@ -14,22 +14,12 @@ export default defineEventHandler((event) => {
         }
     )
     try {
-        return $fetch(event.context.params!.path, {
-            baseURL: API_URL,
-            params: {
-                language: 'en-US',
-                ...query
-            },
-            headers: {
-                Accept: 'application/json'
-            }
+        return proxyRequest(event, `${API_URL}/${event.context.params!.path}`)
+    } catch (error: any) {
+        console.error('Error proxying request:', error)
+        throw createError({
+            statusCode: 500,
+            statusMessage: '代理请求失败'
         })
-    } catch (e: any) {
-        const status = e?.response?.status || 500
-        setResponseStatus(event, status)
-        console.error(e)
-        return {
-            error: String(e)
-        }
     }
 })

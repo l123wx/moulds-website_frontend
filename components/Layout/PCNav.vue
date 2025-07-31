@@ -1,7 +1,7 @@
 <template>
     <nav class="main-navigation">
         <div v-if="error">{{ 'http.error' }}</div>
-        <ul v-else class="nav-list" :class="{ 'mobile-open': props.mobileMenuOpen }">
+        <ul v-else class="nav-list">
             <template v-for="menu in menuTreeList" :key="menu.id">
                 <li v-if="menu.children && menu.children.length" class="nav-item has-dropdown">
                     <a href="#" class="nav-link">
@@ -47,11 +47,6 @@
                     </NuxtLink>
                 </li>
             </template>
-            <li class="nav-item language-switcher">
-                <a :href="switchLocalePath('zh')" class="language-link">中文</a>
-                <span class="language-divider">/</span>
-                <a :href="switchLocalePath('en')" class="language-link">EN</a>
-            </li>
         </ul>
     </nav>
 </template>
@@ -60,44 +55,11 @@
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 
-    const props = defineProps({
-        mobileMenuOpen: {
-            type: Boolean,
-            default: false
-        }
-    })
-
-    const emit = defineEmits(['update:mobileMenuOpen'])
-    const route = useRoute()
     const switchLocalePath = useSwitchLocalePath()
 
     const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
-        transform: data => {
-            console.log(data)
-            const result = handconstree(data.data, 'id', 'parentId')
-            return result
-        },
+        transform: data => handconstree(data.data, 'id', 'parentId'),
         default: () => []
-    })
-
-    // 暴露toggleMobileMenu方法给父组件
-    const toggleMobileMenu = () => {
-        emit('update:mobileMenuOpen', !props.mobileMenuOpen)
-    }
-
-    // 路由变化时关闭移动端菜单
-    watch(
-        () => route.fullPath,
-        () => {
-            emit('update:mobileMenuOpen', false)
-        },
-        {
-            deep: true
-        }
-    )
-
-    defineExpose({
-        toggleMobileMenu
     })
 </script>
 
@@ -114,16 +76,26 @@
 
         .nav-item {
             position: relative;
+            padding: 0 2vw;
+
+            &:hover > .nav-link {
+                color: #004DFF;
+
+                &::after {
+                    width: 100%;
+                }
+            }
 
             .nav-link {
                 display: flex;
                 align-items: center;
-                padding: 0 2vw;
                 color: #333;
                 text-decoration: none;
                 font-size: 16px;
                 transition: all 0.3s;
                 line-height: 100px;
+                font-weight: 600;
+                position: relative;
 
                 &::after {
                     content: '';
@@ -136,14 +108,6 @@
                     transition: all ease .3s;
                     background: #004DFF;
                     height: 4px;
-                }
-
-                &:hover {
-                    color: #004DFF;
-
-                    &::after {
-                        width: 100%;
-                    }
                 }
             }
 
@@ -219,53 +183,7 @@
 // 响应式设计
 @media screen and (max-width: @viewport-md) {
     .main-navigation {
-        .nav-list {
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: #ffffff;
-            display: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-
-            &.mobile-open {
-                display: flex;
-            }
-
-            .nav-item {
-                width: 100%;
-
-                .nav-link {
-                    padding: 12px 20px;
-                    border-bottom: 1px solid #f8f9fa;
-                    line-height: normal;
-                }
-
-                .dropdown-menu {
-                    position: static;
-                    box-shadow: none;
-                    border: none;
-                    background: #f8f9fa;
-                    margin-left: 0;
-                    transform: none;
-                    padding: 0;
-                    width: 100%;
-
-                    &.visible {
-                        opacity: 1;
-                        visibility: visible;
-                    }
-                }
-
-                &.language-switcher {
-                    margin-left: 0;
-                    padding: 12px 20px;
-                    border-bottom: 1px solid #f8f9fa;
-                }
-            }
-        }
+        display: none;
     }
 }
 </style>

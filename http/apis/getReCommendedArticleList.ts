@@ -6,7 +6,8 @@ type PageParams = {
 }
 
 const getReCommendedArticleList = (pageParams?: PageParams) => {
-    return http.get<any, any>('/articlelistReCommend', {
+    return http<any>('/articlelistReCommend', {
+        method: 'GET',
         params: {
             ...pageParams
         }

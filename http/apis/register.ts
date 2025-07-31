@@ -33,13 +33,19 @@ type Params = {
 }
 
 const register = (params: Params) => {
-    return http.post(`/register?phoneCode=${params.phoneCode}`, {
-        takepartName: params.name,
-        takepartPost: params.post,
-        takepartPhone: params.phone,
-        takepartEmail: params.email,
-        takepartType: params.type,
-        takepartUnits: params.organization
+    return http('/register', {
+        method: 'POST',
+        query: {
+            phoneCode: params.phoneCode
+        },
+        body: {
+            takepartName: params.name,
+            takepartPost: params.post,
+            takepartPhone: params.phone,
+            takepartEmail: params.email,
+            takepartType: params.type,
+            takepartUnits: params.organization
+        }
     })
 }
 

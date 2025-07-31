@@ -1,7 +1,7 @@
 // const API_URL = 'https://api.themoviedb.org/3'
 const API_URL = 'http://localhost:39254/api'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
     const query = getQuery(event)
     // eslint-disable-next-line no-console
     console.log(getRequestURL(event))
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         }
     )
     try {
-        return await $fetch(event.context.params!.path, {
+        return $fetch(event.context.params!.path, {
             baseURL: API_URL,
             params: {
                 language: 'en-US',

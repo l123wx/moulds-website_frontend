@@ -1,7 +1,8 @@
 import http from '..'
 
 const getPhoneCode = (phone: string, uuid: string, code: string) => {
-    return http.get('/phoneValid', {
+    return http('/phoneValid', {
+        method: 'GET',
         params: {
             phone,
             uuid,

@@ -1,7 +1,7 @@
 import http from '..'
 
 const getColumnById = (id: number) => {
-    return http.get<any, any>('/CategoryList/' + id)
+    return http<any>('/CategoryList/' + id, { method: 'GET' })
 }
 
 export default getColumnById

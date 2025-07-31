@@ -1,7 +1,7 @@
 import http from '..'
 
 const getArticleById = (id: number) => {
-    return http.get<any, any>('/articlelist/' + id)
+    return http<any>('/articlelist/' + id, { method: 'GET' })
 }
 
 export default getArticleById

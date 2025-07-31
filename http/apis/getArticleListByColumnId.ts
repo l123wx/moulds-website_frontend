@@ -6,7 +6,8 @@ type PageParams = {
 }
 
 const getArticleListByColumnId = (columnId: number, pageParams?: PageParams) => {
-    return http.get<any, any>('/articlelist', {
+    return http<any>('/articlelist', {
+        method: 'GET',
         params: {
             articleFatherColumn: columnId,
             ...pageParams

@@ -1,298 +1,271 @@
 <template>
-    <div class="mobile">
-        <el-icon
-            class="el-icon--right"
-            style="font-size: 22px; cursor: pointer"
-            @click="drawerVisible = true"
-        >
-            <MenuIcon />
-        </el-icon>
-        <el-drawer
-            v-model="drawerVisible"
-            direction="ltr"
-            size="70%"
-            append-to-body
-            :lock-scroll="false"
-        >
-            <div v-if="error">{{ $t('http.error') }}</div>
-            <template v-else>
-                <el-menu unique-opened>
-                    <template v-for="menu in menuTreeList">
-                        <el-sub-menu
-                            v-if="menu.children && menu.children.length"
-                            :key="menu.id"
-                            :index="String(menu.id)"
-                        >
-                            <template #title>
-                                <span>
-                                    {{ menu.label }}
-                                </span>
-                            </template>
-                            <el-menu-item
-                                v-for="subMenu in menu.children"
-                                :key="subMenu.id"
-                                :index="String(subMenu.id)"
-                            >
-                                <NuxtLinkLocale
-                                    v-if="subMenu.linkType === '0'"
-                                    :key="'nuxtLink_' + subMenu.id"
-                                    :to="subMenu.link || ''"
-                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                    class="item"
-                                >
-                                    {{ subMenu.label }}
-                                </NuxtLinkLocale>
-                                <NuxtLink
-                                    v-else
-                                    :key="'nuxtLink_' + subMenu.id"
-                                    :to="subMenu.link || ''"
-                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                    class="item">
-                                    {{ subMenu.label }}
-                                </NuxtLink>
-                            </el-menu-item>
-                        </el-sub-menu>
-                        <el-menu-item
-                            v-else
-                            :key="'menu_item_' + menu.id"
-                            :index="String(menu.id)"
-                        >
-                            <NuxtLinkLocale
-                                v-if="menu.linkType === '0'"
-                                :key="'nuxtLink_' + menu.id"
-                                :to="menu.link || ''"
-                                :target="menu.openType === '1' ? '_blank' : '_self'"
-                                class="item"
-                            >
-                                {{ menu.label }}
-                            </NuxtLinkLocale>
-                            <NuxtLink
-                                v-else
-                                :key="'nuxtLink_' + menu.id"
-                                :to="menu.link || ''"
-                                :target="menu.openType === '1' ? '_blank' : '_self'"
-                                class="item">
-                                {{ menu.label }}
-                            </NuxtLink>
-                        </el-menu-item>
-                    </template>
-                    <el-menu-item>
-                        <a :href="switchLocalePath('zh')">中文</a>
-                        <span style="margin: 0 10px">/</span>
-                        <a :href="switchLocalePath('en')">EN</a>
-                    </el-menu-item>
-                </el-menu>
-            </template>
-        </el-drawer>
-    </div>
-    <div class="nav pc">
-        <template v-for="menu in menuTreeList">
-            <el-dropdown
-                v-if="menu.children && menu.children.length"
-                :key="menu.id"
-                class="item"
-                :show-timeout="100"
-            >
-                <div style="display: flex; align-items: center; width: fit-content">
-                    {{ menu.label }}
-                    <el-icon class="el-icon--right"><arrow-down /></el-icon>
-                </div>
-                <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item
-                            v-for="subMenu in menu.children"
-                            :key="subMenu.id"
-                        >
+    <nav class="main-navigation">
+        <div v-if="error">{{ 'http.error' }}</div>
+        <ul v-else class="nav-list" :class="{ 'mobile-open': props.mobileMenuOpen }">
+            <template v-for="menu in menuTreeList" :key="menu.id">
+                <li v-if="menu.children && menu.children.length" class="nav-item has-dropdown">
+                    <a href="#" class="nav-link">
+                        {{ menu.label }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li v-for="subMenu in menu.children" :key="subMenu.id">
                             <NuxtLinkLocale
                                 v-if="subMenu.linkType === '0'"
-                                :key="'nuxtLink_' + subMenu.id"
                                 :to="subMenu.link || ''"
                                 :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                class="dropdown-item"
+                                class="dropdown-link"
                             >
                                 {{ subMenu.label }}
                             </NuxtLinkLocale>
                             <NuxtLink
                                 v-else
-                                :key="'nuxtLink_' + subMenu.id"
                                 :to="subMenu.link || ''"
                                 :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                class="dropdown-item">
+                                class="dropdown-link"
+                            >
                                 {{ subMenu.label }}
                             </NuxtLink>
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
-            <template v-else>
-                <NuxtLinkLocale
-                    v-if="menu.linkType === '0'"
-                    :key="'nuxtLink_' + menu.id"
-                    :to="menu.link || ''"
-                    :target="menu.openType === '1' ? '_blank' : '_self'"
-                    class="item"
-                >
-                    {{ menu.label }}
-                </NuxtLinkLocale>
-                <NuxtLink
-                    v-else
-                    :key="'nuxtLink_' + menu.id"
-                    :to="menu.link || ''"
-                    :target="menu.openType === '1' ? '_blank' : '_self'"
-                    class="item">
-                    {{ menu.label }}
-                </NuxtLink>
+                        </li>
+                    </ul>
+                </li>
+                <li v-else class="nav-item">
+                    <NuxtLinkLocale
+                        v-if="menu.linkType === '0'"
+                        :to="menu.link || ''"
+                        :target="menu.openType === '1' ? '_blank' : '_self'"
+                        class="nav-link"
+                    >
+                        {{ menu.label }}
+                    </NuxtLinkLocale>
+                    <NuxtLink
+                        v-else
+                        :to="menu.link || ''"
+                        :target="menu.openType === '1' ? '_blank' : '_self'"
+                        class="nav-link"
+                    >
+                        {{ menu.label }}
+                    </NuxtLink>
+                </li>
             </template>
-        </template>
-
-        <div class="item">
-            <a :href="switchLocalePath('zh')">中文</a>
-            /
-            <a :href="switchLocalePath('en')">EN</a>
-        </div>
-    </div>
+            <li class="nav-item language-switcher">
+                <a :href="switchLocalePath('zh')" class="language-link">中文</a>
+                <span class="language-divider">/</span>
+                <a :href="switchLocalePath('en')" class="language-link">EN</a>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <script setup lang="ts">
-    import { Menu as MenuIcon, ArrowDown } from '@element-plus/icons-vue'
-
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 
-    const route = useRoute()
+    const props = defineProps({
+        mobileMenuOpen: {
+            type: Boolean,
+            default: false
+        }
+    })
 
+    const emit = defineEmits(['update:mobileMenuOpen'])
+    const route = useRoute()
     const switchLocalePath = useSwitchLocalePath()
 
     const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
-        server: false,
         transform: data => {
+            console.log(data)
             const result = handconstree(data.data, 'id', 'parentId')
             return result
         },
         default: () => []
     })
 
-    const drawerVisible = ref(false)
+    // 暴露toggleMobileMenu方法给父组件
+    const toggleMobileMenu = () => {
+        emit('update:mobileMenuOpen', !props.mobileMenuOpen)
+    }
 
+    // 路由变化时关闭移动端菜单
     watch(
         () => route.fullPath,
         () => {
-            drawerVisible.value = false
+            emit('update:mobileMenuOpen', false)
         },
         {
             deep: true
         }
     )
+
+    defineExpose({
+        toggleMobileMenu
+    })
 </script>
 
 <style scoped lang="less">
-    .nav {
+.main-navigation {
+    flex: 1;
+    padding-left: 50px;
+    .nav-list {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 30px 0;
-        gap: 30px;
-        position: relative;
-
-        .item {
-            cursor: pointer;
-            color: inherit;
-            font-feature-settings: 'clig' off, 'liga' off;
-            font-family: Poppins;
-            font-size: 16px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-            text-transform: capitalize;
-            width: fit-content;
-            color: #ffffff;
-            > a {
-                color: #ffffff;
-            }
-            i {
-                color: #ffffff;
-            }
-        }
-    }
-
-    .pc {
-        display: flex;
-    }
-    .mobile {
-        display: none;
-        height: 100%;
-        align-items: center;
-        i {
-            color: #ffffff;
-        }
-    }
-    :deep(.el-menu-item a) {
-        width: 100%;
-    }
-
-    @media screen and (max-width: @viewport-md) {
-        .pc {
-            display: none;
-        }
-        .mobile {
-            display: flex;
-        }
-    }
-
-    .el-icon--right {
-        color: @default-font-color;
-    }
-
-    :deep(.el-dropdown:has(.el-dropdown__popper[aria-hidden='false'])) {
-        .el-tooltip__trigger {
-            color: #0056f5;
-        }
-        .el-icon--right {
-            transform: scaleY(-1);
-        }
-    }
-
-    :deep(.el-dropdown__popper.el-popper) {
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    :deep(.el-dropdown-menu) {
-        padding: 16px 0;
-    }
-
-    :deep(.el-dropdown-menu__item) {
-        color: inherit;
-        font-feature-settings: 'clig' off, 'liga' off;
+        list-style: none;
+        margin: 0;
         padding: 0;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        text-transform: capitalize;
-        min-width: 232px;
-        box-sizing: border-box;
-        & + .el-dropdown-menu__item {
-            margin-top: 12px;
+        gap: 0;
+
+        .nav-item {
+            position: relative;
+
+            .nav-link {
+                display: flex;
+                align-items: center;
+                padding: 0 2vw;
+                color: #333;
+                text-decoration: none;
+                font-size: 16px;
+                transition: all 0.3s;
+                line-height: 100px;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 0;
+                    margin: 0 auto;
+                    transition: all ease .3s;
+                    background: #004DFF;
+                    height: 4px;
+                }
+
+                &:hover {
+                    color: #004DFF;
+
+                    &::after {
+                        width: 100%;
+                    }
+                }
+            }
+
+            &.has-dropdown {
+                &:hover {
+                    .dropdown-menu {
+                        opacity: 1;
+                        visibility: visible;
+                        pointer-events: auto;
+                    }
+                }
+            }
+
+            .dropdown-menu {
+                pointer-events: none;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #ffffff;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                border: 1px solid #e9ecef;
+                border-radius: 4px;
+                min-width: 200px;
+                z-index: 1000;
+                padding: 0 15px;
+                transition: all ease .3s;
+                opacity: 0;
+                visibility: hidden;
+
+                li {
+                    list-style: none;
+
+                    .dropdown-link {
+                        display: block;
+                        padding: 15px 0;
+                        text-align: center;
+                        color: #333;
+                        text-decoration: none;
+                        font-size: 14px;
+                        transition: background 0.3s;
+                        border-bottom: 1px solid #eee;
+
+                        &:hover {
+                            color: #004DFF;
+                            border-bottom: 1px solid #004DFF;
+                        }
+                    }
+                }
+            }
+
+            &.language-switcher {
+                margin-left: auto;
+
+                .language-link {
+                    color: #333;
+                    text-decoration: none;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: #004DFF;
+                    }
+                }
+
+                .language-divider {
+                    margin: 0 5px;
+                }
+            }
         }
-        .dropdown-item {
-            color: inherit;
-            padding: 12px 24px;
+    }
+}
+
+// 响应式设计
+@media screen and (max-width: @viewport-md) {
+    .main-navigation {
+        .nav-list {
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
             width: 100%;
-            box-sizing: border-box;
+            background: #ffffff;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+
+            &.mobile-open {
+                display: flex;
+            }
+
+            .nav-item {
+                width: 100%;
+
+                .nav-link {
+                    padding: 12px 20px;
+                    border-bottom: 1px solid #f8f9fa;
+                    line-height: normal;
+                }
+
+                .dropdown-menu {
+                    position: static;
+                    box-shadow: none;
+                    border: none;
+                    background: #f8f9fa;
+                    margin-left: 0;
+                    transform: none;
+                    padding: 0;
+                    width: 100%;
+
+                    &.visible {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+
+                &.language-switcher {
+                    margin-left: 0;
+                    padding: 12px 20px;
+                    border-bottom: 1px solid #f8f9fa;
+                }
+            }
         }
     }
-
-    :deep(.el-dropdown-menu__item:not(.is-disabled):focus) {
-        background-color: #eff0f2;
-        color: inherit;
-    }
-
-    :deep(.el-popper__arrow) {
-        display: none;
-    }
-
-    :deep(.el-menu) {
-        border-right: none;
-    }
+}
 </style>

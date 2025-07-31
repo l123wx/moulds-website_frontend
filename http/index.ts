@@ -50,7 +50,7 @@ const http = async <T = any>(url: string, options: any = {}) => {
             throw new Error(data.msg)
         }
 
-        return data
+        return data as T
     } catch (error: any) {
         // 只在客户端显示错误消息
         if (isClient) { ElMessage.error(error.message || $t('http.error')) }

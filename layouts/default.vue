@@ -6,6 +6,7 @@
         <main>
             <slot />
         </main>
+        <FloatingMenu />
         <Footer />
     </div>
 </template>
@@ -15,6 +16,7 @@
 
     import Header from '~/components/Layout/Header.vue'
     import Footer from '~/components/Layout/Footer.vue'
+    import FloatingMenu from '~/components/Layout/FloatingMenu.vue'
 
     const route = useRoute()
 

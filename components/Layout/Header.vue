@@ -94,7 +94,7 @@
                     </div>
 
                     <!-- 移动端菜单 -->
-                    <MobileNav />
+                    <MobileNav v-model:is-menu-open="isMobileMenuOpen" />
                 </div>
             </div>
         </div>
@@ -105,6 +105,7 @@
     import PCNav from './PCNav.vue'
     import MobileNav from './MobileNav.vue'
 
+    const isMobileMenuOpen = ref(false)
 </script>
 
 <style scoped lang="less">
@@ -112,7 +113,7 @@
         position: sticky;
         width: 100%;
         top: 0;
-        z-index: 10000;
+        z-index: 2003;
         background: #ffffff;
         box-shadow: 0 0 15px rgb(0 0 0 / 20%);
     }

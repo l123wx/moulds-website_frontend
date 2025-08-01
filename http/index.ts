@@ -14,15 +14,12 @@ const http = async <T = any>(url: string, options: any = {}) => {
     try {
         const response = await $fetch<T>(url, {
             baseURL: BASE_URL,
+            ...options,
             timeout: DEFAULT_TIMEOUT,
             credentials: 'omit',
-            ...options,
             params: {
                 ...options.params,
                 ...(languageCode ? { languageCode } : {})
-            },
-            query: {
-                ...options.query
             }
         })
 

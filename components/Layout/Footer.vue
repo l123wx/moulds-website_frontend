@@ -4,12 +4,28 @@
             <div class="footer-left">
                 <h3 class="subscribe-title">邮件订阅</h3>
                 <div class="subscribe-form">
-                    <input type="text" class="email-input" placeholder="您的邮箱" />
-                    <button class="submit-btn">
-                        <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                            <path d="M885.113 489.373L628.338 232.599c-12.496-12.497-32.758-12.497-45.254 0-12.497 12.497-12.497 32.758 0 45.255l203.3 203.3H158.025c-17.036 0-30.846 13.811-30.846 30.846 0 17.036 13.811 30.846 30.846 30.846h628.36L583.084 746.147c-12.497 12.496-12.497 32.758 0 45.255 6.248 6.248 14.438 9.372 22.627 9.372s16.379-3.124 22.627-9.372l256.775-256.775a31.999 31.999 0 0 0 0-45.254z"></path>
-                        </svg>
-                    </button>
+                    <el-form ref="formRef" :model="form" style="width: 100%">
+                        <el-form-item
+                            prop="email"
+                            :rules="[
+                                { required: true, message: $t('subscribe.email.required') },
+                                { type: 'email', message: $t('subscribe.email.invalid') }
+                            ]"
+                            style="margin: 0"
+                        >
+                            <div style="display: flex; gap: 10px; width: 100%;">
+                                <el-input v-model="form.email" type="text" class="email-input" placeholder="您的邮箱" />
+                                <el-button :disabled="isLoading" class="submit-btn" @click="handleSubscribe">
+                                    <el-icon v-if="isLoading" class="is-loading" color="#fff" size="18">
+                                        <Loading />
+                                    </el-icon>
+                                    <svg v-else viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                                        <path d="M885.113 489.373L628.338 232.599c-12.496-12.497-32.758-12.497-45.254 0-12.497 12.497-12.497 32.758 0 45.255l203.3 203.3H158.025c-17.036 0-30.846 13.811-30.846 30.846 0 17.036 13.811 30.846 30.846 30.846h628.36L583.084 746.147c-12.497 12.496-12.497 32.758 0 45.255 6.248 6.248 14.438 9.372 22.627 9.372s16.379-3.124 22.627-9.372l256.775-256.775a31.999 31.999 0 0 0 0-45.254z"></path>
+                                    </svg>
+                                </el-button>
+                            </div>
+                        </el-form-item>
+                    </el-form>
                 </div>
                 <div class="copyright">
                     <p>版权所有 © {{ new Date().getFullYear() }} 东莞市德荣模塑科技有限公司</p>
@@ -17,7 +33,10 @@
             </div>
             <div class="footer-right">
                 <div class="social-links">
-                    <template v-for="item in socialLinkList" :key="item.id">
+                    <template v-if="error">
+                        {{ $t('http.error') }}
+                    </template>
+                    <template v-for="item in socialLinkList" v-else :key="item.id">
                         <a :href="item.url" class="social-link" :title="item.name" target="_blank">
                             <img :src="item.icon" :alt="item.name" />
                         </a>
@@ -29,17 +48,37 @@
 </template>
 
 <script setup lang="ts">
+    import { Loading } from '@element-plus/icons-vue'
+
     import getAllSocialLink from '~/http/apis/getAllSocialLink'
-
+    import emailSubscribe from '~/http/apis/emailSubscribe'
     import useI18n from '~/hooks/useI18n'
+    import { useLoading } from '~/hooks/useLoading'
 
-    const { $tt } = useI18n()
+    const localePath = useLocalePath()
+    const [isLoading, run] = useLoading()
+    const { $t } = useI18n()
+    const form = ref({
+        email: ''
+    })
+    const formRef = ref()
 
     const { data: socialLinkList, error } = useAsyncData(() => getAllSocialLink(), {
-        server: false,
         transform: data => data.data,
         default: () => []
     })
+
+    const handleSubscribe = async () => {
+        await formRef.value.validate()
+
+        try {
+            await run(emailSubscribe(form.value.email))
+            await navigateTo(localePath('/success'))
+            formRef.value.resetFields()
+        } catch (error) {
+
+        }
+    }
 </script>
 
 <style scoped lang="less">
@@ -77,13 +116,13 @@
     }
 
     .subscribe-form {
+        width: 100%;
         display: flex;
         margin-bottom: 30px;
 
         .email-input {
             flex: 1;
             height: 40px;
-            padding: 0 15px;
             border: none;
             outline: none;
             background-color: #fff;

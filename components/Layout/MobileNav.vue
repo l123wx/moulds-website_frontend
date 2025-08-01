@@ -1,8 +1,8 @@
 <template>
     <div class="mobile">
-        <MobileNavButton class="mobile-menu-toggle" :expanded="drawerVisible" @click="drawerVisible = !drawerVisible" />
+        <MobileNavButton class="mobile-menu-toggle" :expanded="isMenuOpen" @click="emit('update:isMenuOpen', !isMenuOpen)" />
         <el-drawer
-            v-model="drawerVisible"
+            :model-value="isMenuOpen"
             direction="ttb"
             size="100%"
             append-to-body
@@ -11,6 +11,7 @@
             :modal="false"
             :show-close="false"
             :with-header="false"
+            @update:model-value="value => emit('update:isMenuOpen', value)"
         >
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
@@ -90,6 +91,11 @@
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 
+    const props = defineProps<{
+        isMenuOpen: boolean
+    }>()
+    const emit = defineEmits(['update:isMenuOpen'])
+
     const route = useRoute()
 
     const switchLocalePath = useSwitchLocalePath()
@@ -103,11 +109,9 @@
         default: () => []
     })
 
-    const drawerVisible = ref(false)
-
     // 监听抽屉状态，控制body的overflow
     watch(
-        () => drawerVisible.value,
+        () => props.isMenuOpen,
         (newValue) => {
             if (newValue) {
                 document.body.style.overflow = 'hidden'
@@ -120,7 +124,7 @@
     watch(
         () => route.fullPath,
         () => {
-            drawerVisible.value = false
+            emit('update:isMenuOpen', false)
         },
         {
             deep: true

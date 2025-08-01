@@ -56,4 +56,11 @@
 :deep(.el-carousel__indicators) {
     z-index: 10;
 }
+
+:deep(.el-carousel__button) {
+    height: 12px;
+    width: 12px;
+    background-color: #999;
+    border-radius: 50%;
+}
 </style>

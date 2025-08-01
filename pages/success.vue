@@ -1,15 +1,15 @@
 <template>
-    <div class="e_container-1 s_layout response-transition">
-        <div class="cbox-1-0 p_item">
-            <h1 class="e_h1-9 s_subtitle response-transition">
+    <div class="e_container-1">
+        <div class=" p_item">
+            <h1 class="e_h1-9">
                 信息提交成功
             </h1>
-            <div class="e_richText-10 s_title clearfix response-transition">
+            <div class="e_richText-10">
                 <p style="font-size: 14px; line-height: 24px; text-align: center;">您的信息已成功提交！我们将在收到消息后尽快回复您。</p>
             </div>
-            <a class="e_button-12 s_button1 btn btn-primary response-transition" href="/" target="_self">
-                <span>返回首页</span>
-            </a>
+            <NuxtLinkLocale to="/" class="e_button-12">
+                返回首页
+            </NuxtLinkLocale>
         </div>
     </div>
 </template>
@@ -21,14 +21,13 @@
 <style scoped lang="less">
     .e_container-1 {
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-wrap: wrap;
         flex-direction: row;
         width: 94%;
         max-width: 1340px;
-        margin-right: auto;
-        margin-left: auto;
-        padding-top: 100px;
-        padding-bottom: 100px;
+        min-height: calc(100vh - var(--header-height) - 100vh/5);
     }
 
     .e_container-1 > .p_item {

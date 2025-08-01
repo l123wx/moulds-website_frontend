@@ -2,21 +2,16 @@
 const API_URL = 'http://localhost:39254/profile/upload'
 
 export default defineEventHandler((event) => {
-    // const query = getQuery(event)
-
-    // console.log(getRequestURL(event))
-    // console.log(
-    //     'Fetching Image API',
-    //     {
-    //         url: getRequestURL(event).href,
-    //         query,
-    //         params: event.context.params
-    //     }
-    // )
+    // eslint-disable-next-line no-console
+    console.log('-------proxyRequest------')
+    // eslint-disable-next-line no-console
+    console.log(getRequestURL(event))
+    const path = event.path.replace(/^\/profile\/upload\//, '')
+    // eslint-disable-next-line no-console
+    console.log(`${API_URL}/${path}`)
     try {
-        return proxyRequest(event, `${API_URL}/${event.context.params!.path}`, {
-            sendStream: true
-        })
+        // 确保正确转发查询参数、请求体和其他相关数据
+        return proxyRequest(event, `${API_URL}/${path}`)
     } catch (e: any) {
         const status = e?.response?.status || 500
         setResponseStatus(event, status)

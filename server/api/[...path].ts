@@ -2,20 +2,18 @@
 const API_URL = 'http://localhost:39254/api'
 
 export default defineEventHandler((event) => {
-    const query = getQuery(event)
+    // eslint-disable-next-line no-console
+    console.log('-------proxyRequest------')
     // eslint-disable-next-line no-console
     console.log(getRequestURL(event))
-    console.log(
-        'Fetching TMDB API',
-        {
-            url: getRequestURL(event).href,
-            query,
-            params: event.context.params
-        }
-    )
+    const path = event.path.replace(/^\/api\//, '')
+    // eslint-disable-next-line no-console
+    console.log(`${API_URL}/${path}`)
     try {
-        return proxyRequest(event, `${API_URL}/${event.context.params!.path}`)
+        // 确保正确转发查询参数、请求体和其他相关数据
+        return proxyRequest(event, `${API_URL}/${path}`)
     } catch (error: any) {
+        // eslint-disable-next-line no-console
         console.error('Error proxying request:', error)
         throw createError({
             statusCode: 500,

@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV === 'development'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     app: {
@@ -60,13 +62,36 @@ export default defineNuxtConfig({
         }
     ],
 
+    routeRules: {
+        '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } }
+    },
+
     modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image'],
 
     i18n: {
-        vueI18n: './i18n.config.ts',
-        locales: ['zh', 'en'],
-        defaultLocale: 'zh',
-        strategy: 'prefix'
+        strategy: 'prefix',
+        locales: [
+            {
+                code: 'en',
+                name: 'English',
+                language: 'en-US',
+                file: 'en.json'
+            },
+            {
+                code: 'zh',
+                name: '中文',
+                language: 'zh-CN',
+                file: 'zh.json'
+            }
+        ],
+        restructureDir: '',
+        langDir: 'locales',
+        defaultLocale: 'en',
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            redirectOn: 'root'
+        }
     },
 
     css: ['normalize.css/normalize.css', '~/assets/styles/index.less'],

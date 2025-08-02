@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-left">
-                <h3 class="subscribe-title">邮件订阅</h3>
+                <h3 class="subscribe-title">{{ $t('Email Subscription') }}</h3>
                 <div class="subscribe-form">
                     <el-form ref="formRef" :model="form" style="width: 100%">
                         <el-form-item
@@ -14,7 +14,7 @@
                             style="margin: 0"
                         >
                             <div style="display: flex; gap: 10px; width: 100%;">
-                                <el-input v-model="form.email" type="text" class="email-input" placeholder="您的邮箱" />
+                                <el-input v-model="form.email" type="text" class="email-input" :placeholder="$t('Your Email')" />
                                 <el-button :disabled="isLoading" class="submit-btn" @click="handleSubscribe">
                                     <el-icon v-if="isLoading" class="is-loading" color="#fff" size="18">
                                         <Loading />
@@ -28,7 +28,7 @@
                     </el-form>
                 </div>
                 <div class="copyright">
-                    <p>版权所有 © {{ new Date().getFullYear() }} 东莞市德荣模塑科技有限公司</p>
+                    <p>{{ $t('Copyright') }} © {{ new Date().getFullYear() }} {{ $t('LD Plastic Solution Limited') }}</p>
                 </div>
             </div>
             <div class="footer-right">
@@ -52,12 +52,10 @@
 
     import getAllSocialLink from '~/http/apis/getAllSocialLink'
     import emailSubscribe from '~/http/apis/emailSubscribe'
-    import useI18n from '~/hooks/useI18n'
     import { useLoading } from '~/hooks/useLoading'
 
     const localePath = useLocalePath()
     const [isLoading, run] = useLoading()
-    const { $t } = useI18n()
     const form = ref({
         email: ''
     })

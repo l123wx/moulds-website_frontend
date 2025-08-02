@@ -23,7 +23,7 @@
         </el-button>
         <template v-if="!error && list.length > 0">
             <div v-for="menu in list" :key="menu.id" class="menu-item">
-                <img :src="menu.imagePath" />
+                <NuxtImg loading="lazy" :src="menu.imagePath" />
                 <div class="link">
                     <NuxtLinkLocale
                         v-if="menu.linkType === '0'"

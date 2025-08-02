@@ -59,6 +59,10 @@ export default defineNuxtConfig({
         {
             route: '/profile/upload/**:path',
             handler: '~/server/profileUploadHandler.ts'
+        },
+        {
+            route: '/ipx/**:path',
+            handler: '~/server/ipxHandler.ts'
         }
     ],
 
@@ -98,6 +102,15 @@ export default defineNuxtConfig({
 
     image: {
         dir: 'assets/images',
+        provider: 'proxy',
+        providers: {
+            proxy: {
+                provider: 'ipx',
+                options: {
+                    baseURL: '/ipx'
+                }
+            }
+        },
         twicpics: {
             baseURL: ''
         }

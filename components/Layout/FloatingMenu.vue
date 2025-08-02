@@ -51,11 +51,13 @@
 
 <style scoped lang="less">
     .floating-menu-container {
+        --item-width: 45px;
+        --item-height: 45px;
+
         position: fixed;
         right: 0;
         bottom: 30%;
         z-index: 1000;
-        width: 35px;
 
         display: flex;
         flex-direction: column;
@@ -65,14 +67,14 @@
         transition: all ease .3s;
 
         > :deep(.el-button) {
-            height: 35px;
+            height: var(--item-height);
             color: #fff;
             background-color: #004dff;
             border-radius: 0;
             border: none;
             padding: 0;
             margin: 0;
-            width: 100%;
+            width: var(--item-width);
             font-size: 20px;
 
             &:hover {
@@ -81,7 +83,7 @@
         }
 
         .menu-item {
-            height: 35px;
+            height: var(--item-height);
             width: 100%;
             display: flex;
             align-items: center;
@@ -133,4 +135,12 @@
             }
         }
     }
+
+     // 响应式设计
+     @media screen and (max-width: @viewport-md) {
+        .floating-menu-container {
+            --item-width: 35px;
+            --item-height: 35px;
+        }
+     }
 </style>

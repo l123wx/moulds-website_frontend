@@ -2,13 +2,13 @@
     <div class="e_container-1">
         <div class=" p_item">
             <h1 class="e_h1-9">
-                信息提交成功
+                {{ $t('Information submitted successfully') }}
             </h1>
             <div class="e_richText-10">
-                <p style="font-size: 14px; line-height: 24px; text-align: center;">您的信息已成功提交！我们将在收到消息后尽快回复您。</p>
+                <p style="font-size: 14px; line-height: 24px; text-align: center;">{{ $t('Submitted successfully tips') }}</p>
             </div>
             <NuxtLinkLocale to="/" class="e_button-12">
-                返回首页
+                {{ $t('Back to home button text') }}
             </NuxtLinkLocale>
         </div>
     </div>

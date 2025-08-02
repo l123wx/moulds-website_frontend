@@ -1,9 +1,12 @@
 {
     "http.error": "服务器错误，请联系管理员",
+    "Back to home button text": "首页",
     "Email Subscription": "邮箱订阅",
     "Your Email": "您的邮箱",
     "subscribe.email.invalid": "请输入正确的邮箱地址",
     "subscribe.email.required": "请输入邮箱地址",
     "Copyright": "版权所有",
-    "LD Plastic Solution Limited": "东莞市德荣模塑科技有限公司"
+    "LD Plastic Solution Limited": "东莞市德荣模塑科技有限公司",
+    "Information submitted successfully": "信息提交成功",
+    "Submitted successfully tips": "您的信息已提交成功！我们将在收到消息后尽快回复您。"
 }

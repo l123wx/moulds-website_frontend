@@ -1,9 +1,12 @@
 {
     "http.error": "Server error. Please contact administrator.",
+    "Back to home button text": "HOME",
     "Email Subscription": "EMAIL SUBSCRIPTION",
     "Your Email": "Your Email",
     "subscribe.email.invalid": "Please enter a valid email address",
     "subscribe.email.required": "Please enter an email address",
     "Copyright": "Copyright",
-    "LD Plastic Solution Limited": "LD Plastic Solution Limited"
+    "LD Plastic Solution Limited": "LD Plastic Solution Limited",
+    "Information submitted successfully": "Information submitted successfully",
+    "Submitted successfully tips": "Your information has been successfully submitted! We will reply to you promptly upon receiving the message."
 }

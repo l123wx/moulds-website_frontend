@@ -9,42 +9,26 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li v-for="subMenu in menu.children" :key="subMenu.id">
-                            <NuxtLinkLocale
-                                v-if="subMenu.linkType === '0'"
+                            <Link
                                 :to="subMenu.link || ''"
-                                :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                :link-type="subMenu.linkType"
+                                :open-type="subMenu.openType"
                                 class="dropdown-link"
                             >
                                 {{ subMenu.label }}
-                            </NuxtLinkLocale>
-                            <NuxtLink
-                                v-else
-                                :to="subMenu.link || ''"
-                                :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                class="dropdown-link"
-                            >
-                                {{ subMenu.label }}
-                            </NuxtLink>
+                            </Link>
                         </li>
                     </ul>
                 </li>
                 <li v-else class="nav-item">
-                    <NuxtLinkLocale
-                        v-if="menu.linkType === '0'"
+                    <Link
                         :to="menu.link || ''"
-                        :target="menu.openType === '1' ? '_blank' : '_self'"
+                        :link-type="menu.linkType"
+                        :open-type="menu.openType"
                         class="nav-link"
                     >
                         {{ menu.label }}
-                    </NuxtLinkLocale>
-                    <NuxtLink
-                        v-else
-                        :to="menu.link || ''"
-                        :target="menu.openType === '1' ? '_blank' : '_self'"
-                        class="nav-link"
-                    >
-                        {{ menu.label }}
-                    </NuxtLink>
+                    </Link>
                 </li>
             </template>
         </ul>
@@ -53,9 +37,8 @@
 
 <script setup lang="ts">
     import getAllMenu from '~/http/apis/getAllMenu'
+    import Link from '~/components/Link.vue'
     import { handconstree } from '~/utils'
-
-    const switchLocalePath = useSwitchLocalePath()
 
     const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
         transform: data => handconstree(data.data, 'id', 'parentId'),

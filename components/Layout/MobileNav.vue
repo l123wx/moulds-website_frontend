@@ -32,23 +32,15 @@
                                 :key="subMenu.id"
                                 :index="String(subMenu.id)"
                             >
-                                <NuxtLinkLocale
-                                    v-if="subMenu.linkType === '0'"
-                                    :key="'nuxtLink_' + subMenu.id"
+                                <Link
+                                    :key="'link_' + subMenu.id"
                                     :to="subMenu.link || ''"
-                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
+                                    :link-type="subMenu.linkType"
+                                    :open-type="subMenu.openType"
                                     class="item"
                                 >
                                     {{ subMenu.label }}
-                                </NuxtLinkLocale>
-                                <NuxtLink
-                                    v-else
-                                    :key="'nuxtLinkExternal_' + subMenu.id"
-                                    :to="subMenu.link || ''"
-                                    :target="subMenu.openType === '1' ? '_blank' : '_self'"
-                                    class="item">
-                                    {{ subMenu.label }}
-                                </NuxtLink>
+                                </Link>
                             </el-menu-item>
                         </el-sub-menu>
                         <el-menu-item
@@ -56,23 +48,15 @@
                             :key="'menu_item_' + menu.id"
                             :index="String(menu.id)"
                         >
-                            <NuxtLinkLocale
-                                v-if="menu.linkType === '0'"
-                                :key="'nuxtLink_' + menu.id"
+                            <Link
+                                :key="'link_' + menu.id"
                                 :to="menu.link || ''"
-                                :target="menu.openType === '1' ? '_blank' : '_self'"
+                                :link-type="menu.linkType"
+                                :open-type="menu.openType"
                                 class="item"
                             >
                                 {{ menu.label }}
-                            </NuxtLinkLocale>
-                            <NuxtLink
-                                v-else
-                                :key="'nuxtLinkExternal_' + menu.id"
-                                :to="menu.link || ''"
-                                :target="menu.openType === '1' ? '_blank' : '_self'"
-                                class="item">
-                                {{ menu.label }}
-                            </NuxtLink>
+                            </Link>
                         </el-menu-item>
                     </template>
                     <el-menu-item>
@@ -88,6 +72,7 @@
 
 <script setup lang="ts">
     import MobileNavButton from './MobileNavButton.vue'
+    import Link from '~/components/Link.vue'
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 

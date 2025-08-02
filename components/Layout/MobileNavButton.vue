@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <ElButton type="text" :aria-label="$t('navbar.button')" :class="{ expanded }">
+    <ElButton link :aria-label="$t('navbar.button')" :class="{ expanded }">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 10H45" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
             <path d="M3 24H45" stroke="currentColor" stroke-width="4" stroke-linecap="round" />

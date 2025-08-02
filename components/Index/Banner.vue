@@ -3,22 +3,9 @@
         <div v-if="error">{{ $t('http.error') }}</div>
         <el-carousel v-else height="auto" :interval="3000">
             <el-carousel-item v-for="(banner, index) in bannerList" :key="index">
-                <NuxtLinkLocale
-                    v-if="banner.linkType === '0' && banner.link"
-                    :to="banner.link"
-                    :target="banner.openType === '1' ? '_blank' : '_self'"
-                    class="banner-link"
-                >
+                <Link v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType" class="banner-link">
                     <img :src="banner.imagePath" :alt="$t('banner.image')" class="banner-image" />
-                </NuxtLinkLocale>
-                <NuxtLink
-                    v-else-if="banner.link"
-                    :to="banner.link"
-                    :target="banner.openType === '1' ? '_blank' : '_self'"
-                    class="banner-link"
-                >
-                    <img :src="banner.imagePath" :alt="$t('banner.image')" class="banner-image" />
-                </NuxtLink>
+                </Link>
                 <img v-else :src="banner.imagePath" :alt="$t('banner.image')" class="banner-image" />
             </el-carousel-item>
         </el-carousel>
@@ -27,6 +14,7 @@
 
 <script setup lang="ts">
     import getBanners from '~/http/apis/getBanners'
+    import Link from '~/components/Link.vue'
 
     const { data: bannerList, error } = useAsyncData(() => getBanners(), {
         transform: data => data?.data,

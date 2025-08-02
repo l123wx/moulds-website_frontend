@@ -1,15 +1,13 @@
 <template>
     <div>
         <Banner />
-        <News />
-        <Schedule />
-        <Forum />
+        <DataStatistics />
+        <ProductType />
     </div>
 </template>
 
 <script setup lang="ts">
     import Banner from '~/components/Index/Banner.vue'
-    import News from '~/components/Index/News.vue'
-    import Schedule from '~/components/Index/Schedule.vue'
-    import Forum from '~/components/Index/Forum.vue'
+    import DataStatistics from '~/components/Index/DataStatistics.vue'
+    import ProductType from '~/components/Index/ProductType.vue'
 </script>

@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- 导航菜单 -->
-                <PCNav />
+                <PCNav :menu-tree-list="menuTreeList" :error="error" />
 
                 <div class="operations">
                     <!-- 产品目录下载按钮 -->
@@ -93,19 +93,27 @@
                         </div>
                     </div>
 
-                    <!-- 移动端菜单 -->
-                    <MobileNav v-model:is-menu-open="isMobileMenuOpen" />
+                    <MobileNavButton class="mobile-menu-toggle" :expanded="isMobileMenuOpen" @click="isMobileMenuOpen = !isMobileMenuOpen" />
                 </div>
             </div>
         </div>
+        <MobileNav v-model:is-menu-open="isMobileMenuOpen" :menu-tree-list="menuTreeList" :error="error" />
     </div>
 </template>
 
 <script setup lang="ts">
     import PCNav from './PCNav.vue'
     import MobileNav from './MobileNav.vue'
+    import MobileNavButton from './MobileNavButton.vue'
+    import getAllMenu from '~/http/apis/getAllMenu'
+    import { handconstree } from '~/utils'
 
     const isMobileMenuOpen = ref(false)
+
+    const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
+        transform: data => handconstree(data.data, 'id', 'parentId'),
+        default: () => []
+    })
 </script>
 
 <style scoped lang="less">
@@ -113,14 +121,16 @@
         position: sticky;
         width: 100%;
         top: 0;
-        z-index: 2003;
+        z-index: 1000;
         background: #ffffff;
-        box-shadow: 0 0 15px rgb(0 0 0 / 20%);
     }
 
     // 主导航栏
     .main-header {
         background: #ffffff;
+        box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+        position: relative;
+        z-index: 1;
 
         .main-header-content {
             max-width: 1200px;
@@ -152,18 +162,6 @@
 
         .mobile-menu-toggle {
             display: none;
-            cursor: pointer;
-            padding: 10px;
-            color: #333;
-
-            &:hover {
-                color: #007bff;
-            }
-
-            .menu-icon {
-                font-size: 18px;
-                font-weight: bold;
-            }
         }
 
         .operations {

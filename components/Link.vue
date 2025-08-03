@@ -4,8 +4,8 @@
     withDefaults(
         defineProps<{
             to: string,
-            linkType: string,
-            openType: string
+            linkType?: string,
+            openType?: string
         }>(), {
             linkType: '0',
             openType: '0'

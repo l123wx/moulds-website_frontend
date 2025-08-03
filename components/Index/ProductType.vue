@@ -23,7 +23,7 @@
                                 id: subType.id,
                                 title: subType.name,
                                 image: subType.imagePath,
-                                href: localePath(`/products/${subType.slug}`)
+                                href: localePath(`/product/type/${firstType.slug}/${subType.slug}`)
                             }
                         })
                     }

@@ -1,21 +1,9 @@
 <template>
     <div class="mobile">
-        <MobileNavButton class="mobile-menu-toggle" :expanded="isMenuOpen" @click="emit('update:isMenuOpen', !isMenuOpen)" />
-        <el-drawer
-            :model-value="isMenuOpen"
-            direction="ttb"
-            size="100%"
-            append-to-body
-            lock-scroll
-            style="top: var(--header-height)"
-            :modal="false"
-            :show-close="false"
-            :with-header="false"
-            @update:model-value="value => emit('update:isMenuOpen', value)"
-        >
+        <div class="menu-container" :class="{ open: isMenuOpen }">
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
-                <el-menu unique-opened>
+                <el-menu class="mobile-menu" unique-opened>
                     <template v-for="menu in menuTreeList">
                         <el-sub-menu
                             v-if="menu.children && menu.children.length"
@@ -59,40 +47,30 @@
                             </Link>
                         </el-menu-item>
                     </template>
-                    <el-menu-item>
-                        <a :href="switchLocalePath('zh')">中文</a>
-                        <span style="margin: 0 10px">/</span>
-                        <a :href="switchLocalePath('en')">EN</a>
-                    </el-menu-item>
+                    <!-- <el-menu-item>
+                            <a :href="switchLocalePath('zh')">中文</a>
+                            <span style="margin: 0 10px">/</span>
+                            <a :href="switchLocalePath('en')">EN</a>
+                        </el-menu-item> -->
                 </el-menu>
             </template>
-        </el-drawer>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import MobileNavButton from './MobileNavButton.vue'
     import Link from '~/components/Link.vue'
-    import getAllMenu from '~/http/apis/getAllMenu'
-    import { handconstree } from '~/utils'
 
     const props = defineProps<{
         isMenuOpen: boolean
+        menuTreeList: any[],
+        error: any
     }>()
     const emit = defineEmits(['update:isMenuOpen'])
 
     const route = useRoute()
 
     const switchLocalePath = useSwitchLocalePath()
-
-    const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
-        // server: false,
-        transform: data => {
-            const result = handconstree(data.data, 'id', 'parentId')
-            return result
-        },
-        default: () => []
-    })
 
     // 监听抽屉状态，控制body的overflow
     watch(
@@ -118,14 +96,6 @@
 </script>
 
 <style scoped lang="less">
-    .mobile {
-        display: none;
-        height: 100%;
-        align-items: center;
-        i {
-            color: #ffffff;
-        }
-    }
     :deep(.el-menu-item a) {
         width: 100%;
     }
@@ -158,10 +128,27 @@
         }
     }
 
-    // 响应式设计
-    @media screen and (max-width: @viewport-md) {
-        .mobile {
-            display: flex;
+    .menu-container {
+        height: 100vh;
+        width: 100%;
+        overflow-y: auto;
+        position: absolute;
+        padding-top: var(--header-height);
+        top: -100vh;
+        background-color: #ffffff;
+        transition: top 0.3s ease-in-out;
+        display: none;
+
+        @media screen and (max-width: @viewport-md) {
+            display: block;
         }
+
+        &.open {
+            top: 0;
+        }
+    }
+
+    .mobile-menu {
+        border-right: none;
     }
 </style>

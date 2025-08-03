@@ -36,14 +36,12 @@
 </template>
 
 <script setup lang="ts">
-    import getAllMenu from '~/http/apis/getAllMenu'
     import Link from '~/components/Link.vue'
-    import { handconstree } from '~/utils'
 
-    const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
-        transform: data => handconstree(data.data, 'id', 'parentId'),
-        default: () => []
-    })
+    defineProps<{
+        menuTreeList: any[],
+        error: any
+    }>()
 </script>
 
 <style scoped lang="less">

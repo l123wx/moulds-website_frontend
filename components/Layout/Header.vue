@@ -110,10 +110,13 @@
 
     const isMobileMenuOpen = ref(false)
 
-    const { data: menuTreeList, error } = useAsyncData(() => getAllMenu(), {
-        transform: data => handconstree(data.data, 'id', 'parentId'),
-        default: () => []
-    })
+    const { data: menuTreeList, error } = useAsyncData(
+        'getAllMenu',
+        () => getAllMenu(), {
+            transform: data => handconstree(data.data, 'id', 'parentId'),
+            default: () => []
+        }
+    )
 </script>
 
 <style scoped lang="less">

@@ -16,12 +16,12 @@
                 return data.data?.map(firstType => {
                     return {
                         id: firstType.id,
-                        title: firstType.name,
+                        title: firstType.label,
                         image: firstType.imagePath,
                         children: firstType.children?.map(subType => {
                             return {
                                 id: subType.id,
-                                title: subType.name,
+                                title: subType.label,
                                 image: subType.imagePath,
                                 href: localePath(`/product/type/${firstType.slug}/${subType.slug}`)
                             }
@@ -36,36 +36,39 @@
 </script>
 
 <template>
-    <div v-if="error">
-        <div class="error-container">
-            <h1>Error</h1>
-            <p>{{ error.message }}</p>
-        </div>
-    </div>
-    <div v-else class="product-type-container">
-        <div class="tabs">
-            <div
-                v-for="(item, index) in productTypes"
-                :key="item.id"
-                class="tab-item"
-                :class="{ active: activeTabIndex === index }"
-                @click="activeTabIndex = index"
-            >
-                {{ item.title }}
+    <div style="background-color: #f2f2f2;">
+        <div class="product-type-container">
+            <div v-if="error">
+                <div class="error-container">
+                    <h1>Error</h1>
+                    <p>{{ error.message }}</p>
+                </div>
             </div>
-        </div>
-        <div v-for="(item, index) in productTypes" :key="item.id" class="tab-content">
-            <ProductTypeList v-if="activeTabIndex === index" :items="item.children" />
+            <template v-else>
+                <div class="tabs">
+                    <div
+                        v-for="(item, index) in productTypes"
+                        :key="item.id"
+                        class="tab-item"
+                        :class="{ active: activeTabIndex === index }"
+                        @click="activeTabIndex = index"
+                    >
+                        {{ item.title }}
+                    </div>
+                </div>
+                <div v-for="(item, index) in productTypes" :key="item.id" class="tab-content">
+                    <ProductTypeList v-if="activeTabIndex === index" :items="item.children" />
+                </div>
+            </template>
         </div>
     </div>
 </template>
 
 <style scoped lang="less">
     .product-type-container {
-        padding: 30px 15px;
+        padding: 30px 15px 50px;
         max-width: @page-content-max-width;
         margin: 0 auto;
-        background-color: #f2f2f2;
 
         @media screen and (max-width: @viewport-md) {
             // padding: 0 18px;

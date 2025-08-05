@@ -1,31 +1,23 @@
 <template>
     <div>
-        <Banner :zh="article?.categoryName" :en="article?.categoryEnglishName" />
         <div class="container">
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
                 <el-breadcrumb :separator-icon="ArrowRight" style="transform: translateY(-24px)">
                     <el-breadcrumb-item :to="localePath('/')">{{ $t('home') }}</el-breadcrumb-item>
-                    <el-breadcrumb-item
-                        v-if="article?.categoryName"
-                        :to="localePath('/article/list/' + article.categoryId)"
-                    >
-                        {{ $tt(article.categoryName, article.categoryEnglishName) }}
-                    </el-breadcrumb-item>
+                    <el-breadcrumb-item :to="localePath('/aboutus/blogs')">Blogs</el-breadcrumb-item>
+                    <el-breadcrumb-item>{{ article?.title || '' }}</el-breadcrumb-item>
                 </el-breadcrumb>
                 <el-skeleton v-if="pending" :rows="5" />
                 <div v-else>
                     <div class="header">
-                        <div class="title">{{ article?.articleTitle || '' }}</div>
+                        <div class="title">{{ article?.title || '' }}</div>
                         <div class="time">
-                            发布日期: {{ dayjs(article.articleTime).format('YYYY-MM-DD') }}
+                            发布日期: {{ dayjs(article?.createTime).format('YYYY-MM-DD') }}
                         </div>
                     </div>
                     <div class="content">
-                        <div v-html="article.articleContent"></div>
-                    </div>
-                    <div v-if="article.articleFrom" class="source">
-                        来源：{{ article.articleFrom }}
+                        <div v-html="article?.content"></div>
                     </div>
                 </div>
             </template>
@@ -36,28 +28,18 @@
 <script setup lang="ts">
     import { ArrowRight } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
-    import Banner from '~/components/Article/Banner.vue'
-    import getArticleById from '~/http/apis/getArticleById'
-    import getColumnById from '~/http/apis/getColumnById'
-    import useI18n from '~/hooks/useI18n'
+    import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
+    import getArticleDetailBySlug from '~/http/apis/getArticleDetailBySlug'
 
-    useHead({
-        link: [
-            {
-                rel: 'stylesheet',
-                href: '/content.min.css'
-            }
-        ]
-    })
+    useTinyMCEStyle()
 
     const route = useRoute()
     const router = useRouter()
     const localePath = useLocalePath()
-    const { $tt } = useI18n()
 
-    const articleId = route.params.id
+    const articleSlug = route.params.slug as string
 
-    if (!articleId) {
+    if (!articleSlug) {
         router.push('/404')
     }
 
@@ -66,24 +48,11 @@
         pending,
         error
     } = useAsyncData(
-        'article_' + articleId,
-        () =>
-            new Promise<any>((resolve, reject) => {
-                getArticleById(Number(articleId))
-                    .then(res => {
-                        const result = res?.data || {}
-                        getColumnById(result.articleFatherColumn)
-                            .then(sRes => {
-                                const sResult = sRes?.data || {}
-                                resolve({
-                                    ...result,
-                                    ...sResult
-                                })
-                            })
-                            .catch(err => reject(err))
-                    })
-                    .catch(err => reject(err))
-            })
+        'getArticleDetailBySlug_' + articleSlug,
+        () => getArticleDetailBySlug(articleSlug),
+        {
+            transform: (data) => data.data
+        }
     )
 </script>
 
@@ -134,12 +103,6 @@
             :deep(img) {
                 max-width: 100%;
             }
-        }
-
-        .source {
-            border-top: 1px solid #efefef;
-            padding-top: 20px;
-            font-size: 14px;
         }
     }
 </style>

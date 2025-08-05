@@ -1,5 +1,9 @@
 <script setup lang="ts">
+    import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
+
     const route = useRoute()
+
+    useTinyMCEStyle()
 </script>
 
 <template>

@@ -28,9 +28,11 @@
 <script setup lang="ts">
     import Breadcrumb from '~/components/Layout/Breadcrumb.vue'
     import getPageDetailBySlug from '~/http/apis/getPageDetailBySlug'
+    import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
 
+    useTinyMCEStyle()
     definePageMeta({
-        layout: 'aboutus'
+        layout: 'about-us'
     })
 
     const route = useRoute()

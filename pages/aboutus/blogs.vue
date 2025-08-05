@@ -4,32 +4,32 @@
             <Breadcrumb :breadcrumb-list="breadcrumbList" :breadcrumb-pending="false" />
         </div>
         <div id="blog-list-container" class="response-animated">
-            <div class="e_loop-5 s_list response-transition">
+            <div class="e_loop s_list response-transition">
                 <div class="">
                     <div class="p_list">
                         <el-skeleton :loading="pending" :count="2" :throttle="{ leading: 500, trailing: 500 }" animated :title="false">
                             <template #default>
                                 <div v-for="(article, index) in articleList" :key="index" class="cbox-5 p_loopitem">
-                                    <div class="e_container-6 s_layout response-transition">
+                                    <div class="e_container s_layout response-transition">
                                         <div class="cbox-6-0 p_item">
-                                            <div class="e_image-7 s_img">
+                                            <div class="e_image s_img">
                                                 <NuxtLinkLocale :to="article.link">
                                                     <NuxtImg loading="lazy" :src="article.imagePath" :alt="article.title" :title="article.title" />
                                                 </NuxtLinkLocale>
                                             </div>
                                         </div>
                                         <div class="cbox-6-1 p_item">
-                                            <p class="e_timeFormat-12 s_title">{{ formatDate(article.createTime) }}</p>
+                                            <p class="e_timeFormat s_title">{{ formatDate(article.createTime) }}</p>
                                             <h3 class="e_h3-8 s_summary">
                                                 <NuxtLinkLocale :to="article.link">
                                                     {{ article.title }}
                                                 </NuxtLinkLocale>
                                             </h3>
-                                            <hr class="e_line-11 s_line">
-                                            <div class="e_richText-9 s_title clearfix response-transition">
+                                            <hr class="e_line s_line">
+                                            <div class="e_richText s_title clearfix response-transition">
                                                 {{ article.description }}
                                             </div>
-                                            <NuxtLinkLocale class="e_button-10 s_button1 btn btn-primary response-transition" :to="article.link">
+                                            <NuxtLinkLocale class="e_button s_button1 btn btn-primary response-transition" :to="article.link">
                                                 <span>了解更多</span>
                                             </NuxtLinkLocale>
                                         </div>
@@ -38,21 +38,21 @@
                             </template>
                             <template #template>
                                 <div class="cbox-5 p_loopitem">
-                                    <div class="e_container-6 s_layout response-transition">
+                                    <div class="e_container s_layout response-transition">
                                         <div class="cbox-6-0 p_item">
-                                            <div class="e_image-7 s_img">
+                                            <div class="e_image s_img">
                                                 <el-skeleton-item variant="image" style="position: absolute; width: 100%; height: 100%;" />
                                             </div>
                                         </div>
                                         <div class="cbox-6-1 p_item">
-                                            <p class="e_timeFormat-12 s_title">
+                                            <p class="e_timeFormat s_title">
                                                 <el-skeleton-item variant="text" style="width: 100%;" />
                                             </p>
                                             <h3 class="e_h3-8 s_summary">
                                                 <el-skeleton-item variant="text" style="width: 100%;" />
                                             </h3>
-                                            <hr class="e_line-11 s_line">
-                                            <div class="e_richText-9 s_title clearfix response-transition">
+                                            <hr class="e_line s_line">
+                                            <div class="e_richText s_title clearfix response-transition">
                                                 <el-skeleton-item v-for="i in 3" :key="i" variant="text" style="width: 100%;" />
                                             </div>
                                             <el-skeleton-item variant="button" style="margin-top: 20px;" />
@@ -85,7 +85,7 @@
     import getArticleListByArticleTypeSlug from '~/http/apis/getArticleListByArticleTypeSlug'
 
     definePageMeta({
-        layout: 'aboutus'
+        layout: 'about-us'
     })
 
     const ACTIVE_PAGE_SLUG = 'blogs'
@@ -118,7 +118,7 @@
     const articleList = computed(() => {
         return data.value?.rows?.map(article => ({
             ...article,
-            link: `/article/detail/${article.slug}`
+            link: `/article/${article.slug}`
         }))
     })
 
@@ -152,7 +152,7 @@
         margin-bottom: 50px;
     }
 
-    .e_loop-5 {
+    .e_loop {
         display: block;
         max-width: 1300px;
         margin-left: auto;
@@ -192,7 +192,7 @@
                     transform: scale(1.1);
                 }
 
-                .e_button-10 {
+                .e_button {
                     border-color: #004DFF;
                     background-color: #004DFF;
                     color: rgba(255,255,255,1);
@@ -201,16 +201,12 @@
         }
     }
 
-    .e_container-6 {
+    .e_container {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         width: 100%;
         margin-bottom: 6%;
-
-        .cbox-6-0 {
-            flex: 0 0 31%;
-        }
 
         .cbox-6-1 {
             padding-left: 5%;
@@ -227,14 +223,22 @@
             flex: 1;
             max-width: 100%;
             max-height: 100%;
+
+            &.cbox-6-0 {
+                flex: 0 0 31%;
+                display: flex;
+                align-items: center;
+            }
         }
     }
 
-    .e_image-7 {
+    .e_image {
         overflow: hidden;
         display: block;
         position: relative;
         padding-bottom: 56%;
+        width: 100%;
+        height: 0;
 
         img {
             position: absolute;
@@ -253,7 +257,7 @@
         font-weight: bold;
     }
 
-    .e_richText-9 {
+    .e_richText {
         font-size: 14px;
         color: rgba(102,102,102,1);
         -webkit-line-clamp: 3;
@@ -262,7 +266,7 @@
         overflow: hidden;
     }
 
-    .e_button-10 {
+    .e_button {
         display: block;
         position: relative;
         overflow: hidden;
@@ -313,7 +317,7 @@
         }
     }
 
-    .e_line-11 {
+    .e_line {
         width: 50px;
         margin-left: 0px;
         height: 2px;
@@ -322,7 +326,7 @@
         border-top-color: rgba(0,77,255,1);
     }
 
-    .e_timeFormat-12 {
+    .e_timeFormat {
         min-height: 20px;
         font-size: 14px;
         font-weight: normal;

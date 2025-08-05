@@ -1,22 +1,12 @@
 <script setup lang="ts">
-    import { ArrowRight } from '@element-plus/icons-vue'
     import { type MenuItem } from '~/components/Layout/InfiniteMenu.vue'
     import InfiniteMenu from '~/components/Layout/InfiniteMenu.vue'
-
-    type BreadcrumbItem = {
-        label: string,
-        link?: string,
-    }
 
     defineProps<{
         activeMenuId?: string,
         subMenuTree: MenuItem,
-        subMenuPending?: boolean,
-        breadcrumbList: BreadcrumbItem[],
-        breadcrumbPending?: boolean,
+        subMenuPending?: boolean
     }>()
-
-    const localePath = useLocalePath()
 </script>
 
 <template>
@@ -36,27 +26,7 @@
             </el-skeleton>
         </div>
         <div class="right-container">
-            <div class="breadcrumb-container">
-                <div class="loading-container">
-                    <el-skeleton :loading="breadcrumbPending" :throttle="{ leading: 500, trailing: 500 }" animated :title="false">
-                        <template #template>
-                            <el-skeleton-item variant="p" style="width: 50%" />
-                        </template>
-                        <template #default>
-                            <el-breadcrumb :separator-icon="ArrowRight">
-                                <el-breadcrumb-item :to="localePath('/')">{{ $t('home') }}</el-breadcrumb-item>
-                                <el-breadcrumb-item
-                                    v-for="breadcrumb in breadcrumbList"
-                                    :key="breadcrumb.label"
-                                    :to="breadcrumb.link ? localePath(breadcrumb.link) : undefined"
-                                >
-                                    {{ breadcrumb.label }}
-                                </el-breadcrumb-item>
-                            </el-breadcrumb>
-                        </template>
-                    </el-skeleton>
-                </div>
-            </div>
+            <slot name="breadcrumb" />
             <div class="main-content">
                 <slot />
             </div>
@@ -99,9 +69,6 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            padding-top: 5px;
         }
     }
-
-    .breadcrumb-container {}
 </style>

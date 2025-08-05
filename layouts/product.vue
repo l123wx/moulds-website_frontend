@@ -2,12 +2,13 @@
     <DefaultLayout>
         <SubMenuContainer
             :active-menu-id="activeMenuId"
-            :breadcrumb-list="breadcrumbList"
-            :breadcrumb-pending="breadcrumbPending"
             :sub-menu-tree="subMenuTree"
             :sub-menu-pending="subMenuPending"
             @refresh="subMenuRefresh"
         >
+            <div style="padding-top: 5px;">
+                <Breadcrumb :breadcrumb-list="breadcrumbList" :breadcrumb-pending="breadcrumbPending" />
+            </div>
             <slot />
         </SubMenuContainer>
     </DefaultLayout>
@@ -18,6 +19,7 @@
 
     import type { MenuItem } from '~/components/Layout/InfiniteMenu.vue'
     import SubMenuContainer from '~/components/SubMenuContainer.vue'
+    import Breadcrumb from '~/components/Layout/Breadcrumb.vue'
     import getAllParentProductTypeBySlug from '~/http/apis/getAllParentProductTypeBySlug'
     import getProductTypeHierarchyBySlug from '~/http/apis/getProductTypeHierarchyBySlug'
     import { handconstree } from '~/utils'

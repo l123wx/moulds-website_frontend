@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    // import { Collection } from '@element-plus/icons-vue'
     import getSubProductTypeListBySlug from '~/http/apis/getSubProductTypeListBySlug'
 
     definePageMeta({
@@ -40,6 +41,7 @@
                     class="item-card"
                     :aria-label="item.label"
                 >
+                    <!-- <Collection class="item-icon" /> -->
                     <div class="item-images">
                         <NuxtImg v-if="item.imagePath" loading="lazy" :src="item.imagePath" :alt="item.label" :title="item.label" />
                     </div>
@@ -108,6 +110,15 @@
                 }
             }
         }
+
+        // .item-icon {
+        //     background-color: #fff;
+        //     width: 12%;
+        //     position: absolute;
+        //     right: 5px;
+        //     top: 10px;
+        //     z-index: 1;
+        // }
 
         .item-images {
             overflow: hidden;

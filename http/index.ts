@@ -26,25 +26,21 @@ const http = async <T = any>(url: string, options: any = {}) => {
         const data = response as any
 
         if (data.code === 500) {
-            // 只在客户端显示错误消息
-            if (isClient) { ElMessage.error($t('http.error')) }
-            throw new Error(data.msg)
+            throw new Error(data.msg || $t('http.error'))
         }
 
         if (data.code !== 200) {
-            // 只在客户端显示错误消息
+            let message = data.msg || $t('http.error')
             if (isClient) {
                 if (data.code === 408) {
-                    ElMessage.error($t('http.phone.code.frequent'))
-                } else if (data.code === 412) {
-                    ElMessage.error(
-                        $t('signIn.form.registered') + ', ' + $t('signIn.form.waiting.for.review')
-                    )
-                } else {
-                    ElMessage.error(data.msg)
+                    message = $t('http.phone.code.frequent')
+                }
+
+                if (data.code === 412) {
+                    message = $t('signIn.form.registered') + ', ' + $t('signIn.form.waiting.for.review')
                 }
             }
-            throw new Error(data.msg)
+            throw new Error(message)
         }
 
         return data as T

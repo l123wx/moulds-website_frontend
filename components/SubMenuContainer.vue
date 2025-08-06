@@ -6,12 +6,13 @@
         activeMenuId?: string,
         subMenuTree: MenuItem,
         subMenuPending?: boolean
+        hideSubMenuOnMobile?: boolean
     }>()
 </script>
 
 <template>
     <div class="sub-menu-layout-container">
-        <div class="left-container">
+        <div class="left-container" :class="{ 'hide-on-mobile': hideSubMenuOnMobile }">
             <div class="sub-menu-header">
                 {{ subMenuTree.label }}
             </div>
@@ -62,6 +63,12 @@
 
             .sub-menu {
                 border-right: none;
+            }
+
+            &.hide-on-mobile {
+                @media screen and (max-width: @viewport-md) {
+                    display: none;
+                }
             }
         }
         .right-container {

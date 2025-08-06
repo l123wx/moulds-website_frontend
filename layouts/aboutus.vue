@@ -4,16 +4,19 @@
             :active-menu-id="activeMenuId"
             :sub-menu-tree="subMenuTree"
             :sub-menu-pending="subMenuPending"
+            hide-sub-menu-on-mobile
             @refresh="subMenuRefresh"
         >
             <slot />
         </SubMenuContainer>
+        <LiveChat />
     </DefaultLayout>
 </template>
 
 <script setup lang="ts">
     import DefaultLayout from './default.vue'
 
+    import LiveChat from '~/components/LiveChat/index.vue'
     import type { MenuItem } from '~/components/Layout/InfiniteMenu.vue'
     import SubMenuContainer from '~/components/SubMenuContainer.vue'
     import getWebsiteMenuHierarchyById from '~/http/apis/getWebsiteMenuHierarchyById'

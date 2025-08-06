@@ -8,6 +8,7 @@
         </main>
         <FloatingMenu />
         <Footer />
+        <LiveChat />
     </div>
 </template>
 
@@ -17,6 +18,7 @@
     import Header from '~/components/Layout/Header.vue'
     import Footer from '~/components/Layout/Footer.vue'
     import FloatingMenu from '~/components/Layout/FloatingMenu.vue'
+    import LiveChat from '~/components/LiveChat/index.vue'
 
     // const route = useRoute()
 

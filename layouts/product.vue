@@ -11,12 +11,14 @@
             </div>
             <slot />
         </SubMenuContainer>
+        <LiveChat />
     </DefaultLayout>
 </template>
 
 <script setup lang="ts">
     import DefaultLayout from './default.vue'
 
+    import LiveChat from '~/components/LiveChat/index.vue'
     import type { MenuItem } from '~/components/Layout/InfiniteMenu.vue'
     import SubMenuContainer from '~/components/SubMenuContainer.vue'
     import Breadcrumb from '~/components/Layout/Breadcrumb.vue'

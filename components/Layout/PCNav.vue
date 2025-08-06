@@ -139,24 +139,6 @@
                     }
                 }
             }
-
-            &.language-switcher {
-                margin-left: auto;
-
-                .language-link {
-                    color: #333;
-                    text-decoration: none;
-                    transition: color 0.3s;
-
-                    &:hover {
-                        color: #004DFF;
-                    }
-                }
-
-                .language-divider {
-                    margin: 0 5px;
-                }
-            }
         }
     }
 }

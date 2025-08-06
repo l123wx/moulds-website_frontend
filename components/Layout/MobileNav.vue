@@ -47,11 +47,6 @@
                             </Link>
                         </el-menu-item>
                     </template>
-                    <!-- <el-menu-item>
-                            <a :href="switchLocalePath('zh')">中文</a>
-                            <span style="margin: 0 10px">/</span>
-                            <a :href="switchLocalePath('en')">EN</a>
-                        </el-menu-item> -->
                 </el-menu>
             </template>
         </div>
@@ -69,8 +64,6 @@
     const emit = defineEmits(['update:isMenuOpen'])
 
     const route = useRoute()
-
-    const switchLocalePath = useSwitchLocalePath()
 
     // 监听抽屉状态，控制body的overflow
     watch(

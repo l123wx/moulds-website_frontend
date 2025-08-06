@@ -16,9 +16,9 @@
                 <div class="operations">
                     <!-- 产品目录下载按钮 -->
                     <div class="download-section item">
-                        <a class="download-btn" href="/download.html" target="_self">
-                            <span>产品目录下载</span>
-                        </a>
+                        <NuxtLinkLocale class="download-btn" to="/download/product_catalog'">
+                            <span>{{ $t('Product Catalog Download') }}</span>
+                        </NuxtLinkLocale>
                     </div>
 
                     <!-- 购物车 -->

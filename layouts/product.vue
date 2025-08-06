@@ -30,13 +30,17 @@
     const activeProductTypeSlug = computed(() => {
         return route.params.path[route.params.path.length - 1]
     })
+    const activeRootParentType = computed(() => {
+        return route.params.path[0]
+    })
 
     const { data: subMenuList, pending: subMenuPending, refresh: subMenuRefresh } = await useAsyncData(
-        'productTypeSubMenu_' + route.params.path[0],
-        () => getProductTypeHierarchyBySlug(route.params.path[0]),
+        'productTypeSubMenu_' + activeRootParentType.value,
+        () => getProductTypeHierarchyBySlug(activeRootParentType.value),
         {
             transform: (data) => data.data,
-            default: () => []
+            default: () => [],
+            watch: [activeRootParentType]
         }
     )
 

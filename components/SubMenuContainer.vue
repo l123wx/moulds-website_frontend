@@ -16,13 +16,16 @@
             <div class="sub-menu-header">
                 {{ subMenuTree.label }}
             </div>
-            <el-skeleton :loading="subMenuPending" :rows="5" animated :title="false">
+            <el-skeleton :loading="subMenuPending" animated :throttle="{ leading: 500, trailing: 500 }">
                 <template #default>
                     <InfiniteMenu
                         :default-active="activeMenuId"
                         :menu-list="subMenuTree.children || []"
                         class="sub-menu"
                     />
+                </template>
+                <template #template>
+                    <el-skeleton-item v-for="i in 5" :key="i" variant="p" style="width: 100%; height: 30px; margin-top: 10px" />
                 </template>
             </el-skeleton>
         </div>

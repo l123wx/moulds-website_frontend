@@ -69,10 +69,21 @@
 
                     <!-- 搜索 -->
                     <div class="search-section item">
-                        <div class="search_warp">
+                        <div class="search_warp" @click="isSearchBarOpen = true">
                             <svg t="1602919003135" class="ss_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9837" width="24" height="24">
                                 <path d="M951.9 904.8l-152-162.5c61.8-74 95.6-167.4 95.5-263.9 0-228.3-186-414.1-414.5-414.1S66.5 250 66.5 478.4c0 228.4 186 414.1 414.5 414.1 59.2 0.1 117.8-12.6 171.7-37.1 16-7.3 23-26.2 15.7-42.2-7.3-16-26.2-23-42.2-15.7-108.5 49.2-234.6 40-334.8-24.5-100.2-64.5-160.9-175.4-161-294.6 0.3-193.5 157.2-350.2 350.7-350.3 193.4 0 350.8 157.2 350.8 350.3 0.1 90.5-34.9 177.5-97.8 242.6-12.2 12.7-11.8 32.8 0.9 45 1 1 2.2 1.3 3.3 2 0.9 1.3 1.3 2.7 2.5 4l164.9 176.3c12 12.8 32.1 13.5 45 1.5 12.6-12 13.2-32.2 1.2-45z m0 0" p-id="9838"></path>
                             </svg>
+                        </div>
+                    </div>
+                    <div class="search-bar" :class="{ show: isSearchBarOpen }">
+                        <div class="container">
+                            <div class="input-container">
+                                <input v-model="searchValue" type="text" :placeholder="$t('Search')" />
+                            </div>
+                            <el-button plain class="search-button" @click="handleSearchSubmit">{{ $t('Search') }}</el-button>
+                            <el-button text class="close-button" @click="handleSearchBarClose">
+                                <Close />
+                            </el-button>
                         </div>
                     </div>
 
@@ -102,13 +113,19 @@
 </template>
 
 <script setup lang="ts">
+    import { Close } from '@element-plus/icons-vue'
     import PCNav from './PCNav.vue'
     import MobileNav from './MobileNav.vue'
     import MobileNavButton from './MobileNavButton.vue'
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
 
+    const router = useRouter()
+    const localePath = useLocalePath()
+
     const isMobileMenuOpen = ref(false)
+    const isSearchBarOpen = ref(false)
+    const searchValue = ref('')
 
     const { data: menuTreeList, error } = useAsyncData(
         'getAllMenu',
@@ -117,6 +134,18 @@
             default: () => []
         }
     )
+
+    const handleSearchBarClose = () => {
+        isSearchBarOpen.value = false
+        searchValue.value = ''
+    }
+
+    const handleSearchSubmit = () => {
+        if (searchValue.value.trim() === '') { return }
+
+        router.push(localePath(`/search?q=${searchValue.value}`))
+        handleSearchBarClose()
+    }
 </script>
 
 <style scoped lang="less">
@@ -187,7 +216,6 @@
                 }
 
                 svg {
-                    margin-right: 5px;
                     fill: #333;
                     transition: fill 0.3s;
                 }
@@ -432,6 +460,74 @@
 
                     &:hover .lang4 {
                         display: block;
+                    }
+                }
+            }
+        }
+
+        .search-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            padding: 0 15px;
+            background-color: #fff;
+            z-index: 1;
+            transform: translateY(-100%);
+            transition: transform 0.2s ease-in-out;
+
+            &.show {
+                transform: translateY(0);
+            }
+
+            .container {
+                width: 94%;
+                height: 100%;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+
+                .input-container {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+
+                    input {
+                        height: 50px;
+                        border: 0;
+                        outline: 0;
+                        box-shadow: none;
+                        width: 100%;
+
+                        padding: .375rem .75rem;
+                        line-height: 1.5;
+                        color: #495057;
+                    }
+                }
+                .search-button {
+                    width: 120px;
+                    height: 38px;
+                    outline: 0;
+                    margin: 0px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 15px;
+                    box-shadow: none;
+                    border-radius: 55px;
+                }
+                .close-button {
+                    color: #004DFF;
+                    outline: 0;
+                    margin: 0px;
+                    box-shadow: none;
+                    border: none;
+                    background: #fff;
+                    display: flex;
+
+                    svg {
+                        width: 30px;
                     }
                 }
             }

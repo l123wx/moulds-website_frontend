@@ -6,9 +6,11 @@
             :sub-menu-pending="subMenuPending"
             @refresh="subMenuRefresh"
         >
-            <div style="padding-top: 5px;">
-                <Breadcrumb :breadcrumb-list="breadcrumbList" :breadcrumb-pending="breadcrumbPending" />
-            </div>
+            <template #breadcrumb>
+                <div style="padding-top: 5px;">
+                    <Breadcrumb :breadcrumb-list="breadcrumbList" :breadcrumb-pending="breadcrumbPending" />
+                </div>
+            </template>
             <slot />
         </SubMenuContainer>
         <LiveChat />

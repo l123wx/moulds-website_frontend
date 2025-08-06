@@ -143,7 +143,7 @@
     const handleSearchSubmit = () => {
         if (searchValue.value.trim() === '') { return }
 
-        router.push(localePath(`/search?q=${searchValue.value}`))
+        router.push(localePath(`/product/search?q=${searchValue.value}`))
         handleSearchBarClose()
     }
 </script>

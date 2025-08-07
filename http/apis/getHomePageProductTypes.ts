@@ -30,9 +30,6 @@ type ProductType = {
 
   /** 更新时间 */
   updateTime: string;
-
-  /** 子分类列表 */
-  children?: ProductType[];
 }
 
 const getHomePageProductTypes = () => {

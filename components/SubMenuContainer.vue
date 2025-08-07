@@ -12,7 +12,7 @@
 
 <template>
     <div class="sub-menu-layout-container">
-        <div class="left-container" :class="{ 'hide-on-mobile': hideSubMenuOnMobile }">
+        <div v-if="subMenuTree.children?.length" class="left-container" :class="{ 'hide-on-mobile': hideSubMenuOnMobile }">
             <div class="sub-menu-header">
                 {{ subMenuTree.label }}
             </div>

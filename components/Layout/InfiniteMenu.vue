@@ -68,7 +68,7 @@
 
 :deep(.el-menu-item) {
     &.is-active .item {
-        color: #1e4cf5;
+        color: @main-color;
     }
 
     .item {
@@ -76,7 +76,7 @@
     }
 
     .item:hover, .router-link-active {
-        color: #1e4cf5;
+        color: @main-color;
     }
 }
 
@@ -88,10 +88,10 @@
         padding: 0;
     }
     .el-sub-menu__title > .router-link-active {
-        color: #1e4cf5;
+        color: @main-color;
     }
     &.is-active > .el-sub-menu__title .item {
-        color: #1e4cf5;
+        color: @main-color;
     }
 }
 </style>

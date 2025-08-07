@@ -36,6 +36,9 @@ export default defineNuxtConfig({
             preprocessorOptions: {
                 less: {
                     additionalData: '@import "~/assets/styles/var.less";'
+                },
+                scss: {
+                    additionalData: `@use "~/assets/styles/element.scss";`,
                 }
             }
         },
@@ -71,6 +74,10 @@ export default defineNuxtConfig({
     },
 
     modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image'],
+
+    elementPlus: {
+        importStyle: 'scss',
+    },
 
     i18n: {
         strategy: 'prefix',

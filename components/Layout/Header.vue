@@ -417,6 +417,7 @@
             transform: translateY(-100%);
             transition: transform 0.2s ease-in-out;
             opacity: 0;
+            box-sizing: border-box;
 
             &.show {
                 transform: translateY(0);
@@ -467,6 +468,7 @@
                     border: none;
                     background: #fff;
                     display: flex;
+                    padding: 0;
 
                     svg {
                         width: 30px;

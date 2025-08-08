@@ -87,8 +87,10 @@
     .el-sub-menu__title .el-menu-item {
         padding: 0;
     }
-    .el-sub-menu__title > .router-link-active {
-        color: @main-color;
+    .el-sub-menu__title {
+        .router-link-active, .item:hover {
+            color: @main-color;
+        }
     }
     &.is-active > .el-sub-menu__title .item {
         color: @main-color;

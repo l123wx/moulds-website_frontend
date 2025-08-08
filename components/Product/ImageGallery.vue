@@ -107,7 +107,6 @@
 
 <script setup lang="ts">
     import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
-    import { VideoPlay } from '@element-plus/icons-vue'
 
     const props = defineProps<{
         bannerList: {
@@ -361,7 +360,7 @@
 
     // 触摸事件代理
     const delegateTouchStart = (event: TouchEvent) => {
-        if (isMobile.value) {
+        if (!isMobile.value) {
             return
         }
 
@@ -381,7 +380,7 @@
     }
 
     const delegateTouchMove = (event: TouchEvent) => {
-        if (isMobile.value || !isCurrentTypeImage.value) {
+        if (!isMobile.value || !isCurrentTypeImage.value) {
             return
         }
 
@@ -392,7 +391,7 @@
     }
 
     const delegateTouchEnd = (event: TouchEvent) => {
-        if (isMobile.value) { return }
+        if (!isMobile.value) { return }
 
         isEnter = false
 

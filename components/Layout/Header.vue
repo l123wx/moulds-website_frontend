@@ -391,6 +391,8 @@
                     .ss_icon {
                         fill: #333;
                         transition: fill 0.3s;
+                        width: 20px;
+                        height: 20px;
                     }
 
                     &:hover .ss_icon {

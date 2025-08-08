@@ -38,7 +38,7 @@ export default defineNuxtConfig({
                     additionalData: '@import "~/assets/styles/var.less";'
                 },
                 scss: {
-                    additionalData: `@use "~/assets/styles/element.scss";`,
+                    additionalData: '@use "~/assets/styles/element.scss";'
                 }
             }
         },
@@ -69,6 +69,14 @@ export default defineNuxtConfig({
         }
     ],
 
+    nitro: {
+        externals: {
+            traceAlias: {
+                '@sxzz/popperjs-es': '@popperjs/core'
+            }
+        }
+    },
+
     routeRules: {
         '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } }
     },
@@ -76,7 +84,7 @@ export default defineNuxtConfig({
     modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image'],
 
     elementPlus: {
-        importStyle: 'scss',
+        importStyle: 'scss'
     },
 
     i18n: {

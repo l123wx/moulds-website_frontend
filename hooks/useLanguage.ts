@@ -12,7 +12,7 @@ const useLanguage = () => {
     })
 
     const { data, pending } = useAsyncData(
-        'language',
+        'getLanguages',
         () => getLanguage(),
         {
             transform: data => data.data
@@ -29,10 +29,4 @@ const useLanguage = () => {
     }
 }
 
-let _useLanguage: ReturnType<typeof useLanguage> | null = null
-export default () => {
-    if (_useLanguage) { return _useLanguage }
-
-    _useLanguage = useLanguage()
-    return _useLanguage
-}
+export default useLanguage

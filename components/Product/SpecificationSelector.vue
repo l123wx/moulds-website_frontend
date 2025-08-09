@@ -7,7 +7,7 @@
         @close="onCancel"
     >
         <div v-if="currentProduct?.id" class="specification-list">
-            <el-skeleton :count="3" animated :loading="pending">
+            <el-skeleton animated :loading="pending">
                 <template #default>
                     <el-empty v-if="specificationList.length === 0" :description="$t('No data')"></el-empty>
                     <div v-for="s in specificationList" :key="s.id" class="specification-row">
@@ -49,8 +49,7 @@
                 <div class="actions">
                     <el-button @click="onCancel">{{ $t('Cancel') }}</el-button>
                     <el-button type="primary" :disabled="totalItems === 0" @click="onConfirm">
-                        {{ $t('Confirm')
-                        }}
+                        {{ $t('Confirm') }}
                     </el-button>
                 </div>
             </div>
@@ -71,12 +70,12 @@
     const emit = defineEmits(['confirm', 'cancel'])
 
     const { data: specificationList, pending, refresh } = useAsyncData(
+        () => `product-${currentProduct.value?.id}-specification-list`,
         () => getAllSpecificationByProductId(currentProduct.value!.id),
         {
             transform: data => data.data,
             default: () => [],
-            immediate: false,
-            watch: [() => currentProduct.value?.id]
+            server: false
         }
     )
 

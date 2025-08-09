@@ -53,8 +53,10 @@
     import getAllSocialLink from '~/http/apis/getAllSocialLink'
     import emailSubscribe from '~/http/apis/emailSubscribe'
     import { useLoading } from '~/hooks/useLoading'
+    import useRoutePath from '~/hooks/useRoutePath'
 
     const localePath = useLocalePath()
+    const { subscribeSuccessPath } = useRoutePath()
     const [isLoading, run] = useLoading()
     const form = ref({
         email: ''
@@ -71,7 +73,7 @@
 
         try {
             await run(emailSubscribe(form.value.email))
-            await navigateTo(localePath('/success'))
+            await navigateTo(localePath(subscribeSuccessPath))
             formRef.value.resetFields()
         } catch (error) {
 

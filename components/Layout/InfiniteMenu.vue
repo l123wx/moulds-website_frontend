@@ -56,7 +56,6 @@
             v-for="menu in menuList"
             :key="menu.id"
             :menu="menu"
-            :level="1"
         />
     </el-menu>
 </template>

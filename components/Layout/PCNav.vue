@@ -47,7 +47,6 @@
 <style scoped lang="less">
 .main-navigation {
     flex: 1;
-    padding-left: 50px;
     .nav-list {
         display: flex;
         list-style: none;
@@ -74,7 +73,7 @@
                 text-decoration: none;
                 font-size: 16px;
                 transition: all 0.3s;
-                line-height: 100px;
+                height: 100px;
                 font-weight: 600;
                 position: relative;
 

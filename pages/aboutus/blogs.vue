@@ -83,6 +83,9 @@
     import { NuxtLinkLocale } from '#components'
     import Breadcrumb from '~/components/Layout/Breadcrumb.vue'
     import getArticleListByArticleTypeSlug from '~/http/apis/getArticleListByArticleTypeSlug'
+    import useRoutePath from '~/hooks/useRoutePath'
+
+    const { articleDetailPath } = useRoutePath()
 
     definePageMeta({
         layout: 'about-us'
@@ -118,7 +121,7 @@
     const articleList = computed(() => {
         return data.value?.rows?.map(article => ({
             ...article,
-            link: `/article/${article.slug}`
+            link: articleDetailPath(article.slug)
         }))
     })
 

@@ -3,58 +3,19 @@
         <div class="menu-container" :class="{ open: isMenuOpen }">
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
-                <el-menu class="mobile-menu" unique-opened>
-                    <template v-for="menu in menuTreeList">
-                        <el-sub-menu
-                            v-if="menu.children && menu.children.length"
-                            :key="menu.id"
-                            :index="String(menu.id)"
-                        >
-                            <template #title>
-                                <span>
-                                    {{ menu.label }}
-                                </span>
-                            </template>
-                            <el-menu-item
-                                v-for="subMenu in menu.children"
-                                :key="subMenu.id"
-                                :index="String(subMenu.id)"
-                            >
-                                <Link
-                                    :key="'link_' + subMenu.id"
-                                    :to="subMenu.link || ''"
-                                    :link-type="subMenu.linkType"
-                                    :open-type="subMenu.openType"
-                                    class="item"
-                                >
-                                    {{ subMenu.label }}
-                                </Link>
-                            </el-menu-item>
-                        </el-sub-menu>
-                        <el-menu-item
-                            v-else
-                            :key="'menu_item_' + menu.id"
-                            :index="String(menu.id)"
-                        >
-                            <Link
-                                :key="'link_' + menu.id"
-                                :to="menu.link || ''"
-                                :link-type="menu.linkType"
-                                :open-type="menu.openType"
-                                class="item"
-                            >
-                                {{ menu.label }}
-                            </Link>
-                        </el-menu-item>
-                    </template>
-                </el-menu>
+                <InfiniteMenu class="mobile-menu" :menu-list="menuTreeList" unique-opened />
+                <NuxtLinkLocale class="el-menu-item" :to="productCatalogDownloadPath">
+                    {{ $t('Product Catalog Download') }}
+                </NuxtLinkLocale>
             </template>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import Link from '~/components/Link.vue'
+    import InfiniteMenu from './InfiniteMenu.vue'
+    import useBodyScroll from '~/hooks/useBodyScroll'
+    import useRoutePath from '~/hooks/useRoutePath'
 
     const props = defineProps<{
         isMenuOpen: boolean
@@ -64,15 +25,16 @@
     const emit = defineEmits(['update:isMenuOpen'])
 
     const route = useRoute()
-
+    const { lock, unlock } = useBodyScroll()
+    const { productCatalogDownloadPath } = useRoutePath()
     // 监听抽屉状态，控制body的overflow
     watch(
         () => props.isMenuOpen,
         (newValue) => {
             if (newValue) {
-                document.body.style.overflow = 'hidden'
+                lock()
             } else {
-                document.body.style.overflow = ''
+                unlock()
             }
         }
     )

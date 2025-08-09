@@ -4,10 +4,11 @@
     import getHomePageProductTypes from '~/http/apis/getHomePageProductTypes'
     import getSubProductTypeListBySlug from '~/http/apis/getSubProductTypeListBySlug'
     import getProductListByProductTypeSlug from '~/http/apis/getProductListByProductTypeSlug'
+    import useRoutePath from '~/hooks/useRoutePath'
 
     const activeTabIndex = ref(0)
 
-    const localePath = useLocalePath()
+    const { productTypeListPath, productDetailPath } = useRoutePath()
 
     const { data: productTypes, error } = await useAsyncData(
         'productTypes',
@@ -39,7 +40,7 @@
                                 id: subType.id,
                                 title: subType.label,
                                 image: subType.imagePath,
-                                href: localePath(`/product/type/${firstType.slug}/${subType.slug}`)
+                                href: productTypeListPath([firstType.slug, subType.slug])
                             }
                         })
                         : firstType.children?.map((subProduct: any) => {
@@ -47,7 +48,7 @@
                                 id: subProduct.id,
                                 title: subProduct.label,
                                 image: subProduct.coverImagePath,
-                                href: localePath(`/product/detail/${firstType.slug}/${subProduct.slug}`)
+                                href: productDetailPath(subProduct.slug)
                             }
                         })
                 }

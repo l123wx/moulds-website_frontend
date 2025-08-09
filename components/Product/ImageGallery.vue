@@ -106,7 +106,10 @@
 </template>
 
 <script setup lang="ts">
-    import { ref, reactive, computed, onMounted, onUnmounted, nextTick } from 'vue'
+    import { ref, reactive, computed, nextTick } from 'vue'
+    import useScreenMediaQuery from '~/hooks/useScreenMediaQuery'
+
+    const { isMobile } = useScreenMediaQuery()
 
     const props = defineProps<{
         bannerList: {
@@ -126,9 +129,6 @@
     const imageRef = ref<HTMLImageElement>()
 
     const isCarouselPlaying = ref(false)
-
-    // 设备类型检测
-    const isMobile = ref(false)
 
     // 放大镜状态
     const isMagnifying = ref(false)
@@ -242,21 +242,6 @@
             pointerEvents: 'none' as const
         }
     })
-
-    // 生命周期
-    onMounted(() => {
-        checkDeviceType()
-        window.addEventListener('resize', checkDeviceType)
-    })
-
-    onUnmounted(() => {
-        window.removeEventListener('resize', checkDeviceType)
-    })
-
-    // 检查设备类型
-    const checkDeviceType = () => {
-        isMobile.value = window.innerWidth <= 768
-    }
 
     // 图片加载处理
     const handleImageLoad = () => {

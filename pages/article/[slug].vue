@@ -4,8 +4,8 @@
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
                 <el-breadcrumb :separator-icon="ArrowRight" style="transform: translateY(-24px)">
-                    <el-breadcrumb-item :to="localePath('/')">{{ $t('home') }}</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="localePath('/aboutus/blogs')">Blogs</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="localePath(homePath)">{{ $t('home') }}</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="localePath(blogsPath)">Blogs</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ article?.title || '' }}</el-breadcrumb-item>
                 </el-breadcrumb>
                 <el-skeleton v-if="pending" :rows="5" />
@@ -30,6 +30,9 @@
     import dayjs from 'dayjs'
     import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
     import getArticleDetailBySlug from '~/http/apis/getArticleDetailBySlug'
+    import useRoutePath from '~/hooks/useRoutePath'
+
+    const { homePath, blogsPath } = useRoutePath()
 
     useTinyMCEStyle()
 

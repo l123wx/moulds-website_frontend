@@ -4,7 +4,7 @@
             <div class="info-container">
                 <div class="product-gallery-section">
                     <ImageGallery
-                        :banner-list="bannerList"
+                        :banner-list="bannerList.length ? bannerList : [{ src: productData.coverImagePath, type: 'image'}]"
                         :product-name="productData.name"
                     />
                 </div>
@@ -23,12 +23,7 @@
                             </el-icon>
                             {{ $t('2D & 3D Download') }}
                         </el-button>
-                        <el-button round type="primary" size="large" class="add-to-cart-btn">
-                            <el-icon size="20">
-                                <ShoppingCart />
-                            </el-icon>
-                            {{ $t('Add to Cart') }}
-                        </el-button>
+                        <AddToCartButton :product="productData" button-size="large" />
                     </div>
                 </div>
             </div>
@@ -45,15 +40,14 @@
 
 <script setup lang="ts">
     import { Download } from '@element-plus/icons-vue'
-    import ShoppingCart from '~/components/Icon/ShoppingCart.vue'
     import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
     import ImageGallery from '~/components/Product/ImageGallery.vue'
     import getProductDetailBySlug from '~/http/apis/getProductDetailBySlug'
+    import AddToCartButton from '~/components/Product/AddToCartButton.vue'
 
     useTinyMCEStyle()
     const route = useRoute()
-    const { path } = route.params
-    const slug = Array.isArray(path) ? path.join('/') : path
+    const { slug } = route.params as { slug: string }
 
     const { data: productData } = await useAsyncData(
         `product-${slug}`,

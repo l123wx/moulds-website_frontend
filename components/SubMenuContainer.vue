@@ -49,7 +49,7 @@
         column-gap: 3%;
 
         @media screen and (max-width: @viewport-md) {
-            flex-direction: column;
+            flex-direction: column-reverse;
         }
 
         .left-container {

@@ -101,6 +101,7 @@
     import { useStorage } from '@vueuse/core'
     import userConsult from '~/http/apis/userConsult'
     import { useLoading } from '~/hooks/useLoading'
+    import useBodyScroll from '~/hooks/useBodyScroll'
 
     const LOCAL_STORAGE_EMAIL_KEY = 'live-chat-email'
 
@@ -112,6 +113,7 @@
 
     const email = useStorage(LOCAL_STORAGE_EMAIL_KEY, '')
     const [isSubmitting, runSubmit] = useLoading()
+    const { lock, unlock } = useBodyScroll()
 
     const formModalOpen = ref(false)
     const formSuccessResultShow = ref(false)
@@ -158,6 +160,12 @@
         })
 
         watch(() => props.isOpen, () => {
+            if (props.isOpen) {
+                lock()
+            } else {
+                unlock()
+            }
+
             if (props.isOpen && !isChatInitialized.value) {
                 setTimeout(() => {
                     addMessage(welcomeMessage)

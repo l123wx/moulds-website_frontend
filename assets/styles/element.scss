@@ -1,2 +1,8 @@
 /* just override what you need */
 @forward 'element-plus/theme-chalk/src/common/var.scss' with ($colors: ('primary': ('base': #1e4cf5)));
+
+.el-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 5px;
+}

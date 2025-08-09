@@ -5,61 +5,38 @@
             <div class="main-header-content">
                 <!-- 品牌Logo区域 -->
                 <div class="brand-section">
-                    <div class="brand-logo">
+                    <NuxtLinkLocale class="brand-logo" :to="homePath">
                         <img src="~/assets/images/logo.png" alt="Logo" />
-                    </div>
+                    </NuxtLinkLocale>
                 </div>
 
                 <!-- 导航菜单 -->
-                <PCNav :menu-tree-list="menuTreeList" :error="error" />
+                <PCNav class="pc-nav" :menu-tree-list="menuTreeList" :error="error" />
 
                 <div class="operations">
                     <!-- 产品目录下载按钮 -->
                     <div class="download-section item">
-                        <NuxtLinkLocale class="download-btn" to="/download/product_catalog'">
+                        <NuxtLinkLocale class="download-btn" :to="productCatalogDownloadPath">
                             <span>{{ $t('Product Catalog Download') }}</span>
                         </NuxtLinkLocale>
                     </div>
 
                     <!-- 购物车 -->
-                    <div class="cart-section item">
-                        <div class="e_productFloat s_list">
-                            <div class="p_floatBtn js_editor_click">
+                    <ClientOnly>
+                        <NuxtLinkLocale class="cart-section item" to="/cart">
+                            <el-badge :value="uniqueItemCount" :hidden="uniqueItemCount === 0" class="item">
                                 <ShoppingCart />
-                                <span>购物车</span>
-                            </div>
-                            <div class="p_content">
-                                <div class="p_arrow"></div>
-                                <div class="p_select">
-                                    <div class="p_close">关闭<div class="guanbi"></div></div>
-                                    <div class="p_currenSelect">
-                                        <span class="p_currentSpan js_editor_click">
-                                            <span>订购</span>
-                                            <svg t="1653966201259" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4836" width="20" height="20">
-                                                <path d="M297.69350383 346.29910124L512 560.6055974 726.30649617 346.29910124a55.0126984 55.0126984 0 1 1 77.87942242 77.87942241L550.66354348 677.70089876a55.0126984 55.0126984 0 0 1-77.87942242 0L219.26174595 424.17852365c-10.49439069-10.49439069-16.01775312-24.30279805-16.01775442-38.66354347s6.07569919-28.72148955 16.01775442-39.21587894c21.54111683-20.98878007 56.89064234-21.54111683 78.43175788 0z" p-id="4837"></path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <ul class="p_selectList">
-                                        <li key="zxxj" class="p_active p_selectItem">
-                                            订购
-                                            <input type="hidden" value="/Inquiry.html" target="_blank">
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="p_list">
-                                    <div class="p_empty">
-                                        请选择内容
-                                    </div>
-                                </div>
-                                <div class="p_btn">
-                                    <span class="p_whole" txt="共 X 个">共 0 个</span>
-                                    <a href="javascript:;" class="btn btn-link p_clear">清空全部内容</a>
-                                    <a href="javascript:;" class="btn btn-primary p_confirmBtn">订购</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                <span>{{ $t('ShoppingCart') }}</span>
+                            </el-badge>
+                        </NuxtLinkLocale>
+                        <template #fallback>
+                            <el-skeleton style="width: 60px" animated>
+                                <template #template>
+                                    <el-skeleton-item variant="text" />
+                                </template>
+                            </el-skeleton>
+                        </template>
+                    </ClientOnly>
 
                     <!-- 搜索 -->
                     <div class="search-section item">
@@ -98,21 +75,27 @@
     import MobileNavButton from './MobileNavButton.vue'
     import LanguageDropdown from './LanguageDropdown.vue'
     import ShoppingCart from '~/components/Icon/ShoppingCart.vue'
+    import useCart from '~/hooks/useCart'
     import getAllMenu from '~/http/apis/getAllMenu'
     import { handconstree } from '~/utils'
+    import useRoutePath from '~/hooks/useRoutePath'
 
     const router = useRouter()
+    const { locale } = useI18n()
     const localePath = useLocalePath()
-
+    const { homePath, productCatalogDownloadPath, productSearchPath } = useRoutePath()
     const isMobileMenuOpen = ref(false)
     const isSearchBarOpen = ref(false)
     const searchValue = ref('')
+
+    const { uniqueItemCount } = useCart()
 
     const { data: menuTreeList, error } = useAsyncData(
         'getAllMenu',
         () => getAllMenu(), {
             transform: data => handconstree(data.data, 'id', 'parentId'),
-            default: () => []
+            default: () => [],
+            watch: [locale]
         }
     )
 
@@ -124,7 +107,7 @@
     const handleSearchSubmit = () => {
         if (searchValue.value.trim() === '') { return }
 
-        router.push(localePath(`/product/search?q=${searchValue.value}`))
+        router.push(localePath(productSearchPath(searchValue.value)))
         handleSearchBarClose()
     }
 </script>
@@ -147,13 +130,21 @@
 
         .main-header-content {
             max-width: 1200px;
-            height: @header-height-pc;
+            height: var(--header-height);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 20px;
             position: relative;
+        }
+
+        .pc-nav {
+            padding-left: 30px;
+
+            @media screen and (max-width: @viewport-lg) {
+                padding-left: 10px;
+            }
         }
 
         .brand-section {
@@ -166,9 +157,14 @@
                 display: flex;
                 align-items: center;
                 height: 100%;
+                max-width: 80px;
+
+                @media screen and (max-width: @viewport-lg) {
+                    max-width: 60px;
+                }
 
                 img {
-                    max-width: 102px;
+                    width: 100%;
                 }
             }
         }
@@ -227,154 +223,20 @@
 
             // 购物车
             .cart-section {
-                .e_productFloat {
+                .btn {
+                    display: flex;
+                    align-items: center;
                     position: relative;
+                }
 
-                    .p_floatBtn {
-                        display: flex;
-                        align-items: center;
+                @media screen and (max-width: @viewport-md) {
+                    svg {
+                        width: 25px;
+                        height: 25px;
                     }
 
-                    .p_content {
+                    span {
                         display: none;
-                        position: absolute;
-                        top: 100%;
-                        right: 0;
-                        width: 300px;
-                        background: white;
-                        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-                        border-radius: 4px;
-                        padding: 15px;
-                        z-index: 100;
-                        margin-top: 10px;
-
-                        .p_arrow {
-                            position: absolute;
-                            top: -10px;
-                            right: 20px;
-                            width: 0;
-                            height: 0;
-                            border-left: 10px solid transparent;
-                            border-right: 10px solid transparent;
-                            border-bottom: 10px solid white;
-                        }
-
-                        .p_select {
-                            border-bottom: 1px solid #eee;
-                            margin-bottom: 10px;
-
-                            .p_close {
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                padding-bottom: 10px;
-
-                                .guanbi {
-                                    position: relative;
-                                    width: 16px;
-                                    height: 16px;
-                                    cursor: pointer;
-
-                                    &:before, &:after {
-                                        content: "";
-                                        position: absolute;
-                                        width: 100%;
-                                        height: 2px;
-                                        background: #333;
-                                        top: 50%;
-                                        left: 0;
-                                    }
-
-                                    &:before {
-                                        transform: rotate(45deg);
-                                    }
-
-                                    &:after {
-                                        transform: rotate(-45deg);
-                                    }
-                                }
-                            }
-
-                            .p_currenSelect {
-                                padding: 10px 0;
-                                cursor: pointer;
-
-                                .p_currentSpan {
-                                    display: flex;
-                                    justify-content: space-between;
-                                    align-items: center;
-                                }
-                            }
-
-                            .p_selectList {
-                                display: none;
-                                list-style: none;
-                                padding: 0;
-                                margin: 0;
-
-                                .p_selectItem {
-                                    padding: 10px 0;
-                                    cursor: pointer;
-
-                                    &:hover {
-                                        color: #004DFF;
-                                    }
-
-                                    &.p_active {
-                                        color: #004DFF;
-                                    }
-                                }
-                            }
-                        }
-
-                        .p_list {
-                            min-height: 100px;
-
-                            .p_empty {
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 100px;
-                                color: #999;
-                            }
-                        }
-
-                        .p_btn {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            margin-top: 10px;
-
-                            .p_whole {
-                                font-size: 14px;
-                                color: #666;
-                            }
-
-                            .p_clear {
-                                color: #666;
-                                text-decoration: none;
-
-                                &:hover {
-                                    color: #004DFF;
-                                }
-                            }
-
-                            .p_confirmBtn {
-                                background: #004DFF;
-                                color: white;
-                                padding: 5px 15px;
-                                border-radius: 4px;
-                                text-decoration: none;
-
-                                &:hover {
-                                    background: darken(#004DFF, 10%);
-                                }
-                            }
-                        }
-                    }
-
-                    &:hover .p_content {
-                        display: block;
                     }
                 }
             }
@@ -428,6 +290,10 @@
                 display: flex;
                 align-items: center;
 
+                @media screen and (max-width: @viewport-md) {
+                    width: 100%;
+                }
+
                 .input-container {
                     flex: 1;
                     display: flex;
@@ -456,6 +322,12 @@
                     font-size: 15px;
                     box-shadow: none;
                     border-radius: 55px;
+
+                    @media screen and (max-width: @viewport-md) {
+                        width: auto;
+                        font-size: 14px;
+                        margin-right: 5px;
+                    }
                 }
                 .close-button {
                     color: #004DFF;
@@ -469,6 +341,10 @@
 
                     svg {
                         width: 30px;
+
+                        @media screen and (max-width: @viewport-md) {
+                            width: 22px;
+                        }
                     }
                 }
             }
@@ -478,9 +354,6 @@
     // 响应式设计
     @media screen and (max-width: @viewport-md) {
         .main-header {
-            .main-header-content {
-                height: @header-height-mobile;
-            }
             .brand-section {
                 flex: 0 0 auto;
                 margin-right: 10px;
@@ -502,8 +375,7 @@
                     padding-right: 10px;
                 }
 
-                .download-section,
-                .cart-section {
+                .download-section {
                     display: none;
                 }
             }

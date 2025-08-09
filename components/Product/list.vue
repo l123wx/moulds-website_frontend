@@ -1,4 +1,7 @@
 <script setup lang="ts">
+    import AddToCartButton from '~/components/Product/AddToCartButton.vue'
+    import useRoutePath from '~/hooks/useRoutePath'
+
     type Product = {
         id: number
         slug: string
@@ -9,21 +12,26 @@
     defineProps<{
         productList: Product[]
     }>()
+
+    const { productDetailPath } = useRoutePath()
 </script>
 
 <template>
     <div class="list-container">
-        <NuxtLinkLocale v-for="item in productList" :key="item.id" :to="`/product/detail/${item.slug}`" target="_self" class="item-card" :aria-label="item.label">
+        <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
             <div class="item-images">
                 <NuxtImg v-if="item.coverImagePath" loading="lazy" :src="item.coverImagePath" :alt="item.label" :title="item.label" />
             </div>
             <div class="item-info">
                 <h3 class="item-title">{{ item.label }}</h3>
             </div>
-            <div class="more-info-btn">
-                {{ $t('Learn More') }}
+            <div class="button-container">
+                <NuxtLinkLocale class="more-info-btn" :to="productDetailPath(item.slug)" target="_self">
+                    {{ $t('Learn More') }}
+                </NuxtLinkLocale>
+                <AddToCartButton :product="item" button-size="large" simple />
             </div>
-        </NuxtLinkLocale>
+        </div>
     </div>
 </template>
 
@@ -44,10 +52,9 @@
             background-color: #fff;
             transition: var(--transition-normal);
             overflow: hidden;
-            cursor: pointer;
 
             flex: 0 0 25%;
-            padding: 10px;
+            padding: 10px 10px 30px;
             box-sizing: border-box;
 
             @media screen and (max-width: @viewport-lg) {
@@ -63,12 +70,6 @@
                     opacity: 0.9;
                     transform: scale(1.05);
                 }
-
-                .more-info-btn {
-                    border-color: #004DFF;
-                    background-color: #004DFF;
-                    color: #fff;
-                }
             }
         }
 
@@ -80,6 +81,7 @@
             align-items: center;
             justify-content: center;
             aspect-ratio: 4/3;
+            width: 100%;
 
             img {
                 max-width: 100%;
@@ -111,9 +113,13 @@
             margin: 0;
         }
 
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
         .more-info-btn {
-            padding: 10px;
-            width: 100px;
+            padding: 10px 15px;
             background-color: transparent;
             color: #666666;
             border: 1px solid #ccc;
@@ -122,7 +128,12 @@
             text-align: center;
             display: inline-block;
             transition: all 0.3s ease;
-            margin-bottom: 30px;
+
+            &:hover {
+                border-color: #004DFF;
+                background-color: #004DFF;
+                color: #fff;
+            }
         }
     }
 </style>

@@ -1,6 +1,9 @@
 <script setup lang="ts">
     // import { Collection } from '@element-plus/icons-vue'
     import getSubProductTypeListBySlug from '~/http/apis/getSubProductTypeListBySlug'
+    import useRoutePath from '~/hooks/useRoutePath'
+
+    const { productListPath, productTypeListPath } = useRoutePath()
 
     definePageMeta({
         layout: 'product'
@@ -33,11 +36,9 @@
         <el-empty v-if="!productTypeList?.length" :description="$t('No data')" />
         <template v-else>
             <div class="list-container">
-                <NuxtLinkLocale
+                <div
                     v-for="item in productTypeList"
                     :key="item.id"
-                    :to="item.isLeaf ? `/product/list/${(route.params.path as string[]).join('/')}/${item.slug}` : `/product/type/${(route.params.path as string[]).join('/')}/${item.slug}`"
-                    target="_self"
                     class="item-card"
                     :aria-label="item.label"
                 >
@@ -48,10 +49,13 @@
                     <div class="item-info">
                         <h3 class="item-title">{{ item.label }}</h3>
                     </div>
-                    <div class="more-info-btn">
+                    <NuxtLinkLocale
+                        class="more-info-btn"
+                        :to="item.isLeaf ? productListPath([...route.params.path, item.slug]) : productTypeListPath([...route.params.path, item.slug])"
+                        target="_self">
                         {{ $t('Learn More') }}
-                    </div>
-                </NuxtLinkLocale>
+                    </NuxtLinkLocale>
+                </div>
             </div>
             <div class="pagination-container">
                 <el-pagination
@@ -83,7 +87,6 @@
             background-color: #fff;
             transition: var(--transition-normal);
             overflow: hidden;
-            cursor: pointer;
 
             flex: 0 0 25%;
             padding: 10px;
@@ -101,12 +104,6 @@
                 .item-images img {
                     opacity: 0.9;
                     transform: scale(1.05);
-                }
-
-                .more-info-btn {
-                    border-color: #004DFF;
-                    background-color: #004DFF;
-                    color: #fff;
                 }
             }
         }
@@ -128,6 +125,7 @@
             align-items: center;
             justify-content: center;
             aspect-ratio: 4/3;
+            width: 100%;
 
             img {
                 max-width: 100%;
@@ -171,6 +169,12 @@
             display: inline-block;
             transition: all 0.3s ease;
             margin-bottom: 30px;
+
+            &:hover {
+                border-color: #004DFF;
+                background-color: #004DFF;
+                color: #fff;
+            }
         }
     }
 

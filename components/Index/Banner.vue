@@ -4,9 +4,9 @@
         <el-carousel v-else height="auto" :interval="3000">
             <el-carousel-item v-for="(banner, index) in bannerList" :key="index">
                 <Link v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType" class="banner-link">
-                    <NuxtImg loading="lazy" :src="banner.imagePath" :alt="$t('banner.image')" class="banner-image" />
+                    <NuxtImg loading="lazy" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" />
                 </Link>
-                <NuxtImg v-else loading="lazy" :src="banner.imagePath" :alt="$t('banner.image')" class="banner-image" />
+                <NuxtImg v-else loading="lazy" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" />
             </el-carousel-item>
         </el-carousel>
     </div>
@@ -30,7 +30,9 @@
 
 .banner-image {
     width: 100%;
-    min-height: 100px;
+    // min-height: 100px;
+    // 临时解决banner高度问题
+    min-height: 438px;
     object-fit: cover;
     display: block;
     margin: 0 auto;

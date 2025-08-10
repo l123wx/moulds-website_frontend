@@ -49,7 +49,7 @@
         <div role="presentation" class="chat-container" style="opacity: 1; position: relative;">
             <div class="chat-header">
                 <div class="chat-header-title">
-                    <div class="chat-header-title-text"><span>LD</span></div>
+                    <div class="chat-header-title-text"><span>LD Consultation</span></div>
                     <div class="chat-header-close">
                         <button
                             class="close-chat-button" type="button" aria-label="Minimize"

@@ -26,7 +26,8 @@
         flex-wrap: wrap;
         flex-direction: row;
         width: 94%;
-        max-width: 1340px;
+        max-width: @page-content-max-width;
+        margin: 0 auto;
         min-height: calc(100vh - var(--header-height) - 100vh/5);
     }
 

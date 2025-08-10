@@ -1,12 +1,24 @@
 <script setup lang="ts">
     import gsap from 'gsap'
     import { ArrowDown, ArrowUp } from '@element-plus/icons-vue'
+    import Link from '~/components/Link.vue'
     import getAllFloatingMenu from '~/http/apis/getAllFloatingMenu'
+    import useScreenMediaQuery from '~/hooks/useScreenMediaQuery'
+
+    const linkRef = ref<HTMLElement[]>([])
+
+    const { isMobile } = useScreenMediaQuery()
 
     const { data: list, error } = useAsyncData(() => getAllFloatingMenu(), {
         transform: data => data.data,
         default: () => []
     })
+
+    const handleMenuClick = (index: number) => {
+        if (linkRef.value[index]?.children?.[0]) {
+            (linkRef.value[index].children[0] as HTMLLinkElement).click()
+        }
+    }
 
     const handleBackTopClick = () => {
         gsap.to(document.querySelector('html'), { duration: 0.5, ease: 'easeInOutCubic', scrollTop: 0 })
@@ -22,25 +34,27 @@
         <el-button class="back-top" :icon="ArrowUp" @click="handleBackTopClick">
         </el-button>
         <template v-if="!error && list.length > 0">
-            <div v-for="menu in list" :key="menu.id" class="menu-item">
+            <div
+                v-for="(menu, index) in list"
+                :key="menu.id"
+                :style="isMobile ? '' : 'cursor: pointer'"
+                class="menu-item"
+                @click="() => !isMobile && handleMenuClick(index)"
+            >
                 <NuxtImg loading="lazy" :src="menu.imagePath" />
                 <div class="link">
-                    <NuxtLinkLocale
-                        v-if="menu.linkType === '0'"
-                        :to="menu.link || ''"
-                        :target="menu.openType === '1' ? '_blank' : '_self'"
-                        class="nav-link"
+                    <span
+                        ref="linkRef"
                     >
-                        {{ menu.label }}
-                    </NuxtLinkLocale>
-                    <NuxtLink
-                        v-else
-                        :to="menu.link || ''"
-                        :target="menu.openType === '1' ? '_blank' : '_self'"
-                        class="nav-link"
-                    >
-                        {{ menu.label }}
-                    </NuxtLink>
+                        <Link
+                            :to="menu.link || ''"
+                            :link-type="menu.linkType"
+                            :open-type="menu.openType"
+                            class="nav-link"
+                        >
+                            {{ menu.label }}
+                        </Link>
+                    </span>
                 </div>
             </div>
         </template>
@@ -89,6 +103,10 @@
             align-items: center;
             justify-content: center;
             position: relative;
+
+            &:hover {
+                background-color: #1f3a9d;
+            }
 
             img {
                 width: 60%;

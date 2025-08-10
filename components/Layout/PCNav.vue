@@ -4,9 +4,14 @@
         <ul v-else class="nav-list">
             <template v-for="menu in menuTreeList" :key="menu.id">
                 <li v-if="menu.children && menu.children.length" class="nav-item has-dropdown">
-                    <a href="#" class="nav-link">
+                    <Link
+                        :to="menu.link || ''"
+                        :link-type="menu.linkType"
+                        :open-type="menu.openType"
+                        class="nav-link"
+                    >
                         {{ menu.label }}
-                    </a>
+                    </Link>
                     <ul class="dropdown-menu">
                         <li v-for="subMenu in menu.children" :key="subMenu.id">
                             <Link

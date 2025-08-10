@@ -11,7 +11,6 @@
             openType: '0'
         }
     )
-
 </script>
 
 <template>

@@ -4,7 +4,7 @@
             <div class="footer-left">
                 <h3 class="subscribe-title">{{ $t('Email Subscription') }}</h3>
                 <div class="subscribe-form">
-                    <el-form ref="formRef" :model="form" style="width: 100%">
+                    <el-form ref="formRef" :model="form" style="width: 100%" @submit.prevent>
                         <el-form-item
                             prop="email"
                             :rules="[
@@ -14,7 +14,7 @@
                             style="margin: 0"
                         >
                             <div style="display: flex; gap: 10px; width: 100%;">
-                                <el-input v-model="form.email" type="text" class="email-input" :placeholder="$t('Your Email')" />
+                                <el-input v-model="form.email" type="text" class="email-input" :placeholder="$t('Your Email')" @keyup.enter.stop="handleSubscribe" />
                                 <el-button :disabled="isLoading" class="submit-btn" @click="handleSubscribe">
                                     <el-icon v-if="isLoading" class="is-loading" color="#fff" size="18">
                                         <Loading />

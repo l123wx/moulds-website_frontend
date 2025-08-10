@@ -17,7 +17,9 @@
                 :autoplay="false"
                 :arrow="isMobile ? 'always' : 'hover'"
                 indicator-position="none"
-                @change="handleSlideChange">
+                :loop="false"
+                @change="handleSlideChange"
+            >
                 <el-carousel-item v-for="(banner, index) in bannerList" :key="index">
                     <div
                         ref="imageContainerRef"
@@ -32,27 +34,6 @@
                                 class="product-image"
                                 @load="handleImageLoad"
                             />
-
-                            <!-- 放大镜镜头 -->
-                            <div
-                                v-if="canShowMagnifier"
-                                class="magnifying-lens"
-                                :style="lensStyle"
-                            >
-                                <div
-                                    v-if="isMobile"
-                                    class="mobile magnifying-glass"
-                                    :style="magnifyingGlassStyle"
-                                >
-                                    <NuxtImg
-                                        v-if="currentZoomImage"
-                                        :src="currentZoomImage.src"
-                                        class="magnified-image"
-                                        :style="magnifiedImageStyle"
-                                        loading="eager"
-                                    />
-                                </div>
-                            </div>
                         </template>
                         <template v-else>
                             <video
@@ -63,6 +44,26 @@
                         </template>
                     </div>
                 </el-carousel-item>
+                <!-- 放大镜镜头 -->
+                <div
+                    v-if="canShowMagnifier"
+                    class="magnifying-lens"
+                    :style="lensStyle"
+                >
+                    <div
+                        v-if="isMobile"
+                        class="mobile magnifying-glass"
+                        :style="magnifyingGlassStyle"
+                    >
+                        <NuxtImg
+                            v-if="currentZoomImage"
+                            :src="currentZoomImage.src"
+                            class="magnified-image"
+                            :style="magnifiedImageStyle"
+                            loading="eager"
+                        />
+                    </div>
+                </div>
             </el-carousel>
         </div>
 

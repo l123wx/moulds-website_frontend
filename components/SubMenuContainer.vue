@@ -43,7 +43,7 @@
         padding-top: 40px;
         margin: 0 auto 50px;
         width: 90%;
-        max-width: 1600px;
+        max-width: @page-content-max-width;
         display: flex;
         row-gap: 20px;
         column-gap: 3%;

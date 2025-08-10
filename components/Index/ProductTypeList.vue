@@ -1,4 +1,6 @@
 <script lang="ts">
+    import defaultImage from '~/assets/images/no-img.svg'
+
     export interface ProductItem {
         id: number;
         title: string;
@@ -23,6 +25,7 @@
                 <div class="product-card">
                     <div class="product-image">
                         <NuxtImg v-if="item.image" loading="lazy" :src="item.image" :alt="item.title" :title="item.title" />
+                        <img v-else :src="defaultImage" alt="default image" />
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">{{ item.title }}</h3>
@@ -37,7 +40,7 @@
 <style scoped lang="less">
 .product-list-container {
   width: 100%;
-  max-width: 1620px;
+  max-width: @page-content-max-width;
   margin: 0 auto;
 }
 

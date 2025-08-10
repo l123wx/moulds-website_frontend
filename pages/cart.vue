@@ -168,7 +168,7 @@
 <style scoped lang="less">
 .cart-page {
     min-height: calc(100vh - var(--header-height) - 20vh);
-    max-width: 1200px;
+    max-width: @page-content-max-width;
     margin: 0 auto;
     padding: 40px 20px;
     display: flex;

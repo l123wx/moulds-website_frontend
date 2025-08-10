@@ -8,10 +8,10 @@
 
     // 定义统计数据
     const stats = ref([
-        { activeNumber: 0, startNumber: 0, endNumber: 100, text: 'Products in\nour web shop', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 5000, text: 'Sales partners\naround the globe', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 200, text: 'Years of experience', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 50, text: 'Ready for\nyour challenges', suffix: '%' }
+        { activeNumber: 0, startNumber: 0, endNumber: 6000, text: 'Products in\nour web shop', suffix: '+' },
+        { activeNumber: 0, startNumber: 0, endNumber: 20, text: 'Sales partners\naround the globe', suffix: '+' },
+        { activeNumber: 0, startNumber: 0, endNumber: 24, text: 'Years of experience', suffix: '+' },
+        { activeNumber: 0, startNumber: 0, endNumber: 100, text: 'Ready for\nyour challenges', suffix: '%' }
     ])
 
     // 数字动画初始化标志
@@ -92,7 +92,6 @@
 }
 
 .stat-item {
-    flex: 1;
     display: flex;
     justify-content: center;
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import AddToCartButton from '~/components/Product/AddToCartButton.vue'
     import useRoutePath from '~/hooks/useRoutePath'
+    import defaultImage from '~/assets/images/no-img.svg'
 
     type Product = {
         id: number
@@ -21,6 +22,7 @@
         <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
             <div class="item-images">
                 <NuxtImg v-if="item.coverImagePath" loading="lazy" :src="item.coverImagePath" :alt="item.label" :title="item.label" />
+                <img v-else :src="defaultImage" alt="default image" />
             </div>
             <div class="item-info">
                 <h3 class="item-title">{{ item.label }}</h3>

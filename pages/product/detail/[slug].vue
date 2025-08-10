@@ -69,7 +69,7 @@
 <style scoped lang="less">
 .product-detail-container {
     padding: 20px;
-    max-width: 1200px;
+    max-width: @page-content-max-width;
     margin: 0 auto;
 
     .product-content {

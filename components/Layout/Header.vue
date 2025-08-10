@@ -49,7 +49,7 @@
                     <div class="search-bar" :class="{ show: isSearchBarOpen }">
                         <div class="container">
                             <div class="input-container">
-                                <input v-model="searchValue" type="text" :placeholder="$t('Search')" />
+                                <input v-model="searchValue" type="text" :placeholder="$t('Search')" @keyup.enter="handleSearchSubmit" />
                             </div>
                             <el-button plain class="search-button" @click="handleSearchSubmit">{{ $t('Search') }}</el-button>
                             <el-button text class="close-button" @click="handleSearchBarClose">
@@ -129,7 +129,7 @@
         z-index: 1;
 
         .main-header-content {
-            max-width: 1200px;
+            max-width: @page-content-max-width;
             height: var(--header-height);
             margin: 0 auto;
             display: flex;

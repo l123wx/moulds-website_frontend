@@ -22,7 +22,7 @@
     "Delete": "删除",
     "Clear All": "清空全部",
     "Total Items": "商品件数",
-    "Checkout (Disabled)": "去结算（暂未开放）",
+    "Checkout": "结算",
     "Select Specifications": "选择规格",
     "Confirm": "确定",
     "Cancel": "取消",
@@ -40,5 +40,18 @@
     "Subtotal": "小计",
     "Order Summary": "订单汇总",
     "Total Amount": "总金额",
-    "Banner Image": "Banner 图片"
+    "Banner Image": "Banner 图片",
+    "Please input {name}": "请输入{name}",
+    "Name": "姓名",
+    "Company": "公司",
+    "Email": "邮箱",
+    "Phone": "电话",
+    "Invite Code": "邀请码",
+    "Address": "地址",
+    "Country": "国家",
+    "Optional": "（可选）",
+    "Please input valid Email": "请输入正确的邮箱地址",
+    "Send Order": "发送订单",
+    "Order submitted successfully": "订单提交成功",
+    "Order submitted successfully tips": "您的订单已提交成功！我们将在收到消息后尽快回复您。"
 }

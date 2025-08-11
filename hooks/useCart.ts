@@ -85,7 +85,6 @@ export default function useCart () {
     }
 
     const updateQuantity = (cardItemId: string, quantity: number) => {
-        console.log('updateQuantity', cardItemId, quantity)
         const nextQty = Math.max(1, Math.floor(quantity || 1))
         const index = findIndex(cardItemId)
         if (index >= 0) {

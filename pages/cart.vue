@@ -86,14 +86,7 @@
                                     {{ $t('Clear All') }}
                                 </el-button>
 
-                                <el-button
-                                    type="primary"
-                                    size="large"
-                                    disabled
-                                    class="checkout-btn"
-                                >
-                                    {{ $t('Checkout (Disabled)') }}
-                                </el-button>
+                                <OrderCheckout />
                             </div>
                         </div>
                     </div>
@@ -294,7 +287,7 @@
     .thumb {
         width: 100px;
         height: 100px;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 8px;
         border: 1px solid #e5e7eb;
 
@@ -468,15 +461,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-
-            .checkout-btn {
-                width: 100%;
-                height: 48px;
-                font-size: 16px;
-                font-weight: 600;
-                border-radius: 8px;
-                margin: 0;
-            }
 
             .clear-btn {
                 align-self: flex-end;

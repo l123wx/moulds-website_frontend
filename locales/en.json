@@ -22,7 +22,7 @@
     "Delete": "Delete",
     "Clear All": "Clear All",
     "Total Items": "Total Items",
-    "Checkout (Disabled)": "Checkout (Disabled)",
+    "Checkout": "Checkout",
     "Select Specifications": "Select Specifications",
     "Confirm": "Confirm",
     "Cancel": "Cancel",
@@ -40,5 +40,18 @@
     "Subtotal": "Subtotal",
     "Order Summary": "Order Summary",
     "Total Amount": "Total Amount",
-    "Banner Image": "Banner Image"
+    "Banner Image": "Banner Image",
+    "Please input {name}": "Please input your {name}",
+    "Name": "Name",
+    "Company": "Company",
+    "Email": "Email",
+    "Phone": "Phone",
+    "Invite Code": "Invite Code",
+    "Address": "Address",
+    "Country": "Country",
+    "Optional": "(Optional)",
+    "Please input valid Email": "Please input valid Email",
+    "Send Order": "Send Order",
+    "Order submitted successfully": "Order submitted successfully",
+    "Order submitted successfully tips": "Your order has been submitted successfully! We will contact you as soon as possible."
 }

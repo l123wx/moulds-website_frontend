@@ -1,0 +1,57 @@
+.rich-text-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  >* {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .rich-text-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+table tr td {
+  font-size: 12px;
+  padding: 10px 3px;
+  line-height: 23px;
+  vertical-align: middle;
+  border: 0px solid #eee
+}
+
+table tr td p {
+  padding: 0;
+  margin: 0;
+}
+
+table tr:first-child {
+  font-size: 14px;
+  color: #333;
+  background: #ddd;
+  font-weight: 600
+}
+
+table tr:first-child td {
+  background: #ddd
+}
+
+table {
+  width: 100% !important;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border: 0px solid #ddd
+}
+
+table tr:nth-child(odd) {
+  background: #fff
+}
+
+table tr {
+  border-bottom: 0px solid #eee;
+  background: #f6f6f6
+}

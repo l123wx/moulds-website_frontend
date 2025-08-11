@@ -4,6 +4,10 @@ const useTinyMCEStyle = () => {
             {
                 rel: 'stylesheet',
                 href: '/content.min.css'
+            },
+            {
+                rel: 'stylesheet',
+                href: '/custom-editor-style.css'
             }
         ]
     })

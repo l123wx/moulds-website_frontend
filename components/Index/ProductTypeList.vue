@@ -80,8 +80,8 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 
     .product-image img {
-      opacity: 0.9;
-      transform: scale(1.05);
+      opacity: 0.8;
+      transform: scale(1.1);
     }
 
     .product-info {
@@ -97,7 +97,7 @@
 .product-image {
   flex: 1;
   overflow: hidden;
-  padding: 15px;
+  padding: 30px;
   background: #fff;
   display: flex;
   align-items: center;
@@ -105,8 +105,8 @@
   aspect-ratio: 4/3;
 
   img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     transition: transform 0.5s ease, opacity 0.3s ease;
   }

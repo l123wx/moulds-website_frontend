@@ -40,7 +40,7 @@
 
                     <!-- 搜索 -->
                     <div class="search-section item">
-                        <div class="search_warp" @click="isSearchBarOpen = true">
+                        <div class="search_warp" @click="handleSearchBarOpen">
                             <svg t="1602919003135" class="ss_icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9837" width="24" height="24">
                                 <path d="M951.9 904.8l-152-162.5c61.8-74 95.6-167.4 95.5-263.9 0-228.3-186-414.1-414.5-414.1S66.5 250 66.5 478.4c0 228.4 186 414.1 414.5 414.1 59.2 0.1 117.8-12.6 171.7-37.1 16-7.3 23-26.2 15.7-42.2-7.3-16-26.2-23-42.2-15.7-108.5 49.2-234.6 40-334.8-24.5-100.2-64.5-160.9-175.4-161-294.6 0.3-193.5 157.2-350.2 350.7-350.3 193.4 0 350.8 157.2 350.8 350.3 0.1 90.5-34.9 177.5-97.8 242.6-12.2 12.7-11.8 32.8 0.9 45 1 1 2.2 1.3 3.3 2 0.9 1.3 1.3 2.7 2.5 4l164.9 176.3c12 12.8 32.1 13.5 45 1.5 12.6-12 13.2-32.2 1.2-45z m0 0" p-id="9838"></path>
                             </svg>
@@ -49,7 +49,7 @@
                     <div class="search-bar" :class="{ show: isSearchBarOpen }">
                         <div class="container">
                             <div class="input-container">
-                                <input v-model="searchValue" type="text" :placeholder="$t('Search')" @keyup.enter="handleSearchSubmit" />
+                                <input ref="searchInputRef" v-model="searchValue" type="text" :placeholder="$t('Search')" @keyup.enter="handleSearchSubmit" />
                             </div>
                             <el-button plain class="search-button" @click="handleSearchSubmit">{{ $t('Search') }}</el-button>
                             <el-button text class="close-button" @click="handleSearchBarClose">
@@ -85,6 +85,8 @@
     const localePath = useLocalePath()
     const { homePath, productCatalogDownloadPath, productSearchPath } = useRoutePath()
     const isMobileMenuOpen = ref(false)
+
+    const searchInputRef = ref()
     const isSearchBarOpen = ref(false)
     const searchValue = ref('')
 
@@ -98,6 +100,13 @@
             watch: [locale]
         }
     )
+
+    const handleSearchBarOpen = () => {
+        isSearchBarOpen.value = true
+        nextTick(() => {
+            searchInputRef.value?.focus()
+        })
+    }
 
     const handleSearchBarClose = () => {
         isSearchBarOpen.value = false
@@ -157,10 +166,10 @@
                 display: flex;
                 align-items: center;
                 height: 100%;
-                max-width: 80px;
+                max-width: 100px;
 
                 @media screen and (max-width: @viewport-lg) {
-                    max-width: 60px;
+                    max-width: 80px;
                 }
 
                 img {
@@ -322,11 +331,11 @@
                     font-size: 15px;
                     box-shadow: none;
                     border-radius: 55px;
+                    margin-right: 5px;
 
                     @media screen and (max-width: @viewport-md) {
                         width: auto;
                         font-size: 14px;
-                        margin-right: 5px;
                     }
                 }
                 .close-button {

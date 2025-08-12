@@ -13,7 +13,7 @@
                     <div class="header">
                         <div class="title">{{ article?.title || '' }}</div>
                         <div class="time">
-                            发布日期: {{ dayjs(article?.createTime).format('YYYY-MM-DD') }}
+                            {{ dayjs(article?.createTime).locale($i18n.locale === 'zh' ? 'zh-cn' : 'en').format('MMM DD, YYYY') }}
                         </div>
                     </div>
                     <div class="content">
@@ -28,6 +28,7 @@
 <script setup lang="ts">
     import { ArrowRight } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
+    import 'dayjs/locale/zh-cn'
     import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
     import getArticleDetailBySlug from '~/http/apis/getArticleDetailBySlug'
     import useRoutePath from '~/hooks/useRoutePath'

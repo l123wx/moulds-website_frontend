@@ -5,6 +5,7 @@
             <template v-for="menu in menuTreeList" :key="menu.id">
                 <li v-if="menu.children && menu.children.length" class="nav-item has-dropdown">
                     <Link
+                        v-if="menu.link"
                         :to="menu.link || ''"
                         :link-type="menu.linkType"
                         :open-type="menu.openType"
@@ -12,6 +13,9 @@
                     >
                         {{ menu.label }}
                     </Link>
+                    <div v-else class="nav-link" style="cursor: default;">
+                        {{ menu.label }}
+                    </div>
                     <ul class="dropdown-menu">
                         <li v-for="subMenu in menu.children" :key="subMenu.id">
                             <Link
@@ -76,7 +80,7 @@
                 align-items: center;
                 color: #333;
                 text-decoration: none;
-                font-size: 16px;
+                font-size: 18px;
                 transition: all 0.3s;
                 height: 100px;
                 font-weight: 600;

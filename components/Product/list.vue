@@ -69,8 +69,8 @@
 
             &:hover {
                 .item-images img {
-                    opacity: 0.9;
-                    transform: scale(1.05);
+                    opacity: 0.8;
+                    transform: scale(1.1);
                 }
             }
         }

@@ -21,6 +21,7 @@
         backgroundColor?: string
         textColor?: string
         activeTextColor?: string
+        defaultOpeneds?: string[]
     }
 
     withDefaults(defineProps<MenuProps>(), {
@@ -29,28 +30,24 @@
         uniqueOpened: true,
         backgroundColor: '',
         textColor: '',
-        activeTextColor: ''
+        activeTextColor: '',
+        defaultOpeneds: () => []
     })
 
     const menuRef = ref<InstanceType<typeof ElMenu>>()
-    const emits = defineEmits(['select'])
-
-    const handleSelect = (index: string) => {
-        emits('select', index)
-    }
 </script>
 
 <template>
     <el-menu
         ref="menuRef"
         :default-active="defaultActive"
+        :default-openeds="defaultOpeneds"
         :mode="mode"
         :unique-opened="uniqueOpened"
         :background-color="backgroundColor"
         :text-color="textColor"
         :active-text-color="activeTextColor"
         class="infinite-menu"
-        @select="handleSelect"
     >
         <RecursiveMenuItem
             v-for="menu in menuList"

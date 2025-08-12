@@ -21,6 +21,8 @@
                     <InfiniteMenu
                         :default-active="activeMenuId"
                         :menu-list="subMenuTree.children || []"
+                        :default-openeds="activeMenuId ? [activeMenuId] : []"
+                        unique-opened
                         class="sub-menu"
                     />
                 </template>

@@ -16,7 +16,6 @@
                 :link-type="menu.linkType"
                 :open-type="menu.openType"
                 class="item"
-                @click.stop="() => {}"
             >
                 {{ menu.label }}
             </Link>

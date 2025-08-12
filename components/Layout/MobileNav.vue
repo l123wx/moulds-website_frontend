@@ -3,7 +3,7 @@
         <div class="menu-container" :class="{ open: isMenuOpen }">
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
-                <InfiniteMenu class="mobile-menu" :menu-list="menuTreeList" unique-opened />
+                <InfiniteMenu class="mobile-menu" :menu-list="menuTreeList" />
                 <NuxtLinkLocale class="el-menu-item" :to="productCatalogDownloadPath">
                     {{ $t('Product Catalog Download') }}
                 </NuxtLinkLocale>

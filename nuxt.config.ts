@@ -5,6 +5,12 @@ export default defineNuxtConfig({
     app: {
         head: {
             title: 'Automation-Automation-LD Plastic Solution Limited ',
+            link: [
+                {
+                    rel: 'icon',
+                    href: '/favicon.ico'
+                }
+            ],
             meta: [
                 { charset: 'utf-8' },
                 { name: 'apple-mobile-web-app-capable', content: 'yes' }, // iOS浏览器禁止缩放

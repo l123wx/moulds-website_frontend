@@ -1,6 +1,7 @@
 <template>
     <DefaultLayout>
         <SubMenuContainer
+            class="sub-menu-container"
             :active-menu-id="activeMenuId"
             :sub-menu-tree="subMenuTree"
             :sub-menu-pending="subMenuPending"
@@ -95,4 +96,8 @@
     })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+    :deep(.sub-menu-container .el-sub-menu__title) {
+        font-weight: 700;
+    }
+</style>

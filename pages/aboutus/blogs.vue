@@ -25,7 +25,7 @@
                                                     {{ article.title }}
                                                 </NuxtLinkLocale>
                                             </h3>
-                                            <hr class="e_line s_line">
+                                            <hr class="e_line">
                                             <div class="e_richText s_title clearfix response-transition">
                                                 {{ article.description }}
                                             </div>
@@ -129,7 +129,7 @@
 
     const formatDate = (date: string) => {
         if (!date) { return '' }
-        return dayjs(date).format('MMM DD,YYYY')
+        return dayjs(date).locale(locale.value === 'zh' ? 'zh-cn' : locale.value).format('MMM DD,YYYY')
     }
 
     const handlePageChange = (page: number) => {
@@ -322,7 +322,7 @@
 
     .e_line {
         width: 50px;
-        margin-left: 0px;
+        margin: 5px 0;
         height: 2px;
         border-top-style: solid;
         border-top-width: 2px;

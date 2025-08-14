@@ -22,6 +22,7 @@
     import getProductListByKeyword from '~/http/apis/getProductListByKeyword'
 
     const route = useRoute()
+    const { locale } = useI18n()
     const searchValue = computed(() => route.query.q as string)
 
     const currentPage = ref(1)
@@ -35,7 +36,7 @@
 
     const { data, refresh } = useAsyncData(
         'getProductListByKeyword_' + searchValue.value,
-        () => getProductListByKeyword(searchValue.value as string, currentPage.value, PAGE_SIZE)
+        () => getProductListByKeyword(searchValue.value as string, currentPage.value, PAGE_SIZE, locale.value)
     )
 
     const productList = computed(() => data.value?.rows ?? [])

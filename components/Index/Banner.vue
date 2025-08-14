@@ -27,9 +27,11 @@
     import getBanners, { type Banner } from '~/http/apis/getBanners'
     import Link from '~/components/Link.vue'
 
+    const { locale } = useI18n()
+
     const carouselRef = ref<InstanceType<typeof ElCarousel>>()
 
-    const { data: bannerList, error } = useAsyncData(() => getBanners(), {
+    const { data: bannerList, error } = useAsyncData(() => getBanners(locale.value), {
         transform: data => data?.data,
         default: () => [] as Banner[]
     })

@@ -13,13 +13,14 @@
     const PAGE_SIZE = 12
 
     const route = useRoute()
+    const { locale } = useI18n()
 
     const activeProductTypeSlug = computed(() => route.params.path[route.params.path.length - 1])
 
     const currentPage = ref(1)
     const { data, refresh } = await useAsyncData(
         'productTypes_' + activeProductTypeSlug.value,
-        () => getSubProductTypeListBySlug(activeProductTypeSlug.value, currentPage.value, PAGE_SIZE)
+        () => getSubProductTypeListBySlug(activeProductTypeSlug.value, currentPage.value, PAGE_SIZE, locale.value)
     )
 
     const productTypeList = computed(() => data.value?.rows)

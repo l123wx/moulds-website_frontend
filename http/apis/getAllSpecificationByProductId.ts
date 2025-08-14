@@ -32,8 +32,13 @@ export type ProductSpecification = {
     updateTime: string;
 }
 
-const getAllSpecificationByProductId = (productId: number) => {
-    return http<{ data: ProductSpecification[] }>(`/product/${productId}/specifications`, { method: 'GET' })
+const getAllSpecificationByProductId = (productId: number, languageCode: string) => {
+    return http<{ data: ProductSpecification[] }>(`/product/${productId}/specifications`, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getAllSpecificationByProductId

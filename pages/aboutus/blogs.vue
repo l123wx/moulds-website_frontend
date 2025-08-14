@@ -86,6 +86,7 @@
     import useRoutePath from '~/hooks/useRoutePath'
 
     const { articleDetailPath } = useRoutePath()
+    const { locale } = useI18n()
 
     definePageMeta({
         layout: 'about-us'
@@ -108,7 +109,7 @@
 
     const { data, pending, refresh } = useAsyncData(
         'blogList_' + ACTIVE_PAGE_SLUG,
-        () => getArticleListByArticleTypeSlug(ACTIVE_PAGE_SLUG, pageNum.value, pageSize),
+        () => getArticleListByArticleTypeSlug(ACTIVE_PAGE_SLUG, pageNum.value, pageSize, locale.value),
         {
             default: () => ({
                 rows: [],

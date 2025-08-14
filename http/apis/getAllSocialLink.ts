@@ -23,8 +23,13 @@ type SocialLink = {
   isDeleted: string;
 }
 
-const getAllSocialLink = () => {
-    return http<{ data: SocialLink[] }>('/socialLink', { method: 'GET' })
+const getAllSocialLink = (languageCode: string) => {
+    return http<{ data: SocialLink[] }>('/socialLink', {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getAllSocialLink

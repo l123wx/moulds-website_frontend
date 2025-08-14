@@ -8,8 +8,9 @@
     const linkRef = ref<HTMLElement[]>([])
 
     const { isMobile } = useScreenMediaQuery()
+    const { locale } = useI18n()
 
-    const { data: list, error } = useAsyncData(() => getAllFloatingMenu(), {
+    const { data: list, error } = useAsyncData(() => getAllFloatingMenu(locale.value), {
         transform: data => data.data,
         default: () => []
     })

@@ -28,7 +28,7 @@
     const ABOUT_US_MENU_ID = 2
     const { data: subMenuList, pending: subMenuPending, refresh: subMenuRefresh } = await useAsyncData(
         'getWebsiteMenuHierarchyById_' + ABOUT_US_MENU_ID,
-        () => getWebsiteMenuHierarchyById(ABOUT_US_MENU_ID),
+        () => getWebsiteMenuHierarchyById(ABOUT_US_MENU_ID, locale.value),
         {
             transform: (data) => data.data,
             default: () => []

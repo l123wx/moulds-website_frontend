@@ -62,8 +62,9 @@
         email: ''
     })
     const formRef = ref()
+    const { locale } = useI18n()
 
-    const { data: socialLinkList, error } = useAsyncData(() => getAllSocialLink(), {
+    const { data: socialLinkList, error } = useAsyncData(() => getAllSocialLink(locale.value), {
         transform: data => data.data,
         default: () => []
     })

@@ -38,8 +38,13 @@ type Column = {
   isDeleted: string;
 }
 
-const getAllMenu = () => {
-    return http<{ data: Column[] }>('/websiteMenu', { method: 'GET' })
+const getAllMenu = (languageCode: string) => {
+    return http<{ data: Column[] }>('/websiteMenu', {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getAllMenu

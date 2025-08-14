@@ -50,8 +50,13 @@ type Product = {
     updateTime: string;
 }
 
-const getProductDetailBySlug = (slug: string) => {
-    return http<{ data: Product}>(`/product/${slug}`, { method: 'GET' })
+const getProductDetailBySlug = (slug: string, languageCode: string) => {
+    return http<{ data: Product}>(`/product/${slug}`, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getProductDetailBySlug

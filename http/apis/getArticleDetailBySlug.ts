@@ -41,8 +41,13 @@ type Article = {
     updateTime: string;
 }
 
-const getArticleDetailBySlug = (slug: string) => {
-    return http<{ data: Article }>('/article/' + slug, { method: 'GET' })
+const getArticleDetailBySlug = (slug: string, languageCode: string) => {
+    return http<{ data: Article }>('/article/' + slug, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getArticleDetailBySlug

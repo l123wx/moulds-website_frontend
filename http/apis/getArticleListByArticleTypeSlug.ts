@@ -41,8 +41,15 @@ type Article = {
     updateTime: string;
 }
 
-const getArticleListByArticleTypeSlug = (slug: string, page: number, pageSize: number) => {
-    return http<{ rows: Article[], total: number }>(`/article/listByTypeSlug/${slug}?pageNum=${page}&pageSize=${pageSize}`, { method: 'GET' })
+const getArticleListByArticleTypeSlug = (slug: string, page: number, pageSize: number, languageCode: string) => {
+    return http<{ rows: Article[], total: number }>(`/article/listByTypeSlug/${slug}`, {
+        method: 'GET',
+        params: {
+            pageNum: page,
+            pageSize,
+            languageCode
+        }
+    })
 }
 
 export default getArticleListByArticleTypeSlug

@@ -34,6 +34,7 @@
     import useRoutePath from '~/hooks/useRoutePath'
 
     const { homePath, blogsPath } = useRoutePath()
+    const { locale } = useI18n()
 
     useTinyMCEStyle()
 
@@ -53,7 +54,7 @@
         error
     } = useAsyncData(
         'getArticleDetailBySlug_' + articleSlug,
-        () => getArticleDetailBySlug(articleSlug),
+        () => getArticleDetailBySlug(articleSlug, locale.value),
         {
             transform: (data) => data.data
         }

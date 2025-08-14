@@ -32,8 +32,13 @@ type ProductType = {
     updateTime: string;
 }
 
-const getAllParentProductTypeBySlug = (slug: string) => {
-    return http<{ data: ProductType[] }>(`/productType/path/${slug}`, { method: 'GET' })
+const getAllParentProductTypeBySlug = (slug: string, languageCode: string) => {
+    return http<{ data: ProductType[] }>(`/productType/path/${slug}`, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getAllParentProductTypeBySlug

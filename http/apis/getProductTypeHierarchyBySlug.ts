@@ -32,8 +32,13 @@ type ProductType = {
   updateTime: string;
 }
 
-const getProductTypeHierarchyBySlug = (slug: string) => {
-    return http<{ data: ProductType[] }>(`/productType/hierarchy/${slug}`, { method: 'GET' })
+const getProductTypeHierarchyBySlug = (slug: string, languageCode: string) => {
+    return http<{ data: ProductType[] }>(`/productType/hierarchy/${slug}`, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getProductTypeHierarchyBySlug

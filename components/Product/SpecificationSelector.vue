@@ -63,6 +63,7 @@
     import getAllSpecificationByProductId from '~/http/apis/getAllSpecificationByProductId'
 
     const { isMobile } = useScreenMediaQuery()
+    const { locale } = useI18n()
 
     const currentProduct = ref<Product | null>(null)
     const visible = ref(false)
@@ -71,7 +72,7 @@
 
     const { data: specificationList, pending, refresh } = useAsyncData(
         () => `product-${currentProduct.value?.id}-specification-list`,
-        () => getAllSpecificationByProductId(currentProduct.value!.id),
+        () => getAllSpecificationByProductId(currentProduct.value!.id, locale.value),
         {
             transform: data => data.data,
             default: () => [],

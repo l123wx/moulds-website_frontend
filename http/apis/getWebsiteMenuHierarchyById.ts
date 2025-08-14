@@ -38,8 +38,13 @@ type WebsiteMenu = {
   isDeleted: string;
 }
 
-const getWebsiteMenuHierarchyById = (id: number) => {
-    return http<{ data: WebsiteMenu[] }>(`/websiteMenu/hierarchy/${id}`, { method: 'GET' })
+const getWebsiteMenuHierarchyById = (id: number, languageCode: string) => {
+    return http<{ data: WebsiteMenu[] }>(`/websiteMenu/hierarchy/${id}`, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getWebsiteMenuHierarchyById

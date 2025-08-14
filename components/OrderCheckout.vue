@@ -15,6 +15,7 @@
     const { orderSubmitSuccessPath } = useRoutePath()
     const router = useRouter()
     const localePath = useLocalePath()
+    const { locale } = useI18n()
 
     const showDrawer = ref(false)
 
@@ -52,7 +53,7 @@
                 specificationId: item.specification.id,
                 quantity: item.quantity
             }))
-        }))
+        }, locale.value))
 
         showDrawer.value = false
         unlock()

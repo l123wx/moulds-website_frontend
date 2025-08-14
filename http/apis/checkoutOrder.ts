@@ -34,10 +34,13 @@ type OrderInfo = {
   productList?: Array<Product>;
 }
 
-const checkoutOrder = (body: OrderInfo) => {
+const checkoutOrder = (body: OrderInfo, languageCode: string) => {
     return http('/api/order/checkout', {
         method: 'POST',
-        body
+        body,
+        params: {
+            languageCode
+        }
     })
 }
 

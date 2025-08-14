@@ -19,8 +19,13 @@ export type Banner = {
     isDeleted: string
 }
 
-const getBanners = () => {
-    return http<{ data: Banner[] }>('/banner', { method: 'GET' })
+const getBanners = (languageCode: string) => {
+    return http<{ data: Banner[] }>('/banner', {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getBanners

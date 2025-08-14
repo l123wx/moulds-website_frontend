@@ -7,19 +7,12 @@ const http = async <T = any>(url: string, options: any = {}) => {
     // 判断是否在客户端环境
     const isClient = process.client
 
-    const i18n = useI18n()
-    const { t: $t } = i18n
-
     try {
         const response = await $fetch<T>(url, {
             baseURL: BASE_URL,
             ...options,
             timeout: DEFAULT_TIMEOUT,
-            credentials: 'omit',
-            params: {
-                ...options.params,
-                ...(i18n.locale.value ? { languageCode: i18n.locale.value } : {})
-            }
+            credentials: 'omit'
         })
 
         const data = response as any

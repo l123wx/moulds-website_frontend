@@ -94,7 +94,8 @@
 
     const { data: menuTreeList, error } = useAsyncData(
         'getAllMenu',
-        () => getAllMenu(), {
+        () => getAllMenu(locale.value),
+        {
             transform: data => handconstree(data.data, 'id', 'parentId'),
             default: () => [],
             watch: [locale]

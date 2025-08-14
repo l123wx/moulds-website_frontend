@@ -36,6 +36,7 @@
     })
 
     const route = useRoute()
+    const { locale } = useI18n()
 
     const breadcrumbList = ref([
         {
@@ -49,7 +50,7 @@
     const activePageSlug = computed(() => route.params.path[route.params.path.length - 1])
     const { data: pageDetail, pending: pageDetailPending } = await useAsyncData(
         'getPageDetailBySlug_' + activePageSlug.value,
-        () => getPageDetailBySlug(activePageSlug.value),
+        () => getPageDetailBySlug(activePageSlug.value, locale.value),
         {
             transform: (data) => data.data
         }

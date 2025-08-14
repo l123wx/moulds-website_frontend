@@ -20,8 +20,13 @@ type Language = {
     isDeleted: string;
 }
 
-const getLanguage = () => {
-    return http<{ data: { language: Language[], defaultLanguage: string } }>('/language', { method: 'GET' })
+const getLanguage = (languageCode: string) => {
+    return http<{ data: { language: Language[], defaultLanguage: string } }>('/language', {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getLanguage

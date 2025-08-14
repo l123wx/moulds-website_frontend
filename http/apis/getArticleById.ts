@@ -1,7 +1,12 @@
 import http from '..'
 
-const getArticleById = (id: number) => {
-    return http<any>('/articlelist/' + id, { method: 'GET' })
+const getArticleById = (id: number, languageCode: string) => {
+    return http<any>('/articlelist/' + id, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getArticleById

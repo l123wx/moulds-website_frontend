@@ -30,6 +30,7 @@
     import { handconstree } from '~/utils'
 
     const route = useRoute()
+    const { locale } = useI18n()
     const activeProductTypeSlug = computed(() => {
         return route.params.path[route.params.path.length - 1]
     })
@@ -39,7 +40,7 @@
 
     const { data: subMenuList, pending: subMenuPending, refresh: subMenuRefresh } = await useAsyncData(
         'productTypeSubMenu_' + activeRootParentType.value,
-        () => getProductTypeHierarchyBySlug(activeRootParentType.value),
+        () => getProductTypeHierarchyBySlug(activeRootParentType.value, locale.value),
         {
             transform: (data) => data.data,
             default: () => [],
@@ -49,7 +50,7 @@
 
     const { data: breadcrumbList, pending: breadcrumbPending } = await useAsyncData(
         'getAllParentProductTypeBySlug_' + activeProductTypeSlug.value,
-        () => getAllParentProductTypeBySlug(activeProductTypeSlug.value),
+        () => getAllParentProductTypeBySlug(activeProductTypeSlug.value, locale.value),
         {
             transform: (data) => {
                 let basePath = '/product/type'

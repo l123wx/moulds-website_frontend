@@ -29,8 +29,13 @@ type PageDetail = {
     updateTime: string
 }
 
-const getPageDetailBySlug = (slug: string) => {
-    return http<{ data: PageDetail }>('/page/' + slug, { method: 'GET' })
+const getPageDetailBySlug = (slug: string, languageCode: string) => {
+    return http<{ data: PageDetail }>('/page/' + slug, {
+        method: 'GET',
+        params: {
+            languageCode
+        }
+    })
 }
 
 export default getPageDetailBySlug

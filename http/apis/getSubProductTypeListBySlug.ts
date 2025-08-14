@@ -35,8 +35,15 @@ type ProductType = {
   updateTime: string;
 }
 
-const getSubProductTypeListBySlug = (slug: string, page: number, pageSize: number) => {
-    return http<{ rows: ProductType[], total: number }>(`/productType/subType/${slug}?pageNum=${page}&pageSize=${pageSize}`, { method: 'GET' })
+const getSubProductTypeListBySlug = (slug: string, page: number, pageSize: number, languageCode: string) => {
+    return http<{ rows: ProductType[], total: number }>(`/productType/subType/${slug}`, {
+        method: 'GET',
+        params: {
+            pageNum: page,
+            pageSize,
+            languageCode
+        }
+    })
 }
 
 export default getSubProductTypeListBySlug

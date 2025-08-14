@@ -47,11 +47,12 @@
 
     useTinyMCEStyle()
     const route = useRoute()
+    const { locale } = useI18n()
     const { slug } = route.params as { slug: string }
 
     const { data: productData } = await useAsyncData(
         `product-${slug}`,
-        () => getProductDetailBySlug(slug),
+        () => getProductDetailBySlug(slug, locale.value),
         {
             transform: (data) => data?.data || {}
         }

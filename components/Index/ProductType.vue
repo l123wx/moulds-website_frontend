@@ -2,61 +2,15 @@
     import { ref } from 'vue'
     import ProductTypeList, { type ProductItem } from './ProductTypeList.vue'
     import getHomePageProductTypes from '~/http/apis/getHomePageProductTypes'
-    import getSubProductTypeListBySlug from '~/http/apis/getSubProductTypeListBySlug'
-    import getProductListByProductTypeSlug from '~/http/apis/getProductListByProductTypeSlug'
-    import useRoutePath from '~/hooks/useRoutePath'
 
     const activeTabIndex = ref(0)
 
-    const { productTypeListPath, productDetailPath } = useRoutePath()
-
     const { data: productTypes, error } = await useAsyncData(
         'productTypes',
-        async () => {
-            const res = await getHomePageProductTypes()
-            const productTypes = res.data as any[]
-
-            if (productTypes?.length) {
-                const firstType = productTypes[0]
-                const secondType = productTypes[1]
-
-                // 第一个分类获取子分类，第二个分类获取商品
-
-                const firstTypeChildren = await getSubProductTypeListBySlug(firstType.slug, 1, 100)
-                const secondTypeProducts = await getProductListByProductTypeSlug(secondType.slug, 1, 100)
-
-                productTypes[0].children = firstTypeChildren.rows
-                productTypes[1].children = secondTypeProducts.rows
-            }
-
-            return productTypes?.map((firstType, index) => {
-                return {
-                    id: firstType.id,
-                    title: firstType.label,
-                    image: firstType.imagePath,
-                    children: index === 0
-                        ? firstType.children?.map((subType: any) => {
-                            return {
-                                id: subType.id,
-                                title: subType.label,
-                                image: subType.imagePath,
-                                href: productTypeListPath([firstType.slug, subType.slug])
-                            }
-                        })
-                        : firstType.children?.map((subProduct: any) => {
-                            return {
-                                id: subProduct.id,
-                                title: subProduct.label,
-                                image: subProduct.coverImagePath,
-                                href: productDetailPath(subProduct.slug)
-                            }
-                        })
-                }
-            })
-        },
+        () => getHomePageProductTypes(),
         {
-            server: false,
-            default: () => [] as (ProductItem & { children: ProductItem[] })[]
+            default: () => [] as (ProductItem & { children: ProductItem[] })[],
+            transform: (data) => data.data
         }
     )
 
@@ -106,6 +60,11 @@
             text-align: center;
             justify-content: center;
             margin-bottom: 30px;
+
+            @media screen and (max-width: @viewport-md) {
+                gap: 10px;
+            }
+
             .tab-item {
                 display: block;
                 line-height: 50px;
@@ -123,6 +82,12 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+
+            @media screen and (max-width: @viewport-md) {
+                font-size: 14px;
+                margin: 0;
+                width: fit-content;
+            }
 
                 &.active {
                     color: #004DFF;

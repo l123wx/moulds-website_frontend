@@ -17,7 +17,7 @@ export default defineNuxtConfig({
                 {
                     name: 'viewport',
                     content:
-                      'width=device-width, initial-scale=1.0, shrink-to-fit=no, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
+                    'width=device-width, initial-scale=1.0, shrink-to-fit=no, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'
                 },
                 { name: 'renderer', content: 'webkit' }, // 强制让360浏览器使用Webkit内核
                 { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -25,13 +25,13 @@ export default defineNuxtConfig({
                     // hid: 'description',
                     name: 'description',
                     content:
-                      'Automation LD Plastic Solution Limited '
+                    'Automation LD Plastic Solution Limited '
                 },
                 {
                     // hid: 'keywords',
                     name: 'keywords',
                     content:
-                      ''
+                    ''
                 }
             ]
         }
@@ -87,10 +87,14 @@ export default defineNuxtConfig({
         '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } }
     },
 
-    modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image'],
+    modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui'],
 
     elementPlus: {
         importStyle: 'scss'
+    },
+
+    ui: {
+        fonts: false
     },
 
     i18n: {
@@ -119,7 +123,7 @@ export default defineNuxtConfig({
         }
     },
 
-    css: ['normalize.css/normalize.css', '~/assets/styles/index.less'],
+    css: ['normalize.css/normalize.css', '~/assets/styles/nuxt-ui.css', '~/assets/styles/index.less'],
 
     image: {
         dir: 'assets/images',
@@ -134,6 +138,22 @@ export default defineNuxtConfig({
         },
         twicpics: {
             baseURL: ''
+        }
+    },
+
+    devtools: {
+        enabled: true
+    },
+
+    runtimeConfig: {
+        // Private keys (only available on server-side)
+        apiUrl: 'http://159.75.215.188:56031/prod-api/api',
+        profileUrl: 'http://159.75.215.188:56031/profile/upload',
+        domain: '159.75.215.188',
+
+        // Public keys that are exposed to client-side
+        public: {
+            // 如果需要在客户端使用API URL，可以在这里添加
         }
     }
 })

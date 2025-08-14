@@ -1,5 +1,4 @@
 import { ElMessage } from 'element-plus'
-import useI18n from '~/hooks/useI18n'
 
 const BASE_URL = '/api'
 const DEFAULT_TIMEOUT = 10 * 1000
@@ -9,7 +8,7 @@ const http = async <T = any>(url: string, options: any = {}) => {
     const isClient = process.client
 
     const i18n = useI18n()
-    const { $t, languageCode } = i18n
+    const { t: $t } = i18n
 
     try {
         const response = await $fetch<T>(url, {
@@ -19,7 +18,7 @@ const http = async <T = any>(url: string, options: any = {}) => {
             credentials: 'omit',
             params: {
                 ...options.params,
-                ...(languageCode ? { languageCode } : {})
+                ...(i18n.locale.value ? { languageCode: i18n.locale.value } : {})
             }
         })
 

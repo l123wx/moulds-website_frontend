@@ -1,6 +1,6 @@
 import http from '..'
 
-type Column = {
+export type Banner = {
     /** Banner ID */
     id: number
     /** Banner 图片路径 */
@@ -20,7 +20,7 @@ type Column = {
 }
 
 const getBanners = () => {
-    return http<{ data: Column[] }>('/banner', { method: 'GET' })
+    return http<{ data: Banner[] }>('/banner', { method: 'GET' })
 }
 
 export default getBanners

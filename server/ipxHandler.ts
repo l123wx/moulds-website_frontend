@@ -1,13 +1,16 @@
 import { createIPX, createIPXH3Handler, ipxHttpStorage } from 'ipx'
 
 export default lazyEventHandler(() => {
+    const config = useRuntimeConfig()
+    const PROFILE_URL = config.profileUrl
+
     const ipx = createIPX({
         maxAge: 3600,
         alias: {
-            '/profile/upload': 'http://localhost:39254/profile/upload'
+            '/profile/upload': PROFILE_URL
         },
         storage: ipxHttpStorage({
-            domains: ['localhost']
+            domains: ['localhost', config.domain]
         })
     })
 

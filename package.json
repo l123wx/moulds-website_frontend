@@ -11,13 +11,13 @@
     },
     "dependencies": {
         "@nuxt/image": "^1.11.0",
+        "@nuxt/ui": "^3.3.0",
         "@videojs-player/vue": "^1.0.0",
         "dayjs": "^1.11.10",
         "element-plus": "^2.10.5",
         "gsap": "^3.12.2",
         "ipx": "^3.1.1",
-        "normalize.css": "^8.0.1",
-        "video.js": "^8.6.1"
+        "normalize.css": "^8.0.1"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.3.0",

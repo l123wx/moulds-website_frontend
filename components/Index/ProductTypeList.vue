@@ -24,7 +24,7 @@
             <div v-for="item in items" :key="item.id" class="product-item">
                 <div class="product-card">
                     <div class="product-image">
-                        <NuxtImg v-if="item.image" loading="lazy" :src="item.image" :alt="item.title" :title="item.title" />
+                        <NuxtImg v-if="item.image" format="webp" loading="lazy" :src="item.image" :alt="item.title" :title="item.title" />
                         <img v-else :src="defaultImage" alt="default image" />
                     </div>
                     <div class="product-info">

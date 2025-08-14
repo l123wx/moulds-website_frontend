@@ -1,27 +1,37 @@
 <template>
     <div class="banner">
         <div v-if="error">{{ $t('http.error') }}</div>
-        <el-carousel v-else ref="carouselRef" height="auto" :interval="3000" trigger="click">
-            <el-carousel-item v-for="(banner, index) in bannerList" :key="index">
-                <Link v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType" class="banner-link">
-                    <NuxtImg loading="lazy" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
-                </Link>
-                <NuxtImg v-else loading="lazy" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
-            </el-carousel-item>
-        </el-carousel>
+        <UCarousel
+            v-slot="{ item: banner }"
+            arrows
+            dots
+            :items="bannerList"
+            :ui="{
+                dots: 'bottom-0',
+                dot: 'w-[10px] h-[10px] !bg-[#999] opacity-20 data-[state=active]:opacity-100',
+                arrows: 'absolute top-[50%] translate-y-[-50%] z-10 w-full',
+                prev: '!start-4',
+                next: '!end-4'
+            }"
+        >
+            <Link v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType" class="banner-link">
+                <NuxtImg loading="lazy" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
+            </Link>
+            <NuxtImg v-else loading="lazy" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
+        </UCarousel>
     </div>
 </template>
 
 <script setup lang="ts">
     import type { ElCarousel } from 'element-plus'
-    import getBanners from '~/http/apis/getBanners'
+    import getBanners, { type Banner } from '~/http/apis/getBanners'
     import Link from '~/components/Link.vue'
 
     const carouselRef = ref<InstanceType<typeof ElCarousel>>()
 
     const { data: bannerList, error } = useAsyncData(() => getBanners(), {
         transform: data => data?.data,
-        default: () => []
+        default: () => [] as Banner[]
     })
 
     const handleImageLoad = () => {
@@ -32,7 +42,6 @@
 <style scoped lang="less">
 .banner {
     width: 100%;
-    overflow: hidden;
 }
 
 .banner-image {
@@ -40,22 +49,5 @@
     object-fit: cover;
     display: block;
     margin: 0 auto;
-}
-
-:deep(.el-carousel__item) {
-    height: fit-content;
-    max-height: calc(100vh - var(--header-height) - 20%);
-}
-
-:deep(.el-carousel__indicators) {
-    z-index: 10;
-    bottom: -14px;
-}
-
-:deep(.el-carousel__button) {
-    height: 10px;
-    width: 10px;
-    background-color: #999;
-    border-radius: 50%;
 }
 </style>

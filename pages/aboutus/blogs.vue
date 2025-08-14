@@ -113,8 +113,7 @@
             default: () => ({
                 rows: [],
                 total: 0
-            }),
-            server: false
+            })
         }
     )
 

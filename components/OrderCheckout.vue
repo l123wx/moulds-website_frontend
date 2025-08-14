@@ -29,17 +29,19 @@
         country: ''
     })
 
-    const rules = ref<FormRules>({
-        name: [{ required: true, message: $t('Please input {name}', { name: $t('Name').toLocaleLowerCase() }), trigger: 'blur' }],
-        company: [{ required: true, message: $t('Please input {name}', { name: $t('Company').toLocaleLowerCase() }), trigger: 'blur' }],
+    const hasInviteCode = computed(() => Boolean(form.value.inviteCode))
+
+    const rules = computed<FormRules>(() => ({
+        name: [{ required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Name').toLocaleLowerCase() }), trigger: 'blur' }],
+        company: [{ required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Company').toLocaleLowerCase() }), trigger: 'blur' }],
         email: [
-            { required: true, message: $t('Please input {name}', { name: $t('Email').toLocaleLowerCase() }), trigger: 'blur' },
+            { required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Email').toLocaleLowerCase() }), trigger: 'blur' },
             { type: 'email', message: $t('Please input valid Email'), trigger: 'blur' }
         ],
-        phone: [{ required: true, message: $t('Please input {name}', { name: $t('Phone').toLocaleLowerCase() }), trigger: 'blur' }],
-        address: [{ required: true, message: $t('Please input {name}', { name: $t('Address').toLocaleLowerCase() }), trigger: 'blur' }],
-        country: [{ required: true, message: $t('Please input {name}', { name: $t('Country').toLocaleLowerCase() }), trigger: 'blur' }]
-    })
+        phone: [{ required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Phone').toLocaleLowerCase() }), trigger: 'blur' }],
+        address: [{ required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Address').toLocaleLowerCase() }), trigger: 'blur' }],
+        country: [{ required: !hasInviteCode.value, message: $t('Please input {name}', { name: $t('Country').toLocaleLowerCase() }), trigger: 'blur' }]
+    }))
 
     const handleSubmit = async () => {
         await formRef.value?.validate()
@@ -53,8 +55,8 @@
         }))
 
         showDrawer.value = false
-        clear()
         unlock()
+        clear()
         router.push(localePath(orderSubmitSuccessPath))
     }
 </script>
@@ -90,26 +92,26 @@
                     <el-row :gutter="10">
                         <el-col :span="12">
                             <el-form-item :label="$t('Name')" prop="name">
-                                <el-input v-model="form.name" :placeholder="$t('Name')" />
+                                <el-input v-model="form.name" :placeholder="$t('Name')" :disabled="hasInviteCode" />
                             </el-form-item>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item :label="$t('Country')" prop="country">
-                                <el-input v-model="form.country" :placeholder="$t('Country')" />
+                                <el-input v-model="form.country" :placeholder="$t('Country')" :disabled="hasInviteCode" />
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-form-item :label="$t('Company')" prop="company">
-                        <el-input v-model="form.company" :placeholder="$t('Company')" />
+                        <el-input v-model="form.company" :placeholder="$t('Company')" :disabled="hasInviteCode" />
                     </el-form-item>
                     <el-form-item :label="$t('Address')" prop="address">
-                        <el-input v-model="form.address" :placeholder="$t('Address')" />
+                        <el-input v-model="form.address" :placeholder="$t('Address')" :disabled="hasInviteCode" />
                     </el-form-item>
                     <el-form-item :label="$t('Email')" prop="email">
-                        <el-input v-model="form.email" :placeholder="$t('Email')" />
+                        <el-input v-model="form.email" :placeholder="$t('Email')" :disabled="hasInviteCode" />
                     </el-form-item>
                     <el-form-item :label="$t('Phone')" prop="phone">
-                        <el-input v-model="form.phone" :placeholder="$t('Phone')" />
+                        <el-input v-model="form.phone" :placeholder="$t('Phone')" :disabled="hasInviteCode" />
                     </el-form-item>
                 </el-form>
             </div>

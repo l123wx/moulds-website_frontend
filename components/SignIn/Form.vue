@@ -82,8 +82,6 @@
     import type { FormItemRule, ElForm } from 'element-plus'
     import { ElMessage } from 'element-plus'
 
-    import useI18n from '~/hooks/useI18n'
-
     import getPhoneCode from '~/http/apis/getPhoneCode'
     import getCaptchaImage from '~/http/apis/getCaptchaImage'
 
@@ -121,7 +119,7 @@
         submitButtonLoading?: boolean
     }>()
 
-    const { $t } = useI18n()
+    const { t: $t } = useI18n()
 
     const formRef = ref<InstanceType<typeof ElForm>>()
 

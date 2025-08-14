@@ -30,37 +30,39 @@
 </script>
 
 <template>
-    <div class="floating-menu-container">
-        <el-button class="back-top" :icon="ArrowUp" @click="handleBackTopClick">
-        </el-button>
-        <template v-if="!error && list.length > 0">
-            <div
-                v-for="(menu, index) in list"
-                :key="menu.id"
-                :style="isMobile ? '' : 'cursor: pointer'"
-                class="menu-item"
-                @click="() => !isMobile && handleMenuClick(index)"
-            >
-                <NuxtImg loading="lazy" :src="menu.imagePath" />
-                <div class="link">
-                    <span
-                        ref="linkRef"
-                    >
-                        <Link
-                            :to="menu.link || ''"
-                            :link-type="menu.linkType"
-                            :open-type="menu.openType"
-                            class="nav-link"
+    <ClientOnly>
+        <div class="floating-menu-container">
+            <el-button class="back-top" :icon="ArrowUp" @click="handleBackTopClick">
+            </el-button>
+            <template v-if="!error && list.length > 0">
+                <div
+                    v-for="(menu, index) in list"
+                    :key="menu.id"
+                    :style="isMobile ? '' : 'cursor: pointer'"
+                    class="menu-item"
+                    @click="() => !isMobile && handleMenuClick(index)"
+                >
+                    <NuxtImg loading="lazy" :src="menu.imagePath" />
+                    <div class="link">
+                        <span
+                            ref="linkRef"
                         >
-                            {{ menu.label }}
-                        </Link>
-                    </span>
+                            <Link
+                                :to="menu.link || ''"
+                                :link-type="menu.linkType"
+                                :open-type="menu.openType"
+                                class="nav-link"
+                            >
+                                {{ menu.label }}
+                            </Link>
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </template>
-        <el-button class="back-bottom" :icon="ArrowDown" @click="handleBackBottomClick">
-        </el-button>
-    </div>
+            </template>
+            <el-button class="back-bottom" :icon="ArrowDown" @click="handleBackBottomClick">
+            </el-button>
+        </div>
+    </ClientOnly>
 </template>
 
 <style scoped lang="less">

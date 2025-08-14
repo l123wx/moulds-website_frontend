@@ -53,8 +53,7 @@
         `product-${slug}`,
         () => getProductDetailBySlug(slug),
         {
-            transform: (data) => data?.data || {},
-            server: false
+            transform: (data) => data?.data || {}
         }
     )
 

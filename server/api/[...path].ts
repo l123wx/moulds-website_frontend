@@ -1,7 +1,8 @@
 // const API_URL = 'https://api.themoviedb.org/3'
-const API_URL = 'http://localhost:39254/api'
 
 export default defineEventHandler((event) => {
+    const config = useRuntimeConfig()
+    const API_URL = config.apiUrl
     // eslint-disable-next-line no-console
     console.log('-------proxyRequest------')
     // eslint-disable-next-line no-console

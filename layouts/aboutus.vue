@@ -31,8 +31,7 @@
         () => getWebsiteMenuHierarchyById(ABOUT_US_MENU_ID),
         {
             transform: (data) => data.data,
-            default: () => [],
-            server: false
+            default: () => []
         }
     )
 

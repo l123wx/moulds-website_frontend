@@ -608,6 +608,7 @@
             user-select: none;
             pointer-events: none;
             transition: transform 0.1s ease-out;
+            max-width: unset;
         }
 
         &.mobile {

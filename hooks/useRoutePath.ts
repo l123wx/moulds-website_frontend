@@ -2,7 +2,7 @@ const useRoutePath = () => ({
     blogsPath: '/aboutus/blogs',
     homePath: '/',
     productCatalogDownloadPath: '/download/product_catalog',
-    subscribeSuccessPath: '/success',
+    informationSubmittedSuccessPath: '/success',
     orderSubmitSuccessPath: '/order-submit-success',
     productTypeListPath: (productTypeSlugs: string[]) => `/product/type/${productTypeSlugs.join('/')}`,
     productListPath: (productTypeSlugs: string[]) => `/product/list/${productTypeSlugs.join('/')}`,

@@ -49,9 +49,16 @@
     "Invite Code": "邀请码",
     "Address": "地址",
     "Country": "国家",
+    "Content": "内容",
+    "Website": "网站",
     "Optional": "（可选）",
     "Please input valid Email": "请输入正确的邮箱地址",
     "Send Order": "发送订单",
     "Order submitted successfully": "订单提交成功",
-    "Order submitted successfully tips": "您的订单已提交成功！我们将在收到消息后尽快回复您。"
+    "Order submitted successfully tips": "您的订单已提交成功！我们将在收到消息后尽快回复您。",
+    "About Us": "关于我们",
+    "Blogs": "博客",
+    "Contact Us": "联系我们",
+    "Contact Us Tips": "如果您想咨询我们的产品，请填写下面的表格，我们会尽快与您联系！",
+    "Submit": "提交"
 }

@@ -36,16 +36,7 @@
     })
 
     const route = useRoute()
-    const { locale } = useI18n()
-
-    const breadcrumbList = ref([
-        {
-            label: 'About Us'
-        },
-        {
-            label: 'Blogs'
-        }
-    ])
+    const { locale, t } = useI18n()
 
     const activePageSlug = computed(() => route.params.path[route.params.path.length - 1])
     const { data: pageDetail, pending: pageDetailPending } = await useAsyncData(
@@ -55,6 +46,22 @@
             transform: (data) => data.data
         }
     )
+
+    const breadcrumbList = computed(() => {
+        const list = [
+            {
+                label: t('About Us')
+            }
+        ]
+
+        if (pageDetail.value?.title) {
+            list.push({
+                label: pageDetail.value.title
+            })
+        }
+
+        return list
+    })
 </script>
 
 <style scoped lang="less">

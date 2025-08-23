@@ -49,9 +49,16 @@
     "Invite Code": "Invite Code",
     "Address": "Address",
     "Country": "Country",
+    "Content": "Content",
+    "Website": "Website",
     "Optional": "(Optional)",
     "Please input valid Email": "Please input valid Email",
     "Send Order": "Send Order",
     "Order submitted successfully": "Order submitted successfully",
-    "Order submitted successfully tips": "Your order has been submitted successfully! We will contact you as soon as possible."
+    "Order submitted successfully tips": "Your order has been submitted successfully! We will contact you as soon as possible.",
+    "About Us": "About Us",
+    "Blogs": "Blogs",
+    "Contact Us": "Contact Us",
+    "Contact Us Tips": "If you want to consult our products, please fill in the form below, and we will contact you as soon as possible!",
+    "Submit": "Submit"
 }

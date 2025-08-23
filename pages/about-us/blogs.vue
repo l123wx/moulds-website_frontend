@@ -86,7 +86,7 @@
     import useRoutePath from '~/hooks/useRoutePath'
 
     const { articleDetailPath } = useRoutePath()
-    const { locale } = useI18n()
+    const { locale, t } = useI18n()
 
     definePageMeta({
         layout: 'about-us'
@@ -96,10 +96,10 @@
 
     const breadcrumbList = ref([
         {
-            label: 'About Us'
+            label: t('About Us')
         },
         {
-            label: 'Blogs'
+            label: t('Blogs')
         }
     ])
 

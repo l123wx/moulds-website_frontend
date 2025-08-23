@@ -111,6 +111,24 @@ export default defineNuxtConfig({
                 name: '中文',
                 language: 'zh-CN',
                 file: 'zh.json'
+            },
+            {
+                code: 'es',
+                name: 'Español',
+                language: 'es',
+                file: 'es.json'
+            },
+            {
+                code: 'de',
+                name: 'Deutsch',
+                language: 'de',
+                file: 'de.json'
+            },
+            {
+                code: 'fr',
+                name: 'Français',
+                language: 'fr',
+                file: 'fr.json'
             }
         ],
         restructureDir: '',

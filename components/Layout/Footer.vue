@@ -56,7 +56,7 @@
     import useRoutePath from '~/hooks/useRoutePath'
 
     const localePath = useLocalePath()
-    const { subscribeSuccessPath } = useRoutePath()
+    const { informationSubmittedSuccessPath } = useRoutePath()
     const [isLoading, run] = useLoading()
     const form = ref({
         email: ''
@@ -74,7 +74,7 @@
 
         try {
             await run(emailSubscribe(form.value.email))
-            await navigateTo(localePath(subscribeSuccessPath))
+            await navigateTo(localePath(informationSubmittedSuccessPath))
             formRef.value.resetFields()
         } catch (error) {
 

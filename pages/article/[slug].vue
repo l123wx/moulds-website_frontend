@@ -8,7 +8,7 @@
                     <el-breadcrumb-item :to="localePath(blogsPath)">Blogs</el-breadcrumb-item>
                     <el-breadcrumb-item>{{ article?.title || '' }}</el-breadcrumb-item>
                 </el-breadcrumb>
-                <el-skeleton v-if="pending" :rows="5" />
+                <el-skeleton v-if="pending" :rows="10" animated />
                 <div v-else>
                     <div class="header">
                         <div class="title">{{ article?.title || '' }}</div>

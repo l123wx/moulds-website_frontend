@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="product-download-buttons">
-                        <el-button round type="primary" plain size="large">
+                        <el-button round type="primary" plain size="large" @click="handleDownloadClick">
                             <el-icon size="18">
                                 <Download />
                             </el-icon>
@@ -47,6 +47,7 @@
 
     useTinyMCEStyle()
     const route = useRoute()
+    const localePath = useLocalePath()
     const { locale } = useI18n()
     const { slug } = route.params as { slug: string }
 
@@ -64,6 +65,10 @@
             type: banner.type
         })) || []
     })
+
+    const handleDownloadClick = () => {
+        navigateTo(localePath(`/download/product/${productData.value?.id}`))
+    }
 </script>
 
 <style scoped lang="less">

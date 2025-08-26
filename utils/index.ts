@@ -54,3 +54,14 @@ export const handconstree = <T extends Record<string, any>>(
     }
     return tree
 }
+
+export const formatFileSize = (size: number) => {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB']
+    let unitIndex = 0
+
+    while (size >= 1024) {
+        size = size / 1024
+        unitIndex++
+    }
+    return size.toFixed(2) + ' ' + units[unitIndex - 1]
+}

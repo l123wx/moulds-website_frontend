@@ -60,5 +60,10 @@
     "Blogs": "Blogs",
     "Contact Us": "Contactez-nous",
     "Contact Us Tips": "Si vous souhaitez consulter nos produits, veuillez remplir le formulaire ci-dessous, et nous vous contacterons dès que possible !",
-    "Submit": "Envoyer"
+    "Submit": "Envoyer",
+    "File Name": "Nom du fichier",
+    "File Size": "Taille du fichier",
+    "File Type": "Type de fichier",
+    "Download": "Télécharger",
+    "Select All": "Tout sélectionner"
 }

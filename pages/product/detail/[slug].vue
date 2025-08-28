@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="product-info-section">
-                    <h1 class="product-title">{{ productData.name }}</h1>
+                    <h1 class="product-title">{{ productData.label }}</h1>
 
                     <div class="product-description">
                         {{ productData.description }}

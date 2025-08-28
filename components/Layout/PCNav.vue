@@ -139,6 +139,7 @@
                         font-size: 14px;
                         transition: background 0.3s;
                         border-bottom: 1px solid #eee;
+                        white-space: nowrap;
 
                         &:hover {
                             color: #004DFF;

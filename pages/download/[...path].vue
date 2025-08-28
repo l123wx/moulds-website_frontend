@@ -17,7 +17,7 @@
                             {{ scope.row.fileSize ? formatFileSize(scope.row.fileSize) : '-' }}
                         </template>
                     </el-table-column>
-                    <el-table-column prop="fileType" :label="t('File Type')" width="150">
+                    <el-table-column prop="fileType" :label="t('File Type')" width="100">
                         <template #default="scope">
                             {{ scope.row.name.split('.').pop() }}
                         </template>
@@ -52,7 +52,7 @@
     import { ref, computed } from 'vue'
     import { ElMessage } from 'element-plus'
     import type { CheckboxValueType } from 'element-plus'
-    import { saveAs } from 'file-saver'
+    import FileSaver from 'file-saver'
     import getDownloadList from '~/http/apis/getDownloadList'
 
     // 分页相关数据
@@ -93,7 +93,8 @@
             page: currentPage.value
         }),
         {
-            watch: [currentPage]
+            watch: [currentPage],
+            server: false
         }
     )
 
@@ -142,7 +143,7 @@
 
         selectedFileIds.value.forEach(id => {
             const file = downloadFiles.value.find(file => file.id === id)!
-            saveAs(file.path, file.name)
+            FileSaver.saveAs(file.path, file.name)
         })
     }
 </script>

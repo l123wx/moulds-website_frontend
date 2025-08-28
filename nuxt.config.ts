@@ -165,8 +165,10 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         // Private keys (only available on server-side)
-        apiUrl: 'http://159.75.215.188:56031/prod-api/api',
-        profileUrl: 'http://159.75.215.188:56031/profile/upload',
+        // apiUrl: 'http://159.75.215.188:56031/prod-api/api',
+        apiUrl: 'http://localhost:39254/api',
+        // profileUrl: 'http://159.75.215.188:56031/profile/upload',
+        profileUrl: 'http://localhost:39254/profile/upload',
         domain: '159.75.215.188',
 
         // Public keys that are exposed to client-side

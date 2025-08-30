@@ -55,3 +55,14 @@ table tr {
   border-bottom: 0px solid #eee;
   background: #f6f6f6
 }
+
+audio,
+canvas,
+embed,
+iframe,
+img,
+object,
+svg,
+video {
+  display: initial;
+}

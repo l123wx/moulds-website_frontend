@@ -11,9 +11,7 @@
                     <div style="display: flex; flex-direction: column; row-gap: 20px;">
                         <div class="form-tips">
                             <span>
-                                We’re currently unavailable. We’ll get back to you when one of
-                                our operators is able to respond. Please provide your email address so we can get in
-                                touch with you.
+                                {{ liveChatTexts.tips }}
                             </span>
                         </div>
                         <el-form
@@ -25,23 +23,23 @@
                         >
                             <el-form-item
                                 prop="email" :rules="[
-                                    { required: true, message: 'Please input email' },
-                                    { type: 'email', message: 'Please input correct email', trigger: 'blur' }
+                                    { required: true, message: t('Please input {name}', { name: t('Email') }) },
+                                    { type: 'email', message: t('Please input valid Email'), trigger: 'blur' }
                                 ]">
-                                <el-input v-model="email" placeholder="Enter your email..." />
+                                <el-input v-model="email" :placeholder="t('Enter your email...')" />
                             </el-form-item>
-                            <el-form-item prop="message" :rules="[{ required: true, message: 'Please input message' }]">
+                            <el-form-item prop="message" :rules="[{ required: true, message: t('Please input {name}', { name: t('message') }) }]">
                                 <el-input
                                     v-model="formData.message" resize="none" type="textarea" :rows="4"
-                                    placeholder="Enter your message..." />
+                                    :placeholder="t('Enter your message...')" />
                             </el-form-item>
-                            <el-button class="form-submit-button" :loading="isSubmitting" @click="handleFormSubmit">Send</el-button>
+                            <el-button class="form-submit-button" :loading="isSubmitting" @click="handleFormSubmit">{{ t('Send') }}</el-button>
                         </el-form>
                     </div>
                 </div>
                 <div class="form-success-result" :class="{ show: formSuccessResultShow }">
                     <CircleCheck />
-                    <div class="text"><span>Thank you, your ticket is submitted!</span></div>
+                    <div class="text"><span>{{ liveChatTexts.submitSuccess }}</span></div>
                 </div>
             </div>
         </div>
@@ -49,7 +47,7 @@
         <div role="presentation" class="chat-container" style="opacity: 1; position: relative;">
             <div class="chat-header">
                 <div class="chat-header-title">
-                    <div class="chat-header-title-text"><span>LD Consultation</span></div>
+                    <div class="chat-header-title-text"><span>{{ liveChatTexts.header }}</span></div>
                     <div class="chat-header-close">
                         <button
                             class="close-chat-button" type="button" aria-label="Minimize"
@@ -75,7 +73,7 @@
                     <div class="footer-input-wrapper-content">
                         <textarea
                             id="new-message-textarea" ref="textareaRef" v-model="formData.message" rows="1"
-                            placeholder="Enter your message..." aria-label="New message"
+                            :placeholder="t('Enter your message...')" aria-label="New message"
                             :style="textareaCalcStyle"></textarea>
                         <button
                             id="send-button" type="button" class="chat-message-submit-btn"
@@ -102,6 +100,7 @@
     import userConsult from '~/http/apis/userConsult'
     import { useLoading } from '~/hooks/useLoading'
     import useBodyScroll from '~/hooks/useBodyScroll'
+    import getLiveChatTexts, { type LiveChatTexts } from '~/http/apis/getLiveChatTexts'
 
     const LOCAL_STORAGE_EMAIL_KEY = 'live-chat-email'
 
@@ -114,6 +113,16 @@
     const email = useStorage(LOCAL_STORAGE_EMAIL_KEY, '')
     const [isSubmitting, runSubmit] = useLoading()
     const { lock, unlock } = useBodyScroll()
+    const { t, locale } = useI18n()
+
+    const { data: liveChatTexts } = useAsyncData(
+        () => 'liveChatTexts_' + locale.value,
+        () => getLiveChatTexts(locale.value),
+        {
+            transform: data => data.data,
+            default: () => ({}) as LiveChatTexts
+        }
+    )
 
     const formModalOpen = ref(false)
     const formSuccessResultShow = ref(false)
@@ -124,8 +133,6 @@
         message: ''
     })
 
-    const welcomeMessage = 'Hey Sir, Thanks for reaching out! We’re on it and will get back to you soon (usually within 24 hours).Quick question—to save us both time:Need faster help? Ping us directly:\n[Phone]：+0086 0769 82930142\n[Email] ：info@ldplastic-solution.com'
-    const thankYouMessage = 'Thank you, your ticket was submitted and you\'ll get a reply via email.'
     const messageContainerRef = ref()
     const chatMessages = ref<string[]>([])
     const addMessage = (msg: string) => {
@@ -168,7 +175,7 @@
 
             if (props.isOpen && !isChatInitialized.value) {
                 setTimeout(() => {
-                    addMessage(welcomeMessage)
+                    addMessage(liveChatTexts.value.welcome)
                     isChatInitialized.value = true
                 }, 1000)
             }
@@ -184,7 +191,7 @@
         await runSubmit(userConsult({ email: email.value }, formData.value.message))
         formSuccessResultShow.value = true
         setTimeout(() => {
-            addMessage(thankYouMessage)
+            addMessage(liveChatTexts.value.autoReply)
             formData.value.message = ''
         }, 500)
     }

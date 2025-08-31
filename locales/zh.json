@@ -65,5 +65,9 @@
     "File Size": "文件大小",
     "File Type": "文件类型",
     "Download": "下载",
-    "Select All": "全选"
+    "Select All": "全选",
+    "Send": "发送",
+    "Enter your email...": "请输入您的邮箱",
+    "Enter your message...": "请输入您的消息",
+    "message": "消息"
 }

@@ -65,5 +65,9 @@
     "File Size": "Dateigröße",
     "File Type": "Dateityp",
     "Download": "Download",
-    "Select All": "Alles auswählen"
+    "Select All": "Alles auswählen",
+    "Send": "Senden",
+    "Enter your email...": "Bitte geben Sie Ihre E-Mail-Adresse ein",
+    "Enter your message...": "Bitte geben Sie Ihre Nachricht ein",
+    "message": "Nachricht"
 }

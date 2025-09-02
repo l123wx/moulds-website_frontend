@@ -2,20 +2,53 @@
     import { ref, onMounted } from 'vue'
     import { gsap } from 'gsap'
     import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    import getDataStatistics from '~/http/apis/getDataStatistics'
 
     // 注册ScrollTrigger插件
     gsap.registerPlugin(ScrollTrigger)
 
+    const { locale } = useI18n()
+
     // 定义统计数据
-    const stats = ref([
-        { activeNumber: 0, startNumber: 0, endNumber: 6000, text: 'Products in\nour web shop', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 20, text: 'Sales partners\naround the globe', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 24, text: 'Years of experience', suffix: '+' },
-        { activeNumber: 0, startNumber: 0, endNumber: 100, text: 'Ready for\nyour challenges', suffix: '%' }
-    ])
+    const stats = ref<{
+        activeNumber: number
+        startNumber: number
+        endNumber: number
+        text: string
+        suffix: string
+    }[]>([])
 
     // 数字动画初始化标志
     const animationInitialized = ref(false)
+
+    // 获取数据统计信息
+    const { data: statisticsData, pending, error } = await useAsyncData(
+        'dataStatistics',
+        () => getDataStatistics(locale.value),
+        {
+            watch: [locale],
+            transform: (result) => result.data
+        }
+    )
+
+    // 监听数据变化并更新统计数据
+    watch(statisticsData, (newData) => {
+        if (newData) {
+            stats.value = newData.map(item => ({
+                activeNumber: 0,
+                startNumber: 0,
+                endNumber: item.value,
+                text: item.label,
+                suffix: item.suffix
+            }))
+            // 重置动画状态
+            animationInitialized.value = false
+            // 重新初始化动画
+            nextTick(() => {
+                initNumberAnimation()
+            })
+        }
+    }, { immediate: true })
 
     // 初始化数字滚动动画
     const initNumberAnimation = () => {
@@ -48,7 +81,22 @@
 
 <template>
     <div class="stats-container">
-        <div class="stats-wrapper">
+        <div v-if="pending" class="stats-loading">
+            <el-skeleton animated>
+                <template #template>
+                    <el-skeleton-item variant="p" />
+                    <el-skeleton-item variant="p" style="margin-top: 10px" />
+                </template>
+            </el-skeleton>
+        </div>
+        <div v-else-if="error" class="stats-error">
+            <el-alert
+                type="error"
+                :title="error.message"
+                show-icon
+            />
+        </div>
+        <div v-else class="stats-wrapper">
             <div
                 v-for="(stat, index) in stats"
                 :key="index"
@@ -73,6 +121,11 @@
     max-width: @page-content-max-width;
     margin: 80px auto;
     padding: 0 30px;
+
+    .stats-loading,
+    .stats-error {
+        padding: 20px;
+    }
 
     @media screen and (max-width: @viewport-md) {
         margin: 50px auto;

@@ -1,5 +1,6 @@
 {
     "http.error": "服务器错误，请联系管理员",
+    "Home": "首页",
     "Back to home button text": "首页",
     "Email Subscription": "邮箱订阅",
     "Your Email": "您的邮箱",
@@ -69,5 +70,6 @@
     "Send": "发送",
     "Enter your email...": "请输入您的邮箱",
     "Enter your message...": "请输入您的消息",
-    "message": "消息"
+    "message": "消息",
+    "navbar button": "导航按钮"
 }

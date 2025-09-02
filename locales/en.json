@@ -1,5 +1,6 @@
 {
     "http.error": "Server error. Please contact administrator.",
+    "Home": "Home",
     "Back to home button text": "HOME",
     "Email Subscription": "EMAIL SUBSCRIPTION",
     "Your Email": "Your Email",
@@ -69,5 +70,6 @@
     "Send": "Send",
     "Enter your message...": "Enter your message...",
     "Enter your email...": "Enter your email...",
-    "message": "message"
+    "message": "message",
+    "navbar button": "navbar button"
 }

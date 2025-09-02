@@ -23,7 +23,7 @@
         </template>
         <template #default>
             <el-breadcrumb :separator-icon="ArrowRight">
-                <el-breadcrumb-item :to="localePath('/')">{{ $t('home') }}</el-breadcrumb-item>
+                <el-breadcrumb-item :to="localePath('/')">{{ $t('Home') }}</el-breadcrumb-item>
                 <el-breadcrumb-item
                     v-for="breadcrumb in breadcrumbList"
                     :key="breadcrumb.label"

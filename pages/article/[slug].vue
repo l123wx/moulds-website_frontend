@@ -3,11 +3,17 @@
         <div class="container">
             <div v-if="error">{{ $t('http.error') }}</div>
             <template v-else>
-                <el-breadcrumb :separator-icon="ArrowRight" style="transform: translateY(-24px)">
-                    <el-breadcrumb-item :to="localePath(homePath)">{{ $t('home') }}</el-breadcrumb-item>
-                    <el-breadcrumb-item :to="localePath(blogsPath)">Blogs</el-breadcrumb-item>
-                    <el-breadcrumb-item>{{ article?.title || '' }}</el-breadcrumb-item>
-                </el-breadcrumb>
+                <Breadcrumb
+                    :breadcrumb-list="[
+                        {
+                            label: $t('Blogs'),
+                            link: blogsPath
+                        },
+                        {
+                            label: article?.title || ''
+                        }
+                    ]"
+                />
                 <el-skeleton v-if="pending" :rows="10" animated />
                 <div v-else>
                     <div class="header">
@@ -26,21 +32,20 @@
 </template>
 
 <script setup lang="ts">
-    import { ArrowRight } from '@element-plus/icons-vue'
     import dayjs from 'dayjs'
     import 'dayjs/locale/zh-cn'
     import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
     import getArticleDetailBySlug from '~/http/apis/getArticleDetailBySlug'
     import useRoutePath from '~/hooks/useRoutePath'
+    import Breadcrumb from '~/components/Layout/Breadcrumb.vue'
 
-    const { homePath, blogsPath } = useRoutePath()
+    const { blogsPath } = useRoutePath()
     const { locale } = useI18n()
 
     useTinyMCEStyle()
 
     const route = useRoute()
     const router = useRouter()
-    const localePath = useLocalePath()
 
     const articleSlug = route.params.slug as string
 
@@ -82,6 +87,7 @@
 
         .header {
             border-bottom: 1px solid #efefef;
+            margin-top: 30px;
 
             .title {
                 color: #222;

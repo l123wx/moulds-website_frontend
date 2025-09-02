@@ -234,6 +234,7 @@
 }
 
 .contact-item {
+    font-size: 14px;
     .label {
         margin-right: 4px;
     }

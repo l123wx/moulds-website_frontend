@@ -1,5 +1,6 @@
 {
     "http.error": "Erreur du serveur. Veuillez contacter l'administrateur.",
+    "Home": "Accueil",
     "Back to home button text": "ACCUEIL",
     "Email Subscription": "ABONNEMENT PAR EMAIL",
     "Your Email": "Votre Email",
@@ -69,5 +70,6 @@
     "Send": "Envoyer",
     "Enter your email...": "Veuillez entrer votre email",
     "Enter your message...": "Veuillez entrer votre message",
-    "message": "message"
+    "message": "message",
+    "navbar button": "bouton de navigation"
 }

@@ -49,6 +49,7 @@
         display: flex;
         row-gap: 20px;
         column-gap: 3%;
+        min-height: calc(100vh - var(--header-height) - 100vh/5);
 
         @media screen and (max-width: @viewport-md) {
             flex-direction: column-reverse;

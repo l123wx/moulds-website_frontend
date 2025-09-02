@@ -1,5 +1,5 @@
 const useRoutePath = () => ({
-    blogsPath: '/aboutus/blogs',
+    blogsPath: '/about-us/blogs',
     homePath: '/',
     productCatalogDownloadPath: '/download/product_catalog',
     informationSubmittedSuccessPath: '/success',

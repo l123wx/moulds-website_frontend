@@ -13,12 +13,12 @@
                 v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType"
                 class="banner-link">
                 <NuxtImg
-                    loading="lazy" fetch-priority="high" :placeholder="[300, 100, 100]" :preload="index === 0"
+                    fetch-priority="high" :placeholder="[300, 100, 100]" :preload="index === 0"
                     format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image"
                     @load="handleImageLoad" />
             </Link>
             <NuxtImg
-                v-else loading="lazy" fetch-priority="high" :placeholder="[300, 100, 100]" :preload="index === 0"
+                v-else fetch-priority="high" :placeholder="[300, 100, 100]" :preload="index === 0"
                 format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image"
                 @load="handleImageLoad" />
         </UCarousel>

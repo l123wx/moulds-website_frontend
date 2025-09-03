@@ -43,7 +43,7 @@
                     class="menu-item"
                     @click="() => !isMobile && handleMenuClick(index)"
                 >
-                    <NuxtImg loading="lazy" :src="menu.imagePath" />
+                    <NuxtImg loading="lazy" preload :src="menu.imagePath" />
                     <div class="link">
                         <span
                             ref="linkRef"

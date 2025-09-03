@@ -2,7 +2,7 @@
     <div class="banner">
         <div v-if="error">{{ $t('http.error') }}</div>
         <UCarousel
-            v-slot="{ item: banner }"
+            v-slot="{ item: banner, index }"
             arrows
             dots
             :items="bannerList"
@@ -15,9 +15,9 @@
             }"
         >
             <Link v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType" class="banner-link">
-                <NuxtImg loading="lazy" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
+                <NuxtImg loading="lazy" :placeholder="[300, 100, 100]" :preload="index === 0" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
             </Link>
-            <NuxtImg v-else loading="lazy" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
+            <NuxtImg v-else loading="lazy" :placeholder="[300, 100, 100]" :preload="index === 0" format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image" @load="handleImageLoad" />
         </UCarousel>
     </div>
 </template>

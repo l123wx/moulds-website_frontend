@@ -80,7 +80,8 @@ export default defineNuxtConfig({
             traceAlias: {
                 '@sxzz/popperjs-es': '@popperjs/core'
             }
-        }
+        },
+        compressPublicAssets: true
     },
 
     routeRules: {

@@ -33,6 +33,9 @@ jobs:
       #     path: ~/.pnpm
       #     key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.json') }}
 
+      - name: Before Build
+        run: pm2 stop website
+
       - name: Install dependencies
         run: ni
 
@@ -41,7 +44,6 @@ jobs:
 
       - name: After Build
         run: |
-          pm2 stop 0
           rm /data/mould/frontend/website/.output -rf
           cp .output /data/mould/frontend/website -r
-          pm2 start 0
+          pm2 start website

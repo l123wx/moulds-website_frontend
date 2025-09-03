@@ -2,7 +2,7 @@
     <div class="banner">
         <div v-if="error">{{ $t('http.error') }}</div>
         <UCarousel
-            v-slot="{ item: banner, index }" arrows dots :items="bannerList" :ui="{
+            v-slot="{ item: banner, index }" autoplay arrows dots :items="bannerList" :ui="{
                 dots: 'bottom-0',
                 dot: 'w-[10px] h-[10px] !bg-[#999] opacity-20 data-[state=active]:opacity-100',
                 arrows: 'absolute top-[50%] translate-y-[-50%] z-10 w-full',

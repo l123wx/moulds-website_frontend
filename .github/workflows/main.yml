@@ -50,4 +50,5 @@ jobs:
           rm /data/mould/frontend/website/.output -rf
           cp .output /data/mould/frontend/website -r
           pm2 start website
+          cd /data/mould/backend
           /data/mould/backend/ry.sh start

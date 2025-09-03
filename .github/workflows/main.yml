@@ -27,11 +27,11 @@ jobs:
       # - name: Install ni
       #   run: npm i -g @antfu/ni@latest
 
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.pnpm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.json') }}
+      # - name: Cache node modules
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.pnpm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.json') }}
 
       - name: Install dependencies
         run: ni

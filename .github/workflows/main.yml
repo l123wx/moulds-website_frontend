@@ -33,8 +33,11 @@ jobs:
       #     path: ~/.pnpm
       #     key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.json') }}
 
+      # 机器内存不足，打包之前需要先停掉一些服务
       - name: Before Build
-        run: pm2 stop website
+        run: |
+          pm2 stop website
+          /data/mould/backend/ry.sh stop
 
       - name: Install dependencies
         run: ni
@@ -47,3 +50,4 @@ jobs:
           rm /data/mould/frontend/website/.output -rf
           cp .output /data/mould/frontend/website -r
           pm2 start website
+          /data/mould/backend/ry.sh start

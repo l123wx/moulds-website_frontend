@@ -81,7 +81,10 @@ export default defineNuxtConfig({
                 '@sxzz/popperjs-es': '@popperjs/core'
             }
         },
-        compressPublicAssets: true
+        compressPublicAssets: {
+            gzip: true,
+            brotli: false
+        }
     },
 
     routeRules: {

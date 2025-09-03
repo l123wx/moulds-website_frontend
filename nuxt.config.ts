@@ -84,7 +84,8 @@ export default defineNuxtConfig({
         compressPublicAssets: {
             gzip: true,
             brotli: false
-        }
+        },
+        sourceMap: false
     },
 
     routeRules: {

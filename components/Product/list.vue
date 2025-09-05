@@ -21,7 +21,7 @@
     <div class="list-container">
         <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
             <div class="item-images">
-                <NuxtImg v-if="item.coverImagePath" loading="lazy" :src="item.coverImagePath" :alt="item.label" :title="item.label" />
+                <NuxtImg v-if="item.coverImagePath" :placeholder="[100, 77, 100]" :src="item.coverImagePath" :alt="item.label" :title="item.label" />
                 <img v-else :src="defaultImage" alt="default image" />
             </div>
             <div class="item-info">

@@ -1,5 +1,6 @@
 import { computed, unref } from 'vue'
 import { useStorage } from '@vueuse/core'
+import usePrice from './usePrice'
 
 export type Specification = {
     id: number
@@ -26,6 +27,7 @@ const STORAGE_KEY = 'cart-items'
 
 export default function useCart () {
     const cartItems = useStorage<CartItem[]>(STORAGE_KEY, [])
+    const { formatPrice } = usePrice()
 
     const itemCount = computed(() => {
         return unref(cartItems).reduce((sum, item) => sum + (item.quantity || 0), 0)
@@ -49,14 +51,6 @@ export default function useCart () {
     })
 
     const formattedTotalPrice = computed(() => formatPrice(unref(totalPrice)))
-
-    const formatPrice = (p: number) => {
-        try {
-            return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(p)
-        } catch {
-            return String(p)
-        }
-    }
 
     const findIndex = (cardItemId: string) => {
         return unref(cartItems).findIndex((it) => {

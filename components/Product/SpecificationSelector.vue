@@ -59,11 +59,13 @@
 
 <script setup lang="ts">
     import useCart, { type Product } from '~/hooks/useCart'
+    import usePrice from '~/hooks/usePrice'
     import useScreenMediaQuery from '~/hooks/useScreenMediaQuery'
     import getAllSpecificationByProductId from '~/http/apis/getAllSpecificationByProductId'
 
     const { isMobile } = useScreenMediaQuery()
     const { locale } = useI18n()
+    const { formatPrice } = usePrice()
 
     const currentProduct = ref<Product | null>(null)
     const visible = ref(false)
@@ -109,14 +111,6 @@
         })
 
         visible.value = false
-    }
-
-    const formatPrice = (p: number) => {
-        try {
-            return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(p)
-        } catch {
-            return String(p)
-        }
     }
 
     const totalItems = computed(

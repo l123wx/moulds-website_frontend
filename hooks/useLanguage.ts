@@ -20,10 +20,16 @@ const useLanguage = () => {
     )
 
     const languageList = computed(() => (data.value?.language ?? []).filter(item => supportLocalesMap.value[item.code]))
-    const defaultLanguage = computed(() => data.value?.defaultLanguage ?? 'en')
+    const defaultLanguageCode = computed(() => data.value?.defaultLanguage.code ?? 'en')
+
+    const activeLanguage = computed(() => {
+        const languageCode = locale.value
+        return data.value?.language.find(item => item.code === languageCode)
+    })
 
     return {
-        defaultLanguage,
+        defaultLanguageCode,
+        activeLanguage,
         pending,
         languageList
     }

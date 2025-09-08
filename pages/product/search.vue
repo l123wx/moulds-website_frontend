@@ -36,7 +36,10 @@
 
     const { data, refresh } = useAsyncData(
         'getProductListByKeyword_' + searchValue.value,
-        () => getProductListByKeyword(searchValue.value as string, currentPage.value, PAGE_SIZE, locale.value)
+        () => getProductListByKeyword(searchValue.value as string, currentPage.value, PAGE_SIZE, locale.value),
+        {
+            watch: [searchValue]
+        }
     )
 
     const productList = computed(() => data.value?.rows ?? [])

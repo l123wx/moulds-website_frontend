@@ -45,9 +45,10 @@ type Product = {
 }
 
 const getProductListByKeyword = (keyword: string, page: number, pageSize: number, languageCode: string) => {
-    return http<{ rows: Product[], total: number }>(`/product/keyword/${keyword}`, {
+    return http<{ rows: Product[], total: number }>('/product/keyword', {
         method: 'GET',
         params: {
+            keyword,
             pageNum: page,
             pageSize,
             languageCode

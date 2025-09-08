@@ -21,7 +21,7 @@ type Language = {
 }
 
 const getLanguage = (languageCode: string) => {
-    return http<{ data: { language: Language[], defaultLanguage: string } }>('/language', {
+    return http<{ data: { language: Language[], defaultLanguage: Language } }>('/language', {
         method: 'GET',
         params: {
             languageCode

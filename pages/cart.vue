@@ -46,7 +46,7 @@
                                     :min="1"
                                     size="small"
                                     style="width: 100px"
-                                    @change="val => onQtyChange(item.id, val ?? 0)"
+                                    @change="(val: number) => onQtyChange(item.id, val ?? 0)"
                                 />
                             </div>
 

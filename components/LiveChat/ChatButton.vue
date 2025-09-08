@@ -1,6 +1,6 @@
 <template>
     <div class="live-chat-button">
-        <button>
+        <button aria-label="Open live chat dialog">
             <i
                 class="material-icons type1 for-closed active"
                 style="color: var(--custom-text-color, #fff);"

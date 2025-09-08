@@ -33,7 +33,7 @@
 <template>
     <ClientOnly>
         <div class="floating-menu-container">
-            <el-button class="back-top" :icon="ArrowUp" @click="handleBackTopClick">
+            <el-button class="back-top" aria-label="Go to page top" :icon="ArrowUp" @click="handleBackTopClick">
             </el-button>
             <template v-if="!error && list.length > 0">
                 <div
@@ -43,7 +43,7 @@
                     class="menu-item"
                     @click="() => !isMobile && handleMenuClick(index)"
                 >
-                    <NuxtImg loading="lazy" preload :src="menu.imagePath" />
+                    <NuxtImg loading="lazy" preload :src="menu.imagePath" :alt="menu.label" />
                     <div class="link">
                         <span
                             ref="linkRef"
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </template>
-            <el-button class="back-bottom" :icon="ArrowDown" @click="handleBackBottomClick">
+            <el-button class="back-bottom" aria-label="Go to page bottom" :icon="ArrowDown" @click="handleBackBottomClick">
             </el-button>
         </div>
     </ClientOnly>

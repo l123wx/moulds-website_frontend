@@ -15,7 +15,7 @@
                         >
                             <div style="display: flex; gap: 10px; width: 100%;">
                                 <el-input v-model="form.email" type="text" class="email-input" :placeholder="$t('Your Email')" @keyup.enter.stop="handleSubscribe" />
-                                <el-button :disabled="isLoading" class="submit-btn" @click="handleSubscribe">
+                                <el-button :disabled="isLoading" aria-label="Subscribe" class="submit-btn" @click="handleSubscribe">
                                     <el-icon v-if="isLoading" class="is-loading" color="#fff" size="18">
                                         <Loading />
                                     </el-icon>
@@ -38,7 +38,7 @@
                     </template>
                     <template v-for="item in socialLinkList" v-else :key="item.id">
                         <a :href="item.url" class="social-link" :title="item.name" target="_blank">
-                            <NuxtImg loading="lazy" preload :src="item.icon" :alt="item.name" />
+                            <NuxtImg loading="lazy" :src="item.icon" :alt="item.name" />
                         </a>
                     </template>
                 </div>

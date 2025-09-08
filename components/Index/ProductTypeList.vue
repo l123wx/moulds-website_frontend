@@ -24,8 +24,8 @@
             <div v-for="item in items" :key="item.id" class="product-item">
                 <div class="product-card">
                     <div class="product-image">
-                        <NuxtImg v-if="item.image" format="webp" preload :placeholder="[100, 77, 100]" :src="item.image" :alt="item.title" :title="item.title" />
-                        <img v-else :src="defaultImage" alt="default image" />
+                        <NuxtImg v-if="item.image" format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.image" :alt="item.title" :title="item.title" />
+                        <img v-else :src="defaultImage" loading="lazy" alt="default image" />
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">{{ item.title }}</h3>

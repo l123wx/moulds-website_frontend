@@ -22,21 +22,14 @@
                     </div>
 
                     <!-- 购物车 -->
-                    <ClientOnly>
-                        <NuxtLinkLocale class="cart-section item" to="/cart">
-                            <el-badge :value="uniqueItemCount" :hidden="uniqueItemCount === 0" class="item">
-                                <ShoppingCart />
-                                <span>{{ $t('ShoppingCart') }}</span>
-                            </el-badge>
-                        </NuxtLinkLocale>
-                        <template #fallback>
-                            <el-skeleton style="width: 60px" animated>
-                                <template #template>
-                                    <el-skeleton-item variant="text" />
-                                </template>
-                            </el-skeleton>
-                        </template>
-                    </ClientOnly>
+                    <NuxtLinkLocale class="cart-section item" to="/cart">
+                        <ShoppingCart />
+                        <span>{{ $t('ShoppingCart') }}</span>
+
+                        <ClientOnly>
+                            <el-badge class="badge" :value="uniqueItemCount" :hidden="uniqueItemCount === 0" />
+                        </ClientOnly>
+                    </NuxtLinkLocale>
 
                     <!-- 搜索 -->
                     <div class="search-section item">
@@ -237,6 +230,14 @@
                     display: flex;
                     align-items: center;
                     position: relative;
+                }
+
+                .badge {
+                    position: absolute;
+                    top: 0;
+                    right: calc(1px + var(--el-badge-size) / 2);
+                    transform: translateX(100%);
+                    z-index: var(--el-index-normal);
                 }
 
                 @media screen and (max-width: @viewport-md) {

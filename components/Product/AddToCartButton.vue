@@ -30,9 +30,7 @@
         {{ $t('Add to Cart') }}
     </el-button>
 
-    <SpecificationSelector ref="specificationSelectorRef" />
+    <ClientOnly>
+        <SpecificationSelector ref="specificationSelectorRef" />
+    </ClientOnly>
 </template>
-
-<style scoped lang="less">
-
-</style>

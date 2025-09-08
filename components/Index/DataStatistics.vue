@@ -23,7 +23,7 @@
 
     // 获取数据统计信息
     const { data: statisticsData, pending, error } = await useAsyncData(
-        'dataStatistics',
+        'dataStatistics_' + locale.value,
         () => getDataStatistics(locale.value),
         {
             watch: [locale],
@@ -41,12 +41,6 @@
                 text: item.label,
                 suffix: item.suffix
             }))
-            // 重置动画状态
-            animationInitialized.value = false
-            // 重新初始化动画
-            nextTick(() => {
-                initNumberAnimation()
-            })
         }
     }, { immediate: true })
 

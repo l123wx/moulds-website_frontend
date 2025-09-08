@@ -22,7 +22,7 @@
             <div v-for="item in items" :key="item.id" class="product-item">
                 <div class="product-card">
                     <div class="product-image">
-                        <NuxtImg format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.image || 'no-img.svg'" :alt="item.title" :title="item.title" />
+                        <NuxtImg format="webp" loading="lazy" :src="item.image || 'no-img.svg'" :alt="item.title" :title="item.title" />
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">{{ item.title }}</h3>

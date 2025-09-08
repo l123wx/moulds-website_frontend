@@ -2,7 +2,6 @@
     // import { Collection } from '@element-plus/icons-vue'
     import getSubProductTypeListBySlug from '~/http/apis/getSubProductTypeListBySlug'
     import useRoutePath from '~/hooks/useRoutePath'
-    import defaultImage from '~/assets/images/no-img.svg'
 
     const { productListPath, productTypeListPath } = useRoutePath()
 
@@ -44,10 +43,8 @@
                     class="item-card"
                     :aria-label="item.label"
                 >
-                    <!-- <Collection class="item-icon" /> -->
                     <div class="item-images">
-                        <NuxtImg v-if="item.imagePath" loading="lazy" :src="item.imagePath" :alt="item.label" :title="item.label" />
-                        <img v-else :src="defaultImage" alt="default image" />
+                        <NuxtImg format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.imagePath || 'no-img.svg'" :alt="item.title" :title="item.title" />
                     </div>
                     <div class="item-info">
                         <h3 class="item-title">{{ item.label }}</h3>

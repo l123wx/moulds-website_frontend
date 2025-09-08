@@ -149,7 +149,6 @@ export default defineNuxtConfig({
     css: ['normalize.css/normalize.css', '~/assets/styles/nuxt-ui.css', '~/assets/styles/index.less'],
 
     image: {
-        dir: 'assets/images',
         provider: 'proxy',
         providers: {
             proxy: {
@@ -158,9 +157,6 @@ export default defineNuxtConfig({
                     baseURL: '/ipx'
                 }
             }
-        },
-        twicpics: {
-            baseURL: ''
         }
     },
 

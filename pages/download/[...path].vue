@@ -19,7 +19,7 @@
                     </el-table-column>
                     <el-table-column prop="fileType" :label="t('File Type')" width="100">
                         <template #default="scope">
-                            {{ scope.row.name.split('.').pop() }}
+                            {{ scope.row.name.includes('.') ? scope.row.name.split('.').pop() : t('Unknown') }}
                         </template>
                     </el-table-column>
                 </el-table>

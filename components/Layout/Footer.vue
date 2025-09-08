@@ -38,7 +38,7 @@
                     </template>
                     <template v-for="item in socialLinkList" v-else :key="item.id">
                         <a :href="item.url" class="social-link" :title="item.name" target="_blank">
-                            <NuxtImg loading="lazy" :src="item.icon" :alt="item.name" />
+                            <NuxtImg loading="lazy" format="webp" :src="item.icon" :alt="item.name" />
                         </a>
                     </template>
                 </div>

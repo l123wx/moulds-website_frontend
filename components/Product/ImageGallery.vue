@@ -30,7 +30,10 @@
                             <NuxtImg
                                 ref="imageRef"
                                 :src="banner.src"
-                                loading="lazy"
+                                :preload="index === 0"
+                                :loading="index === 0 ? 'eager' : 'lazy'"
+                                :placeholder="[100, 100, 100]"
+                                format="webp"
                                 class="product-image"
                                 @load="handleImageLoad"
                             />
@@ -84,7 +87,7 @@
                 />
                 <div v-else class="thumbnail-video">
                     <video :src="banner.src" />
-                    <img class="play-icon" src="~/assets/images/play-icon.png" />
+                    <NuxtImg class="play-icon" src="play-icon.png" />
                 </div>
             </div>
         </div>

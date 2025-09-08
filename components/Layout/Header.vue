@@ -6,7 +6,7 @@
                 <!-- 品牌Logo区域 -->
                 <div class="brand-section">
                     <NuxtLinkLocale class="brand-logo" :to="homePath">
-                        <img src="~/assets/images/logo.png" alt="Logo" />
+                        <NuxtImg src="logo.png" format="webp" alt="Logo" />
                     </NuxtLinkLocale>
                 </div>
 
@@ -160,10 +160,10 @@
                 display: flex;
                 align-items: center;
                 height: 100%;
-                max-width: 100px;
+                width: 100px;
 
                 @media screen and (max-width: @viewport-lg) {
-                    max-width: 80px;
+                    width: 80px;
                 }
 
                 img {
@@ -235,8 +235,8 @@
                 .badge {
                     position: absolute;
                     top: 0;
-                    right: calc(1px + var(--el-badge-size) / 2);
-                    transform: translateX(100%);
+                    right: calc(var(--el-badge-size) / 2);
+                    transform: translateY(-10%) translateX(100%);
                     z-index: var(--el-index-normal);
                 }
 

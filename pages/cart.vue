@@ -20,7 +20,7 @@
                     <div class="items-list">
                         <div v-for="item in cartItems" :key="item.id" class="cart-item">
                             <div class="item-image">
-                                <NuxtImg v-if="item.specification.imagePath || item.product.coverImagePath" :src="item.specification.imagePath || item.product.coverImagePath" class="thumb" />
+                                <NuxtImg v-if="item.specification.imagePath || item.product.coverImagePath" format="webp" :src="item.specification.imagePath || item.product.coverImagePath" class="thumb" />
                                 <div v-else class="placeholder-image">📦</div>
                             </div>
                             <div class="item-details">

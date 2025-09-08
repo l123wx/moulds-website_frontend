@@ -14,7 +14,7 @@
                                         <div class="cbox-6-0 p_item">
                                             <div class="e_image s_img">
                                                 <NuxtLinkLocale :to="article.link">
-                                                    <NuxtImg loading="lazy" :src="article.imagePath" :alt="article.title" :title="article.title" />
+                                                    <NuxtImg loading="lazy" :src="article.imagePath" format="webp" :alt="article.title" :title="article.title" />
                                                 </NuxtLinkLocale>
                                             </div>
                                         </div>

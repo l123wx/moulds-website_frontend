@@ -16,6 +16,8 @@
                 class="banner-link">
                 <NuxtImg
                     :preload="index === 0" :loading="index === 0 ? 'eager' : 'lazy'"
+                    width="1920"
+                    height="630"
                     format="webp" :src="banner.imagePath" :alt="$t('Banner Image')" class="banner-image"
                 />
             </Link>

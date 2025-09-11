@@ -98,7 +98,8 @@
 </script>
 
 <style scoped lang="less">
-    :deep(.sub-menu-container .el-sub-menu__title) {
+    :deep(.sub-menu-container .el-sub-menu__title),
+    :deep(.infinite-menu > .el-menu-item) {
         font-weight: 700;
     }
 </style>

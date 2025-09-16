@@ -4,6 +4,7 @@
         <div
             ref="mainImageRef"
             class="main-image"
+            @click="delegateClick"
             @mousemove="delegateMouseMove"
             @mouseenter="delegateMouseEnter"
             @mouseleave="delegateMouseLeave"
@@ -101,11 +102,22 @@
             <NuxtImg
                 v-if="currentZoomImage"
                 :src="currentZoomImage.src"
-                class="magnified-image"
                 :style="magnifiedImageStyle"
-                loading="eager"
+                format="webp"
+                class="magnified-image"
             />
         </div>
+
+        <ClientOnly>
+            <el-image-viewer
+                v-if="previewerShowing"
+                :url-list="bannerList.filter(item => item.type === 'image').map(item => $img(item.src, { format: 'webp' }))"
+                show-progress
+                :initial-index="activeIndex"
+                @close="previewerShowing = false"
+            >
+            </el-image-viewer>
+        </ClientOnly>
     </div>
 </template>
 
@@ -114,6 +126,7 @@
     import useScreenMediaQuery from '~/hooks/useScreenMediaQuery'
 
     const { isMobile } = useScreenMediaQuery()
+    const $img = useImage()
 
     const props = defineProps<{
         bannerList: {
@@ -121,6 +134,8 @@
             type: 'video' | 'image';
         }[];
     }>()
+
+    const previewerShowing = ref(false)
 
     // 轮播图播放间隔
     const CAROUSEL_PLAYING_INTERVAL = 400
@@ -307,6 +322,14 @@
     const saveClientPosition = (event: MouseEvent | TouchEvent['touches'][number]) => {
         client.x = event.clientX
         client.y = event.clientY
+    }
+
+    const delegateClick = () => {
+        if (isMobile.value || !isCurrentTypeImage.value) {
+            return
+        }
+
+        previewerShowing.value = true
     }
 
     watch(isCarouselPlaying, newVal => {

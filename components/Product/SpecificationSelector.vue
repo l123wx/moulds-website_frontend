@@ -11,7 +11,7 @@
                 <template #default>
                     <el-empty v-if="specificationList.length === 0" :description="$t('No data')"></el-empty>
                     <div v-for="s in specificationList" :key="s.id" class="specification-row">
-                        <NuxtImg v-if="s.imagePath || currentProduct?.coverImagePath" format="webp" :src="s.imagePath || currentProduct?.coverImagePath" class="thumb" />
+                        <NuxtImg v-if="s.imagePath || currentProduct?.coverImagePath" format="webp" fit="contain" background="transparent" width="64" height="64" :src="s.imagePath || currentProduct?.coverImagePath" class="thumb" />
                         <div class="meta">
                             <div class="name">{{ s.name }}</div>
                             <div class="price">

@@ -113,7 +113,7 @@
                 v-if="previewerShowing"
                 :url-list="bannerList.filter(item => item.type === 'image').map(item => $img(item.src, { format: 'webp' }))"
                 show-progress
-                :initial-index="activeIndex"
+                :initial-index="activeImageViewerIndex"
                 @close="previewerShowing = false"
             >
             </el-image-viewer>
@@ -146,6 +146,18 @@
     const mainImageRef = ref<HTMLElement>()
     const imageContainerRef = ref<HTMLElement[]>([])
     const imageRef = ref<HTMLImageElement>()
+
+    const activeImageViewerIndex = computed(() => {
+        let index = activeIndex.value
+
+        props.bannerList.slice(0, index).forEach(item => {
+            if (item.type === 'video') {
+                index--
+            }
+        })
+
+        return index
+    })
 
     const isCarouselPlaying = ref(false)
 

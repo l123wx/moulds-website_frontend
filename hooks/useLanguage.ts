@@ -1,6 +1,8 @@
 import { computed } from 'vue'
 import getLanguage from '~/http/apis/getLanguage'
 
+let initialization = false
+
 const useLanguage = () => {
     const { locales, locale } = useI18n()
     const supportLocalesMap = computed(() => {
@@ -11,13 +13,19 @@ const useLanguage = () => {
         return map
     })
 
-    const { data, pending } = useAsyncData(
+    const { data, pending, refresh } = useAsyncData(
         'getLanguages',
         () => getLanguage(locale.value),
         {
-            transform: data => data.data
+            transform: data => data.data,
+            immediate: false
         }
     )
+
+    if (!initialization) {
+        refresh()
+        initialization = true
+    }
 
     const languageList = computed(() => (data.value?.language ?? []).filter(item => supportLocalesMap.value[item.code]))
     const defaultLanguageCode = computed(() => data.value?.defaultLanguage.code ?? 'en')

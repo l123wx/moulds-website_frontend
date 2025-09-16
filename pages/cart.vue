@@ -46,7 +46,7 @@
                                     :min="1"
                                     size="small"
                                     style="width: 100px"
-                                    @change="(val: number) => onQtyChange(item.id, val ?? 0)"
+                                    @change="(val: number | undefined) => onQtyChange(item.id, val ?? 0)"
                                 />
                             </div>
 
@@ -160,7 +160,7 @@
 
 <style scoped lang="less">
 .cart-page {
-    min-height: calc(100vh - var(--header-height) - 20vh);
+    min-height: calc(100vh - var(--header-height) - 100vh/5);
     max-width: @page-content-max-width;
     margin: 0 auto;
     padding: 40px 20px;

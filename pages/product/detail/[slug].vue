@@ -60,7 +60,7 @@
     )
 
     const bannerList = computed(() => {
-        return productData.value?.bannerList.sort((a, b) => a.order - b.order).map((banner) => ({
+        return productData.value?.bannerList?.sort((a, b) => a.order - b.order).map((banner) => ({
             src: banner.path,
             type: banner.type
         })) || []
@@ -76,6 +76,7 @@
     padding: 20px;
     max-width: @page-content-max-width;
     margin: 0 auto;
+    min-height: calc(100vh - var(--header-height) - 100vh/5);
 
     .product-content {
         .info-container {

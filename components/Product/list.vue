@@ -10,29 +10,49 @@
     }
 
     defineProps<{
-        productList: Product[]
+        productList: Product[],
+        loading?: boolean
     }>()
 
     const { productDetailPath } = useRoutePath()
 </script>
 
 <template>
-    <div class="list-container">
-        <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
-            <div class="item-images">
-                <NuxtImg format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.coverImagePath || 'no-img.svg'" :alt="item.title" :title="item.title" />
+    <el-skeleton class="list-container" animated :loading="loading" :count="12">
+        <template #default>
+            <div class="list-container">
+                <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
+                    <div class="item-images">
+                        <NuxtImg format="webp" loading="lazy" background="transparent" :placeholder="[100, 77, 100]" :src="item.coverImagePath || 'no-img.svg'" :alt="item.label" :title="item.label" />
+                    </div>
+                    <div class="item-info">
+                        <h3 class="item-title">{{ item.label }}</h3>
+                    </div>
+                    <div class="button-container">
+                        <NuxtLinkLocale class="more-info-btn" :to="productDetailPath(item.slug)" target="_self">
+                            {{ $t('Learn More') }}
+                        </NuxtLinkLocale>
+                        <AddToCartButton :product="item" button-size="large" simple />
+                    </div>
+                </div>
             </div>
-            <div class="item-info">
-                <h3 class="item-title">{{ item.label }}</h3>
+        </template>
+        <template #template>
+            <div class="item-card">
+                <div class="item-images">
+                    <el-skeleton-item style="width: 100%; height: 300px;" variant="image" />
+                </div>
+                <div class="item-info">
+                    <h3 class="item-title">
+                        <el-skeleton-item style="width: 90%;" variant="text" />
+                    </h3>
+                </div>
+                <div class="button-container">
+                    <el-skeleton-item style="width: 100px" variant="button" />
+                </div>
             </div>
-            <div class="button-container">
-                <NuxtLinkLocale class="more-info-btn" :to="productDetailPath(item.slug)" target="_self">
-                    {{ $t('Learn More') }}
-                </NuxtLinkLocale>
-                <AddToCartButton :product="item" button-size="large" simple />
-            </div>
-        </div>
-    </div>
+        </template>
+    </el-skeleton>
 </template>
 
 <style scoped lang="less">

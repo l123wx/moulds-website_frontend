@@ -2,7 +2,7 @@
     <div class="container">
         <Breadcrumb :breadcrumb-list="breadcrumbList" />
         <div style="padding-top: 15px;">
-            <ProductList v-if="productList.length" :product-list="productList" />
+            <ProductList v-if="productList.length" :product-list="productList" :loading="pending" />
             <el-empty v-else :description="$t('No data')" />
             <div v-if="productList.length" class="pagination-container">
                 <el-pagination
@@ -34,7 +34,7 @@
         }
     ])
 
-    const { data, refresh } = useAsyncData(
+    const { data, refresh, pending } = useAsyncData(
         'getProductListByKeyword_' + searchValue.value,
         () => getProductListByKeyword(searchValue.value as string, currentPage.value, PAGE_SIZE, locale.value),
         {
@@ -57,7 +57,7 @@
         margin: 0 auto;
         width: 90%;
         max-width: @page-content-max-width;
-        min-height: calc(100vh - var(--header-height) - 30vh);
+        min-height: calc(100vh - var(--header-height) - - 100vh/5);
 
         @media screen and (max-width: @viewport-md) {
             margin: 50px auto;

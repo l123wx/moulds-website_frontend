@@ -13,7 +13,7 @@
     const activeProductTypeSlug = computed(() => route.params.path[route.params.path.length - 1])
 
     const currentPage = ref(1)
-    const { data, refresh } = await useAsyncData(
+    const { data, refresh, pending } = await useAsyncData(
         'getProductListByProductTypeSlug_' + activeProductTypeSlug.value,
         () => getProductListByProductTypeSlug(activeProductTypeSlug.value, currentPage.value, PAGE_SIZE, locale.value)
     )
@@ -32,7 +32,7 @@
         <el-empty v-if="!productList?.length" :description="$t('No data')" />
         <template v-else>
             <div class="list-container">
-                <ProductList :product-list="productList" />
+                <ProductList :product-list="productList" :loading="pending" />
             </div>
             <div class="pagination-container">
                 <el-pagination

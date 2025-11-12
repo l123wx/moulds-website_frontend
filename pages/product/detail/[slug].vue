@@ -23,13 +23,13 @@
                             </el-icon>
                             {{ $t('2D & 3D Download') }}
                         </el-button>
-                        <AddToCartButton :product="productData" button-size="large" />
+                        <AddToCartButton ref="addToCartButtonRef" :product="productData" preload button-size="large" @specification-quantity-change="(name, value) => contentRef?.changeQuantityByName && contentRef.changeQuantityByName(name, value)" />
                     </div>
                 </div>
             </div>
             <div class="detail-container">
                 <h2 class="detail-title">{{ $t('Product Details') }}</h2>
-                <div ref="detailContentRef" class="detail-content" v-html="productData.content"></div>
+                <Content ref="contentRef" class="detail-content" :content="productData.content" @change="(name, value) => addToCartButtonRef?.changeQuantityByName && addToCartButtonRef.changeQuantityByName(name, value)" />
             </div>
         </div>
         <div v-else class="loading-container">
@@ -40,6 +40,7 @@
 
 <script setup lang="ts">
     import { Download } from '@element-plus/icons-vue'
+    import Content from './content.vue'
     import useTinyMCEStyle from '~/hooks/useTinyMCEStyle'
     import ImageGallery from '~/components/Product/ImageGallery.vue'
     import getProductDetailBySlug from '~/http/apis/getProductDetailBySlug'
@@ -58,6 +59,9 @@
             transform: (data) => data?.data || {}
         }
     )
+
+    const contentRef = ref<InstanceType<typeof Content>>()
+    const addToCartButtonRef = ref<InstanceType<typeof AddToCartButton>>()
 
     const bannerList = computed(() => {
         return productData.value?.bannerList?.sort((a, b) => a.order - b.order).map((banner) => ({

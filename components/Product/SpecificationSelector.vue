@@ -6,12 +6,12 @@
         :width="isMobile ? '100%' : '620px'"
         @close="onCancel"
     >
-        <div v-if="currentProduct?.id" class="specification-list">
+        <div v-if="props.product?.id" class="specification-list">
             <el-skeleton animated :loading="pending">
                 <template #default>
                     <el-empty v-if="specificationList.length === 0" :description="$t('No data')"></el-empty>
                     <div v-for="s in specificationList" :key="s.id" class="specification-row">
-                        <NuxtImg v-if="s.imagePath || currentProduct?.coverImagePath" format="webp" fit="contain" background="transparent" width="64" height="64" :src="s.imagePath || currentProduct?.coverImagePath" class="thumb" />
+                        <NuxtImg v-if="s.imagePath || props.product?.coverImagePath" format="webp" fit="contain" background="transparent" width="64" height="64" :src="s.imagePath || props.product?.coverImagePath" class="thumb" />
                         <div class="meta">
                             <div class="name">{{ s.name }}</div>
                             <div class="price">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="qty">
-                            <el-input-number v-model="quantities[s.id]" :min="0" :step="1" style="width: 100px" size="small" />
+                            <el-input-number :model-value="quantities[s.id]" :min="0" :step="1" style="width: 100px" size="small" @change="(val: any) => handleInputNumberChange(s.id, val)" />
                         </div>
                     </div>
                 </template>
@@ -67,18 +67,23 @@
     const { locale } = useI18n()
     const { formatPrice } = usePrice()
 
-    const currentProduct = ref<Product | null>(null)
+    const props = defineProps<{
+        product: Product,
+        preload?: boolean
+    }>()
+
     const visible = ref(false)
 
-    const emit = defineEmits(['confirm', 'cancel'])
+    const emit = defineEmits(['confirm', 'cancel', 'change'])
 
     const { data: specificationList, pending, refresh } = useAsyncData(
-        () => `product-${currentProduct.value?.id}-specification-list`,
-        () => getAllSpecificationByProductId(currentProduct.value!.id, locale.value),
+        () => `product-${props.product?.id}-specification-list`,
+        () => getAllSpecificationByProductId(props.product!.id, locale.value),
         {
             transform: data => data.data,
             default: () => [],
-            server: false
+            server: false,
+            immediate: Boolean(props.preload)
         }
     )
 
@@ -92,13 +97,36 @@
         }
     })
 
+    const handleInputNumberChange = (id: number, value: number) => {
+        changeQuantityById(id, value)
+
+        const specification = specificationList.value.find(item => item.id === id)
+        emit('change', specification!.name, value)
+    }
+
+    const changeQuantityById = (id: number, value: number) => {
+        quantities.value[id] = value
+    }
+
+    const changeQuantityByName = (name: string, value: number) => {
+        const specification = specificationList.value.find(item => item.name === name)
+
+        if (!specification) {
+            // eslint-disable-next-line
+            console.warn(`can not found specification named ${name}`)
+            return
+        }
+
+        changeQuantityById(specification.id, value)
+    }
+
     const onCancel = () => {
         emit('cancel')
         visible.value = false
     }
 
     const onConfirm = () => {
-        const productData = currentProduct.value!
+        const productData = props.product
         specificationList.value.forEach(specification => {
             const quantity = unref(quantities)[specification.id]
             if (quantity > 0) {
@@ -126,16 +154,14 @@
         )
     )
 
-    const open = (product: Product) => {
-        if (!product) { return }
-
-        currentProduct.value = product
-        refresh()
+    const open = () => {
+        !props.preload && refresh()
         visible.value = true
     }
 
     defineExpose({
-        open
+        open,
+        changeQuantityByName
     })
 </script>
 

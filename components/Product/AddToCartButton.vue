@@ -3,17 +3,26 @@
     import SpecificationSelector from '~/components/Product/SpecificationSelector.vue'
     import type { Product } from '~/hooks/useCart'
 
+    const emit = defineEmits(['specificationQuantityChange'])
+
     const props = defineProps<{
         product: Product
         simple?: boolean
-        buttonSize?: '' | 'small' | 'default' | 'large'
+        buttonSize?: '' | 'small' | 'default' | 'large',
+        preload?: boolean
     }>()
 
     const specificationSelectorRef = ref<InstanceType<typeof SpecificationSelector>>()
 
     const handleClick = () => {
-        specificationSelectorRef.value?.open(props.product)
+        specificationSelectorRef.value?.open()
     }
+
+    defineExpose({
+        changeQuantityByName: (name: string, value: number) => {
+            specificationSelectorRef.value?.changeQuantityByName(name, value)
+        }
+    })
 </script>
 
 <template>
@@ -31,6 +40,6 @@
     </el-button>
 
     <ClientOnly>
-        <SpecificationSelector ref="specificationSelectorRef" />
+        <SpecificationSelector ref="specificationSelectorRef" :product="props.product" :preload="props.preload" @change="(...args) => emit('specificationQuantityChange', ...args)" />
     </ClientOnly>
 </template>

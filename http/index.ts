@@ -5,7 +5,7 @@ const DEFAULT_TIMEOUT = 10 * 1000
 
 const http = async <T = any>(url: string, options: any = {}) => {
     // 判断是否在客户端环境
-    const isClient = process.client
+    const isClient = import.meta.client
 
     try {
         const response = await $fetch<T>(url, {

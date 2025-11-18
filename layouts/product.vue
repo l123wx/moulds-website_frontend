@@ -39,17 +39,17 @@
     })
 
     const { data: subMenuList, pending: subMenuPending, refresh: subMenuRefresh } = await useAsyncData(
-        'productTypeSubMenu_' + activeRootParentType.value,
+        `productTypeSubMenu_${activeRootParentType.value}_${locale.value}`,
         () => getProductTypeHierarchyBySlug(activeRootParentType.value, locale.value),
         {
             transform: (data) => data.data,
             default: () => [],
-            watch: [activeRootParentType]
+            watch: [activeRootParentType, locale]
         }
     )
 
     const { data: breadcrumbList, pending: breadcrumbPending } = await useAsyncData(
-        'getAllParentProductTypeBySlug_' + activeProductTypeSlug.value,
+        `getAllParentProductTypeBySlug_${activeProductTypeSlug.value}_${locale.value}`,
         () => getAllParentProductTypeBySlug(activeProductTypeSlug.value, locale.value),
         {
             transform: (data) => {
@@ -63,7 +63,7 @@
                 })
             },
             default: () => [],
-            watch: [activeProductTypeSlug]
+            watch: [activeProductTypeSlug, locale]
         }
     )
 

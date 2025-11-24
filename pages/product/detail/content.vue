@@ -12,7 +12,7 @@
     const detailContentRef = ref<HTMLDivElement>()
 
     const quantities: Record<string, number> = {}
-    const addInputToContent = (html: string): string => {
+    const addInputToContent = (html = ''): string => {
         // 使用正则匹配整个结构，包括em标签和其内容
         const regex = /<td(\s[^>]*)?>\s*<em>([^<]*)<\/em>/gi
 

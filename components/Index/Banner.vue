@@ -2,18 +2,34 @@
     <div class="banner">
         <div v-if="error">{{ $t('http.error') }}</div>
         <UCarousel
-            v-slot="{ item: banner, index }" :autoplay="isMounted ? { delay: 5000 } : false" loop arrows dots :items="bannerList"
+            ref="carouselRef"
+            v-slot="{ item: banner, index }"
+            :autoplay="isMounted ? { delay: 5000 } : false" loop arrows indicators
+            :items="bannerList"
             :ui="{
-                dots: 'bottom-0',
-                dot: 'w-[10px] h-[10px] !bg-[#999] opacity-20 data-[state=active]:opacity-100',
-                arrows: 'absolute top-[50%] translate-y-[-50%] z-10 w-full',
+                arrows: {
+                    wrapper: 'absolute top-[50%] translate-y-[-50%] z-10 w-full'
+                },
                 prev: '!start-4',
-                next: '!end-4'
+                next: '!end-4',
+                item: 'w-full',
+                indicators: {
+                    wrapper: 'bottom-0',
+                    base: 'w-[10px] h-[10px] !bg-[#999]',
+                    active: 'opacity-100',
+                    inactive: 'opacity-20'
+                },
+            }"
+            :prev-button="{
+                color: 'gray'
+            }"
+            :next-button="{
+                color: 'gray'
             }"
         >
             <Link
                 v-if="banner.link" :to="banner.link" :link-type="banner.linkType" :open-type="banner.openType"
-                class="banner-link">
+                class="banner-link w-full">
                 <NuxtImg
                     :preload="index === 0" :loading="index === 0 ? 'eager' : 'lazy'"
                     width="1920"
@@ -36,6 +52,19 @@
 
     const { locale } = useI18n()
     const isMounted = useMounted()
+
+    const carouselRef = ref()
+    onMounted(() => {
+        setInterval(() => {
+            if (!carouselRef.value) { return }
+
+            if (carouselRef.value.page === carouselRef.value.pages) {
+                return carouselRef.value.select(0)
+            }
+
+            carouselRef.value.next()
+        }, 5000)
+    })
 
     const { data: bannerList, error } = useAsyncData(() => getBanners(locale.value), {
         transform: data => data?.data,

@@ -64,6 +64,13 @@ export default defineNuxtConfig({
         }
     },
 
+    legacy: {
+        vite: {
+            polyfills: ['es.array.at'],
+            modernPolyfills: ['es.array.at']
+        }
+    },
+
     serverHandlers: [
         {
             route: '/profile/upload/**:path',
@@ -92,7 +99,7 @@ export default defineNuxtConfig({
         '/**': isDev ? {} : { cache: { swr: true, maxAge: 120, staleMaxAge: 60, headersOnly: true } }
     },
 
-    modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui'],
+    modules: ['@element-plus/nuxt', '@nuxtjs/i18n', '@nuxt/image', '@nuxt/ui', '@teages/nuxt-legacy'],
 
     elementPlus: {
         importStyle: 'scss'
@@ -166,11 +173,11 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         // Private keys (only available on server-side)
-        apiUrl: 'http://159.75.215.188:56031/prod-api/api',
+        apiUrl: 'https://www.atleoat.com/prod-api/api',
         // apiUrl: 'http://localhost:39254/api',
-        profileUrl: 'http://159.75.215.188:56031/profile/upload',
+        profileUrl: 'https://www.atleoat.com/profile/upload',
         // profileUrl: 'http://localhost:39254/profile/upload',
-        domain: '159.75.215.188',
+        domain: 'www.atleoat.com',
 
         // Public keys that are exposed to client-side
         public: {

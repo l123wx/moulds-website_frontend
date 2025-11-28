@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
     app: {
         head: {
-            title: 'Automation-Automation-LD Plastic Solution Limited ',
+            title: 'www.atleoat.com',
             link: [
                 {
                     rel: 'icon',
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
                     // hid: 'description',
                     name: 'description',
                     content:
-                    'Automation LD Plastic Solution Limited '
+                    'Automation EOAT components'
                 },
                 {
                     // hid: 'keywords',
@@ -105,9 +105,7 @@ export default defineNuxtConfig({
         importStyle: 'scss'
     },
 
-    ui: {
-        fonts: false
-    },
+    ui: {},
 
     i18n: {
         strategy: 'prefix',

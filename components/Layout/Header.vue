@@ -166,6 +166,10 @@
                     width: 80px;
                 }
 
+                @media screen and (max-width: @viewport-md) {
+                    width: 56px;
+                }
+
                 img {
                     width: 100%;
                 }

@@ -100,6 +100,9 @@
   align-items: center;
   justify-content: center;
   aspect-ratio: 4/3;
+  @media screen and (max-width: @viewport-sm) {
+    padding: 15px;
+  }
 
   img {
     width: 100%;
@@ -117,6 +120,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: @viewport-sm) {
+    padding: 10px;
+  }
 }
 
 .product-title {
@@ -130,6 +137,9 @@
   text-overflow: ellipsis;
   width: 100%;
   transition: all 0.3s ease;
+  @media screen and (max-width: @viewport-sm) {
+    font-size: 12px;
+  }
 }
 
 .product-link {

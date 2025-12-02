@@ -37,25 +37,24 @@
         <el-empty v-if="!productTypeList?.length" :description="$t('No data')" />
         <template v-else>
             <div class="list-container">
-                <div
+                <NuxtLinkLocale
                     v-for="item in productTypeList"
                     :key="item.id"
+                    :to="item.isLeaf ? productListPath([...route.params.path, item.slug]) : productTypeListPath([...route.params.path, item.slug])"
+                    target="_self"
                     class="item-card"
                     :aria-label="item.label"
                 >
                     <div class="item-images">
-                        <NuxtImg format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.imagePath || 'no-img.svg'" :alt="item.title" :title="item.title" />
+                        <NuxtImg format="webp" loading="lazy" :placeholder="[100, 77, 100]" :src="item.imagePath || 'no-img.svg'" :alt="item.name" :title="item.name" />
                     </div>
                     <div class="item-info">
                         <h3 class="item-title">{{ item.label }}</h3>
                     </div>
-                    <NuxtLinkLocale
-                        class="more-info-btn"
-                        :to="item.isLeaf ? productListPath([...route.params.path, item.slug]) : productTypeListPath([...route.params.path, item.slug])"
-                        target="_self">
+                    <div class="more-info-btn">
                         {{ $t('Learn More') }}
-                    </NuxtLinkLocale>
-                </div>
+                    </div>
+                </NuxtLinkLocale>
             </div>
             <div class="pagination-container">
                 <el-pagination
@@ -87,6 +86,7 @@
             background-color: #fff;
             transition: var(--transition-normal);
             overflow: hidden;
+            cursor: pointer;
 
             flex: 0 0 25%;
             padding: 10px;
@@ -101,9 +101,17 @@
             }
 
             &:hover {
+                border-color: #004DFF;
+
                 .item-images img {
                     opacity: 0.8;
                     transform: scale(1.1);
+                }
+
+                .more-info-btn {
+                    border-color: #004DFF;
+                    background-color: #004DFF;
+                    color: #fff;
                 }
             }
         }
@@ -169,12 +177,6 @@
             display: inline-block;
             transition: all 0.3s ease;
             margin-bottom: 30px;
-
-            &:hover {
-                border-color: #004DFF;
-                background-color: #004DFF;
-                color: #fff;
-            }
         }
     }
 

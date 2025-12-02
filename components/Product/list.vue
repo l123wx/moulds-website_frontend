@@ -21,7 +21,14 @@
     <el-skeleton class="list-container" animated :loading="loading" :count="12">
         <template #default>
             <div class="list-container">
-                <div v-for="item in productList" :key="item.id" class="item-card" :aria-label="item.label">
+                <NuxtLinkLocale
+                    v-for="item in productList"
+                    :key="item.id"
+                    :to="productDetailPath(item.slug)"
+                    target="_self"
+                    class="item-card"
+                    :aria-label="item.label"
+                >
                     <div class="item-images">
                         <NuxtImg format="webp" loading="lazy" background="transparent" :placeholder="[100, 77, 100]" :src="item.coverImagePath || 'no-img.svg'" :alt="item.label" :title="item.label" />
                     </div>
@@ -29,12 +36,12 @@
                         <h3 class="item-title">{{ item.label }}</h3>
                     </div>
                     <div class="button-container">
-                        <NuxtLinkLocale class="more-info-btn" :to="productDetailPath(item.slug)" target="_self">
+                        <div class="more-info-btn">
                             {{ $t('Learn More') }}
-                        </NuxtLinkLocale>
-                        <AddToCartButton :product="item" button-size="large" simple />
+                        </div>
+                        <AddToCartButton :product="item" button-size="large" simple @click.prevent="() => {}" />
                     </div>
-                </div>
+                </NuxtLinkLocale>
             </div>
         </template>
         <template #template>
@@ -72,6 +79,7 @@
             background-color: #fff;
             transition: var(--transition-normal);
             overflow: hidden;
+            cursor: pointer;
 
             flex: 0 0 25%;
             padding: 10px 10px 30px;
@@ -86,9 +94,17 @@
             }
 
             &:hover {
+                border-color: #004DFF;
+
                 .item-images img {
                     opacity: 0.8;
                     transform: scale(1.1);
+                }
+
+                .more-info-btn {
+                    border-color: #004DFF;
+                    background-color: #004DFF;
+                    color: #fff;
                 }
             }
         }
@@ -148,12 +164,6 @@
             text-align: center;
             display: inline-block;
             transition: all 0.3s ease;
-
-            &:hover {
-                border-color: #004DFF;
-                background-color: #004DFF;
-                color: #fff;
-            }
         }
     }
 </style>

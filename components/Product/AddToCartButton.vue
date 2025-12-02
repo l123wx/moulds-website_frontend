@@ -26,20 +26,22 @@
 </script>
 
 <template>
-    <el-button v-if="simple" plain circle :size="buttonSize" @click="handleClick">
-        <el-icon size="20">
-            <ShoppingCart />
-        </el-icon>
-    </el-button>
+    <div>
+        <el-button v-if="simple" plain circle :size="buttonSize" @click="handleClick">
+            <el-icon size="20">
+                <ShoppingCart />
+            </el-icon>
+        </el-button>
 
-    <el-button v-else round type="primary" :size="buttonSize" class="add-to-cart-btn" @click="handleClick">
-        <el-icon size="20">
-            <ShoppingCart />
-        </el-icon>
-        {{ $t('Add to Cart') }}
-    </el-button>
+        <el-button v-else round type="primary" :size="buttonSize" class="add-to-cart-btn" @click="handleClick">
+            <el-icon size="20">
+                <ShoppingCart />
+            </el-icon>
+            {{ $t('Add to Cart') }}
+        </el-button>
 
-    <ClientOnly>
-        <SpecificationSelector ref="specificationSelectorRef" :product="props.product" :preload="props.preload" @change="(...args) => emit('specificationQuantityChange', ...args)" />
-    </ClientOnly>
+        <ClientOnly>
+            <SpecificationSelector ref="specificationSelectorRef" :product="props.product" :preload="props.preload" @change="(...args) => emit('specificationQuantityChange', ...args)" />
+        </ClientOnly>
+    </div>
 </template>
